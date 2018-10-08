@@ -42,7 +42,7 @@
           width: 100%;
           height: auto;
           min-height: 35rem;
-          padding: 15rem 0;
+          padding: 0.3rem 0;
           background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.5)), to(#161616));
           background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%);
           background-position: center;
@@ -90,8 +90,13 @@
             background-color: transparent;
             -webkit-text-decoration-skip: objects;
         }
+        
     </style>
 </head>
+
+
+
+
 
 <div id="wrapper" class="toggled">
   <!-- /#sidebar-wrapper -->
@@ -135,181 +140,92 @@
               <i class="fas fa-bars"></i>
             </button>
           </div>
-        </nav>
-    <div class="row">
-      <div class="">
-        <div class="col-md-12">
-          
-          <div class="row">
-            <div class="col-md-12">  
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active show" href="#">Google</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  show" href="#">Baidu</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  show" href="#">naver</a>
-                  </li>
-                </ul>
-            </div>
-          </div>
-          
-          <div class="row searcharea">
-            <div class="col-md-12"> 
-              <input class="au-input au-input--xl" type="text" name="search" id="s_search" placeholder="Search for ....">
-              <button class="au-btn au-btn--small" type="button" id="t_search">
-                  Search
-              </button>
-            </div>
-          </div>
-          
-          <div class="row searcharea">
-            <div class="col-md-12" id="todolistInputform" >
-              <input class="au-input au-input--xl" type="text" id="s_storage" >
-              <button class="au-btn au-btn--small" type="button" id="s_storagebtn" >save</button>
-              <!-- <button class="au-btn au-btn--small" type="button" id="g_storagebtn" >getData</button> -->
-            </div>
-          </div>
-
-        </div>
+      </nav>
+      <div class="row">
+       
       </div>
+         
     </div>
-
-    <div class="row" style="display: block">
-      <div class="col-lg-4">
-        <!-- Theme -->
-        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
-          <div class="au-card-title" style="background-image:url('img/bg-title-01.jpg');">
-            <div class="bg-overlay bg-overlay--gray"></div>
-            <h3>
-              <span id="todo_list_date" ></span>
-              <!--i class="zmdi zmdi-account-calendar"></i--></h3>
-            <button class="au-btn-plus" id="todoListAddBtn">
-              <i class="zmdi zmdi-plus"></i>
-                +
-            </button>
-          </div>
-          <div class="au-task js-list-load">
-            <div class="au-task__title">
-              <p>Tasks for Noah</p>
-            </div>
-            <div class="au-task-list js-scrollbar3" id="chromeTodoList">
-              <div class="au-task__item au-task__item--danger">
-                <div class="au-task__item-inner">
-                  <h5 class="task">
-                    <a href="#">Meeting about plan for Admin Template 2018</a>
-                  </h5>
-                  <span class="time">10:00 AM</span>
-                </div>
+  </div>
+  <!--main page-->
+  <div class="masthead" id="masthead">
+    <div class="container d-flex h-100">
+      <div class="mx-auto ">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-12">  
+                  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active show" href="#">Google</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  show" href="#">Baidu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  show" href="#">naver</a>
+                    </li>
+                  </ul>
               </div>
-              <!-- <div class="au-task__item au-task__item--warning">
-                <div class="au-task__item-inner">
-                  <h5 class="task">
-                    <a href="#">Create new task for Dashboard</a>
-                  </h5>
-                  <span class="time">11:00 AM</span>
-                </div>
-              </div> -->
             </div>
-            <div class="au-task__footer">
-              <!--Add Todo List-->
-              <button class="au-btn au-btn-load js-load-btn">load more</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-lg-4">
-          <h2 class="title-1 m-b-25">Stock List</h2>
-        <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
-            <div class="au-card-inner">
-                <div class="table-responsive">
-                    <table class="table table-top-countries">
-                        <tbody>
+            <div class="row searcharea">
+              <div class="col-md-12"> 
+                <input class="au-input au-input--xl" type="text" name="search" id="s_search" placeholder="Search for ....">
+                <button class="au-btn au-btn--small" type="button" id="t_search">
+                    Search
+                </button>
+              </div>
+            </div>
+
+            <div class="row searcharea">
+              <div class="col-md-12" id="todolistInputform" >
+                <input class="au-input au-input--xl" type="text" id="s_storage" >
+                <button class="au-btn au-btn--small" type="button" id="s_storagebtn" >save</button>
+                <!-- <button class="au-btn au-btn--small" type="button" id="g_storagebtn" >getData</button> -->
+              </div>
+            </div>
+
+          </div>
+              
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- DATA TABLE-->
+                <div class="table-responsive m-b-40">
+                    <button class="au-btn-plus" id="todoListAddBtn">
+                        <i class="zmdi zmdi-plus"></i>
+                          +
+                      </button>
+                    <table class="table table-borderless table-data3">
+                        <thead>
                             <tr>
-                                <td>United States</td>
-                                <td class="text-right">$119,366.96</td>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Todo</th>
+                                <th>regDate</th>
+                                <th>Status</th>
+                                <th>Edit</th>
                             </tr>
-                            <tr>
-                                <td>Australia</td>
-                                <td class="text-right">$70,261.65</td>
-                            </tr>
-                            <tr>
-                                <td>United Kingdom</td>
-                                <td class="text-right">$46,399.22</td>
-                            </tr>
-                            <tr>
-                                <td>Turkey</td>
-                                <td class="text-right">$35,364.90</td>
-                            </tr>
-                            <tr>
-                                <td>Germany</td>
-                                <td class="text-right">$20,366.96</td>
-                            </tr>
-                            <tr>
-                                <td>France</td>
-                                <td class="text-right">$10,366.96</td>
-                            </tr>
-                            <tr>
-                                <td>Australia</td>
-                                <td class="text-right">$5,366.96</td>
-                            </tr>
-                            <tr>
-                                <td>Italy</td>
-                                <td class="text-right">$1639.32</td>
-                            </tr>
+                        </thead>
+                        <tbody id="todoTemplate">
                         </tbody>
                     </table>
                 </div>
+                <!-- END DATA TABLE-->
             </div>
         </div>
       </div>
-      
     </div>
   </div>
+
+<div id="template">
 </div>
-  <!--main page-->
-  <div class="masthead" id="masthead">
-    <div class="container d-flex h-100 align-items-center">
-      <div class="mx-auto text-center">
-        <!-- <h1 class="mx-auto my-0 text-uppercase">Grayscale</h1>
-          <h2 class="text-white-50 mx-auto mt-2 mb-5">A free, responsive, one page Bootstrap theme created by Start Bootstrap.</h2> -->
-        <div class="col-md-10 col-lg-8 mx-auto text-center">
-          <!-- <form class="form-inline d-flex">
-            <div class="input_dv">
-              <input type="text" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="googleSearch">
-              <button type="button" class="btn .btn-success mx-auto" id="g_search">google</button>
-            </div>
-            <div class="input_dv">
-              <input type="text" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="redmine_search" />
-              <button type="button" class="btn .btn-success mx-auto" id="redmine_searchbtn">redmine</button>
-            </div>
-          </form> -->
-        </div>
-      </div>
-    </div>
-  </div>
+ 
 
 
 
 
-
-
-  <!-- About Section -->
-  <section id="about" class="about-section text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <form class="form-inline">
-
-          </form>
-        </div>
-      </div>
-      <!-- <img src="img/bg-signup.jpg" class="img-fluid" alt=""> -->
-    </div>
-  </section>
   <input type="hidden" value="" id="hid_todo" />
 
   <div class="footer_pop2">

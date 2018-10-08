@@ -109,12 +109,30 @@ $(document).ready(function(){
     $("#todoListAddBtn").click(function(){
         $("#todolistInputform").toggle("active");
     });
-
+    //test 
+    var geturl__ = chrome.extension.getURL("todolistsample.html");
+    $("#template").load(geturl__);
 });
 
 window.onload= function(){
     $(".sidebar-nav").css('top', $("#mainNav").height() + "px");
-    //$("#mainNav").css( "left" ,  $("#sidebar-wrapper").width()+ "px" );
+
+     $(document).on('click','#todoTemplate .au-checkbox input[type=checkbox]', function(e) {
+        //console.log( $(this) );
+        var valuetest =  $(this).val();
+        console.log(valuetest);
+
+         todo_obj =  JSON.parse( $("#hid_todo").val());
+         var testobj =  ChromeStorageObj.getObjects(todo_obj , "todoId" , valuetest);
+         console.log(testobj);
+         
+         
+     });
+     
+
+     ChromeStorageObj.getStorage();
+
+
 }
 
 Date.locale = {
@@ -140,16 +158,21 @@ var ChromeStorageObj = {
             ChromeStorageObj.getStorage();
             return;
         }else{
+            console.log($("#hid_todo").val());
             todo_obj =  JSON.parse( $("#hid_todo").val());
+            console.log(todo_obj);
         }
-        console.log(todo_obj);
+        var todoId = ChromeStorageObj.generateKEy(26);
+
         var todoitem = {
+            "todoId" : todoId, 
             "todoitem" : add_message,
-            "regdate" : dataStr
+            "regdate" : dataStr,
+            "status" : false
         }
         todo_obj.push(todoitem);
     
-        chrome.storage.sync.set({'value1': JSON.stringify(todo_obj)}, function() {
+        chrome.storage.sync.set({'todolist': JSON.stringify(todo_obj)}, function() {
             console.log('successed!' + JSON.stringify(todo_obj));
         });
     
@@ -157,41 +180,86 @@ var ChromeStorageObj = {
         $("#todolistInputform").removeClass('active');
     },
     getStorage : function (){
-        chrome.storage.sync.get(['value1'], function(result) {
+        chrome.storage.sync.get(['todolist'], function(result) {
             $("#hid_todo").val('');
-            todo_obj = JSON.parse(result.value1);
-            $("#hid_todo").val(result.value1);
-            console.log( JSON.parse( $("#hid_todo").val()));
-            $("#chromeTodoList").empty();
-            ChromeStorageObj.renderChromeStorageData();
+            
+            if(result.todolist == undefined){
+                var temptodoitem = [
+                    {
+                        "origin": "1"
+                    }
+                ]
+                console.log(JSON.stringify(temptodoitem)) ;
+                $("#hid_todo").val( JSON.stringify( temptodoitem));
+            }else{
+                todo_obj = JSON.parse(result.todolist);
+            
+                $("#hid_todo").val(result.todolist);
+                console.log( JSON.parse( $("#hid_todo").val()));
+                $("#chromeTodoList").empty();
+                
+                ChromeStorageObj.RenderHtmlByTemplate();
+                
+            }
         });
-    }
-    ,
-    renderChromeStorageData : function (){
+    },
+    generateKEy:function( keylength ){
+        var ret = "";
+        while (ret.length < keylength) {
+          ret += Math.random().toString(16).substring(2);
+        }
+        return ret.substring(0,keylength);
+    },
+    RenderHtmlByTemplate: function(){
+        //var todo_list =  JSON.parse( $("#hid_todo").val());
         var ChromeStorageDt = $("#hid_todo").val();
         if(ChromeStorageDt == "" || ChromeStorageDt == undefined){
             return;
         }
         var ChromeStorageDtObj = JSON.parse(ChromeStorageDt);
-        var renderHtml = "";
-        var chromeStorageIndex = 0;
-        ChromeStorageDtObj.forEach(chromestorageItem => {
-            
-            renderHtml += "<div class='au-task__item au-task__item--danger'>"
-                +   " <div class='au-task__item-inner'>"
-                +    "  <h6>" + (chromeStorageIndex + 1) + "</h6>"
-                +    "  <h5 class='task'>"
-                +     "   <a href='#'>" + chromestorageItem.todoitem + "</a>"
-                +     " </h5>"
-                +     " <span class='time'>10:00 AM</span>"
-                +    "</div>"
-                +  "</div>"
-                chromeStorageIndex ++;     
-        });
-        $("#chromeTodoList").append(renderHtml);
+        
+        $("#templatetodo").tmpl(ChromeStorageDtObj).append("#todoTemplate");
+        console.log($("#templatetodo").tmpl(ChromeStorageDtObj));
+        console.log($("#templatetodo"))
+        return;
+
+
+        //html template
+        var geturl__ = chrome.extension.getURL("todolist.html");
+        var markup = '';
+        // $.get( geturl__ , function( data ) {
+        //     //console.log(data);     
+        //     markup = data;
+        // });
+        $.ajax({
+            url : geturl__,
+            dataType: "html",
+            success : function(res){
+                markup = res
+            },
+            complete : function(){
+                $.template( "todolistTemplate", markup );
+                // Render the template with the movies data and insert
+                // the rendered HTML under the "movieList" element
+                $("#todoTemplate").empty();
+                $.tmpl( "todolistTemplate", ChromeStorageDtObj ).appendTo( "#todoTemplate" );
+            }
+        })
+        // var markup = "<li><b>${Name}</b> (${ReleaseYear})</li>";
+        // Compile the markup as a named template
+    },
+    getObjects : function (obj, key, val) {
+        var objects = [];
+        for (var i in obj) {
+            if (!obj.hasOwnProperty(i)) continue;
+            if (typeof obj[i] == 'object') {
+                objects = objects.concat( ChromeStorageObj.getObjects(obj[i], key, val));
+            } else if (i == key && obj[key] == val) {
+                objects.push(obj);
+            }
+        }
+        return objects;
     }
-
-
 }
 
 //----------------------------------------------------------------------------
@@ -243,7 +311,7 @@ function loadDoc() {
         imagePath = './img/17935469_xl.jpg'
     }
     //document.getElementById('mainContent').style.backgroundImage = "url('" + imagePath + "')";
-    //document.getElementById('masthead').style.backgroundImage = "url('" + imagePath + "')";
+    document.getElementById('masthead').style.backgroundImage = "url('" + imagePath + "')";
     
   }
 

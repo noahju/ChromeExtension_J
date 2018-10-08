@@ -37,6 +37,25 @@ chrome.omnibox.onInputEntered.addListener((text) => {
     else href = 'http://redmine.tricycle.co.kr/issues/' + text;
     openUrlCurrentTab(href);
 });
+
+
+
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    if(request.cmd == "read_file") {
+        $.ajax({
+            url: chrome.extension.getURL("todolist.html"),
+            dataType: "html",
+            success: sendResponse,
+            complete: function(res){
+                console.log(res)
+            }
+        });
+    }
+})
+
+
+
+
 // 获取当前选项卡ID
 function getCurrentTabId(callback)
 {

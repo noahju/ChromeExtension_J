@@ -307,14 +307,14 @@ section {
 }
 
 .main-content {
-    padding-top: 116px;
-    min-height: 100vh;
+    padding-top: 0px;
+    min-height: 56px;
     background: white;
 }
 
 @media (max-width: 991px) {
     .main-content {
-        padding-top: 50px;
+        padding-top: 56px;
     }
 }
 
@@ -490,10 +490,10 @@ section {
 }
 
 .au-btn-plus {
-    position: absolute;
+    position: relative;
     height: 45px;
     width: 45px;
-    background: #63c76a;
+    background: gray;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     border-radius: 100%;
@@ -501,9 +501,9 @@ section {
     -o-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    bottom: -22.5px;
-    right: 45px;
     z-index: 3;
+    top: 1.4rem;
+    opacity: 0.59;
 }
 
 .au-btn-plus i {
