@@ -109,9 +109,6 @@ $(document).ready(function(){
     $("#todoListAddBtn").click(function(){
         $("#todolistInputform").toggle("active");
     });
-    //test 
-    var geturl__ = chrome.extension.getURL("todolistsample.html");
-    $("#template").load(geturl__);
 });
 
 window.onload= function(){
@@ -124,15 +121,63 @@ window.onload= function(){
 
          todo_obj =  JSON.parse( $("#hid_todo").val());
          var testobj =  ChromeStorageObj.getObjects(todo_obj , "todoId" , valuetest);
-         console.log(testobj);
-         
-         
+         console.log(testobj);  
      });
-     
-
      ChromeStorageObj.getStorage();
 
 
+     
+    $(document).on("click" , "#todoTemplate button" , function(e){
+        var valuetest =  $(this).val();
+         todo_obj =  JSON.parse( $("#hid_todo").val());
+         var testobj =  ChromeStorageObj.getObjects(todo_obj , "todoId" , valuetest);
+         console.log(testobj);
+         $("#del_id").empty();
+         $("#del_todo").empty();
+         $("#del_regdate").empty();
+
+         $("#del_id").val(testobj[0].todoId);
+         $("#del_todo").val(testobj[0].todoitem);
+         $("#del_regdate").val(testobj[0].regdate);
+    });
+
+    $(document).on("click" ,"#del_delete" , function(){
+        console.log($("#del_id").val());
+        var del_id = $("#del_id").val();
+
+        var delhidvalue = $("#hid_todo").val();
+       
+        var delobj = JSON.parse(delhidvalue);
+        //delete incorrect item 
+
+        var i =  delobj.length;
+        var data1 = [ del_id ];
+        while  (i--){
+            if(data1.indexOf(delobj[i].todoId)!=-1){
+                delobj.splice(i,1);
+            }
+        }
+
+        ChromeStorageObj.saveItem(delobj);
+        $("#exampleModal").modal('hide');
+    });
+
+    $(document).on("click" , "#del_Update" , function(){
+        console.log($("#del_id").val());
+        var upt_id = $("#del_id").val();
+        var upt_todoitem = $("#del_todo").val();
+        var upthidvalue = $("#hid_todo").val();
+        var uptobj = JSON.parse(upthidvalue);
+        var i = uptobj.length;
+        var data1 = [ upt_id ];
+        while  (i--){
+            if(data1.indexOf(uptobj[i].todoId)!=-1){
+                uptobj[i].todoitem = upt_todoitem;
+            }
+        }
+        ChromeStorageObj.saveItem(uptobj);
+        $("#exampleModal").modal('hide');
+    });
 }
 
 Date.locale = {
@@ -173,7 +218,7 @@ var ChromeStorageObj = {
         todo_obj.push(todoitem);
     
         chrome.storage.sync.set({'todolist': JSON.stringify(todo_obj)}, function() {
-            console.log('successed!' + JSON.stringify(todo_obj));
+            //console.log('successed!' + JSON.stringify(todo_obj));
         });
     
         ChromeStorageObj.getStorage();
@@ -217,11 +262,17 @@ var ChromeStorageObj = {
             return;
         }
         var ChromeStorageDtObj = JSON.parse(ChromeStorageDt);
-        
-        $("#templatetodo").tmpl(ChromeStorageDtObj).append("#todoTemplate");
-        console.log($("#templatetodo").tmpl(ChromeStorageDtObj));
-        console.log($("#templatetodo"))
-        return;
+        //delete incorrect item 
+
+        var i =  ChromeStorageDtObj.length;
+        var deldata = ["todoId"];
+        while  (i--){
+            if(ChromeStorageDtObj[i].origin == "1"
+            ){
+                console.log(1);
+                ChromeStorageDtObj.splice(i,1);
+            }
+        }
 
 
         //html template
@@ -259,6 +310,14 @@ var ChromeStorageObj = {
             }
         }
         return objects;
+    },
+    saveItem: function(s_obj){
+        chrome.storage.sync.set({'todolist': JSON.stringify(s_obj)}, function() {
+            console.log('successed!' + JSON.stringify(s_obj));
+        });
+    
+        ChromeStorageObj.getStorage();
+
     }
 }
 
@@ -396,12 +455,15 @@ var x = setInterval(function() {
     if(new Date().getHours() < 9 ){
         clearInterval(x);
         $("#now_timer").append("It's not work time NOW");
+        $("#warningOffwork").toggle("active");
+        $("#warningOffwork").append('Good day Today!!!')
     }else 
     // If the count down is finished, write some text 
     if (distance < 0) {
       clearInterval(x);
       $("#now_timer").append("Let's Call it a day!!!");
-      
+      $("#warningOffwork").toggle("active");
+      $("#warningOffwork").append('Go Home and get Some food with honey!')
     }else{
         $("#now_timer").append(hours + "h "+ minutes + "m " + seconds + "s ")
     }
