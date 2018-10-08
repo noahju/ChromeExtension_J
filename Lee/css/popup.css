@@ -1,0 +1,112 @@
+.input-form{
+    margin-left: 1rem;
+    width: 15rem;
+    font-family: 'Roboto',sans-serif;
+    font-size: 11px;
+    color: lightslategray;
+}
+.dvbox{
+    border-radius: 1rem;
+    padding: 0.2rem;
+}
+.btn-form{
+    position: relative;
+    width: 4rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+    font-family: 'Roboto',sans-serif;
+    font-size: 11px;
+}
+.dv_top{
+    width:30rem;
+    min-height: 30rem;
+    height: 90rem;
+    /* min-height: 5rem;
+    margin: 0.5rem; */
+
+}
+.gtx-footer {
+    color:lightslategray;
+    font-family: 'Roboto',sans-serif;
+    font-size: 11px;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+.footer_dv span{
+    font-size: 0.1rem;
+}
+.list-group-lee{
+    width: 27rem;
+    margin-top: 0.4rem;
+    font-size: 11px;
+}
+.edit-lee{
+  margin-left: 0.4rem;
+}
+.list-group-item{
+    word-wrap: inherit
+}
+.input-form{
+    margin-left: 0.3rem;
+    margin-right: 0.3rem
+}
+.alert-info{
+  margin-right: 1rem;
+}
+.alert-top {
+    font-size: 11px;
+    height: 100%
+    width:100%;
+    display:none;
+    text-align: center;
+    padding:10px;
+    margin-left: 1rem;
+    margin-right: 2rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.5rem;
+}
+.tabs-lee{
+    font-size: 11px;
+}
+.dvactive{
+    display: block
+}
+.dvhide{
+    display: none
+}
+.right{
+  align:right;
+}
+.description{
+  margin-left: 0.4rem;
+}
+.modalbtn{
+  margin: 0.4rem;
+  width: auto;
+}
+.containerInsert{
+  margin-top: 0.4rem;
+}
+.btnInsert{
+  margin-top: 0.4rem;
+  width: 5rem;
+}
+.btndownloadInsert{
+  margin-top:0.4rem;
+  border-radius: 0.2rem;
+  width: 5rem;
+  font-color:white;
+  color:white !important;
+}
+a {
+    text-decoration: none !important;
+    color: black !important;
+}
+.btn-delete-lee{
+  font-size: 9px;
+  align: left
+}
+#resultList li button{
+  display: none;
+}

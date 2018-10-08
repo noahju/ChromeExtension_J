@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="lib/bootstrap.css" rel="stylesheet" />
+    <link href="css/popup.css" rel="stylesheet"/>
+    <script type="text/javascript" src="lib/jquery-min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/background.js"></script>
+    <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zeroclipboard/2.1.6/ZeroClipboard.min.js" ></script> -->
+</head>
+<body>
+    <div class="dv_top" >
+
+
+        <ul class="nav nav-tabs tabs-lee">
+            <li class="nav-item">
+                <a class="nav-link active" seq="0" href="#">Search Content</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" seq="1" href="#">Insert Content</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" seq="2" href="#">Edit Content</a>
+            </li>
+        </ul>
+        <!-- alert -->
+        <div id="alert-info" class="alert alert-info alert-top" role="alert">
+            <button type="button" class="close alert-close" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <span class="alert-msg"></span>
+        </div>
+
+        <div id="alert-warn" class="alert alert-warn alert-top" role="alert">
+            <button type="button" class="close alert-close" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <span class="alert-msg"></span>
+        </div>
+
+
+        <div id="contentPage">
+          <div id="dv1" class="dvactive" >
+              <div class="container-fluid">
+                  <div class="row dvbox">
+                      <input type="text" class="form-control input-form"  id="searchForLee" onfocus="this.blur();" ></input>
+                      <button id="SearchBtn" class="btn btn-form" >Search</button>
+                  </div>
+                  <div class="card list-group-lee" >
+                      <ul class="list-group list-group-flush" id="resultList">
+                      </ul>
+                  </div>
+              </div>
+          </div>
+
+          <div id="dv2" class="dvhide" >
+              <div class="container-fluid containerInsert">
+                      <textarea class="form-control" rows="5" id="textbox"></textarea>
+                  <button id="create" class="btn btn-form btnInsert" >Input</button>
+                  <a download="sample_lee.json" class="btn btn-form bg-success btndownloadInsert " id="downloadlink" style="display: none">Download</a>
+              </div>
+          </div>
+
+          <div id="dv3" class="dvhide">
+              <div class="container-fluid">
+                <div class="card list-group-lee edit-lee" >
+                    <ul class="list-group list-group-flush" id="editList">
+                    </ul>
+                </div>
+                <button type="button" class="btn btn-form modalbtn" data-toggle="modal" data-target="#myModal">Open Modal</button>
+              </div>
+          </div>
+      </div>
+
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-body">
+                <textarea>
+                </textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="textSection" style="display:none"></div>
+    </div>
+    <footer class="gtx-footer">
+        <span>ⓒ Noahju All Rights Reserved.</span>
+    </footer>
+</body>
+</html>

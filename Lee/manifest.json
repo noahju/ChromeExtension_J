@@ -1,0 +1,28 @@
+{  
+    "name": "redmine",  
+    "version": "1",  
+    "manifest_version": 2,
+    "description": "redmine",  
+    "permissions":[
+        "tabs","<all_urls>", "http://*/*", "https://*/*",
+        "clipboardRead",
+        "clipboardWrite",
+        "management"
+      ],
+    "browser_action": {  
+      "default_icon": "/img/icon.png" ,
+      "default_title": "joobong",
+      "default_popup": "popup.html"
+    }, 
+    "chrome_url_overrides" : {
+        "newtab": "popup.html"
+    },
+    "background":
+    {
+        // 2种指定方式，如果指定JS，那么会自动生成一个背景页
+        "page": "background.html"
+        //"scripts": ["js/background.js"]
+    },
+    // 向地址栏注册一个关键字以提供搜索建议，只能设置一个关键字
+    "omnibox": { "keyword" : "joobong" }
+  }
