@@ -103,6 +103,17 @@
           animation: fade 5s ease-in-out;
           display: block;  
         }
+        .table-font{
+          text-align: center
+        }
+        table{
+          text-align: center
+        }
+        .nav-bottom{
+          bottom: 0;
+          position: absolute;
+          padding: 0.3rem;
+        }
     </style>
 </head>
 
@@ -110,7 +121,7 @@
 
 
 
-<div id="wrapper" class="toggled">
+<div id="wrapper" >
   <!-- /#sidebar-wrapper -->
   <!-- Navigation -->
  
@@ -118,7 +129,7 @@
   <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
-       
+        
       </li>
       <li>
         <a href="https://docs.google.com/spreadsheets/d/1uDyobyDyYqol1S_GCpCjyTRNCod7dzc7shJTgBRQTLA/edit#gid=2109150482"
@@ -136,6 +147,10 @@
         <a href="http://www.boribori.co.kr/PlanShop?ThemeSeq=75511" target="top">boribori</a>
       </li>
     </ul>
+    <div class="nav-bottom">
+        
+        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-rss"></i> edit</button>
+    </div>
   </div>
 
   <div class="main-content" id="mainContent">
@@ -214,7 +229,7 @@
                         <i class="zmdi zmdi-plus"></i>
                           +
                       </button>
-                    <table class="table table-borderless table-data3">
+                    <table class="table table-borderless table-data3 table-font">
                         <thead>
                             <tr>
                                 <th></th>
@@ -251,21 +266,24 @@
         </div>
         <div class="modal-body">
           <table class="table table-borderless table-data3">
-            <thead>
+            <thead class="table-head">
               <td>id</td>
               <td>todolist</td>
               <td>regdata</td>
             </thead>
             <tbody>
-              <td>
-                  <input type="text" id="del_id" disabled></input>
-              </td>
-              <td>
-                   <input type="text" id="del_todo" class="form-control" >
-              </td>
-              <td> 
-                <input type="text" id="del_regdate" disabled >
-              </td>
+              <tr>
+                <td >
+                    <input type="text" id="del_id"  style="display: none" disabled></input>
+                </td>
+                <td>
+                      <textarea type="text" id="del_todo" class="form-control" >
+                      </textarea>
+                </td>
+                <td> 
+                  <input type="text" id="del_regdate" disabled >
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -279,10 +297,56 @@
   </div>
 
 
-
-
+  <!-- Large modal -->
   
+
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content ">
+        
+          <div class="card">
+              <div class="card-header">
+                  <strong>Add </strong>
+              </div>
+              <div class="card-body card-block">
+                  <form action="" method="post" class="form-horizontal">
+                      <div class="row form-group">
+                          <div class="col col-md-3">
+                              <label for="nav_name" class=" form-control-label">Name</label>
+                          </div>
+                          <div class="col-12 col-md-9">
+                              <input type="text" id="nav_name" name="nav_name" placeholder="Enter Name" class="form-control">
+                          </div>
+                      </div>
+                      <div class="row form-group">
+                          <div class="col col-md-3">
+                              <label for="nav_url" class=" form-control-label">Url</label>
+                          </div>
+                          <div class="col-12 col-md-9">
+                              <input type="text" id="nav_url" name="nav_url" placeholder="nav_url" class="form-control">
+                              
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-sm">
+                      <i class="fa fa-dot-circle-o"></i> Submit
+                  </button>
+                  <button type="reset" class="btn btn-danger btn-sm">
+                      <i class="fa fa-ban"></i> Reset
+                  </button>
+              </div>
+          </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
   <input type="hidden" value="" id="hid_todo" />
+  <input type="hidden" value="" id="hid_nav" />
 
   <div class="footer_pop2">
     <p class="text-muted">@ Noah </p>

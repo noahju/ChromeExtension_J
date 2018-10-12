@@ -367,8 +367,11 @@ function loadDoc() {
     var cookiebackgroundImage = getCookie("backgroundImage");
    
     if(cookiebackgroundImage == "true"){
-        imagePath = './img/17935469_xl.jpg'
+        imagePath = './img/53679405_xl.jpg'
     }
+    //For test
+    imagePath = 'https://d3cbihxaqsuq0s.cloudfront.net/images/48244404_xl.jpg'
+
     //document.getElementById('mainContent').style.backgroundImage = "url('" + imagePath + "')";
     document.getElementById('masthead').style.backgroundImage = "url('" + imagePath + "')";
     
