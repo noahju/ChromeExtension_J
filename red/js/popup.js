@@ -99,7 +99,9 @@ $(document).ready(function(){
     // chrome - storage 
     $("#s_storagebtn").click(function(){
         var storageText = $("#s_storage").val();
-        ChromeStorageObj.addStorage(storageText) ;
+        ChromeStorageObj.addStorage(storageText);
+        $("#s_storage").val("");
+        $("#todolistInputform").toggle("active");
     });
 
     $("#g_storagebtn").click(function(){
@@ -178,6 +180,11 @@ window.onload= function(){
         ChromeStorageObj.saveItem(uptobj);
         $("#exampleModal").modal('hide');
     });
+
+
+
+    GetNewsData();
+    GetNYpd();
 }
 
 Date.locale = {
@@ -326,21 +333,7 @@ var ChromeStorageObj = {
 //----------------------------------------------------------------------------
 
 
-function GetNYpd(){
-        // Built by LucyBot. www.lucybot.com
-        var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-        url += '?' + $.param({
-            'api-key': "7778a6357a37473a84802d825dae0d3e"
-        });
-        $.ajax({
-            url: url,
-            method: 'GET',
-        }).done(function(result) {
-            
-        }).fail(function(err) {
-            throw err;
-        });
-}
+
 
 var GetImageXmlUrl = 'https://d3cbihxaqsuq0s.cloudfront.net/';
 
@@ -370,7 +363,7 @@ function loadDoc() {
         imagePath = './img/53679405_xl.jpg'
     }
     //For test
-    imagePath = 'https://d3cbihxaqsuq0s.cloudfront.net/images/48244404_xl.jpg'
+    //imagePath = 'https://d3cbihxaqsuq0s.cloudfront.net/images/48244404_xl.jpg'
 
     //document.getElementById('mainContent').style.backgroundImage = "url('" + imagePath + "')";
     document.getElementById('masthead').style.backgroundImage = "url('" + imagePath + "')";
@@ -471,3 +464,62 @@ var x = setInterval(function() {
         $("#now_timer").append(hours + "h "+ minutes + "m " + seconds + "s ")
     }
   }, 1000);
+
+
+
+
+    
+  function renderingNews(newsObj){  
+    //html template
+     var getnewsurl__ = chrome.extension.getURL("news.html");
+     var newsmarkup = '';
+     
+     $.ajax({
+         url : getnewsurl__,
+         dataType: "html",
+         success : function(res){
+            newsmarkup = res
+         },
+         complete : function(){
+             $.template( "newsTemplate", newsmarkup );
+             // Render the template with the movies data and insert
+             // the rendered HTML under the "movieList" element
+             $("#brights").empty();
+             $.tmpl( "newsTemplate", newsObj ).appendTo( "#brights" );
+         }
+     })    
+  }
+
+  function GetNewsData(){
+    var n_obj = ''
+    var Url = "https://api.washingtonpost.com/rainbow-tv/brights/";
+    $.ajax({
+        url : Url,
+        dataType: "json",
+        success : function(res){
+            n_obj = res.brights
+        },
+        complete : function(){
+
+            ///var entry = n_obj[Math.floor(Math.random()*n_obj.length)];
+            renderingNews(n_obj);
+        }
+    });
+  }
+  
+  function GetNYpd(){
+    // Built by LucyBot. www.lucybot.com
+    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+    url += '?' + $.param({
+        'api-key': "7778a6357a37473a84802d825dae0d3e"
+    });
+    $.ajax({
+        url: url,
+        method: 'GET',
+    }).done(function(result) {
+        console.log(JSON.stringify( result.response.docs))
+    }).fail(function(err) {
+        throw err;
+    });
+}
+  

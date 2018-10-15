@@ -437,7 +437,7 @@ section {
 /*-----------------------------------------------------*/
 /* ----- Buttons----- */
 .au-btn {
-    line-height: 45px;
+    line-height: 1.5rem;
     padding: 0 35px;
     text-transform: uppercase;
     color: white;
@@ -486,7 +486,7 @@ section {
 }
 
 .au-btn--green:hover {
-    background: #59bd60;
+    background: black;
 }
 
 .au-btn-plus {
@@ -4473,7 +4473,7 @@ section {
 
 @media (min-width: 1200px) {
     .table-responsive-data2 {
-        overflow: visible;
+        /* overflow: visible; */
     }
 }
 
