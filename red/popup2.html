@@ -16,6 +16,7 @@
   <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
   <script type="text/javascript" src="js/popup.js"></script>
   <script type="text/javascript" src="js/background.js"></script>
+  <script type="text/javascript" src="js/navi.js" ></script>
   <style>
     .footer_pop2{
             position: relative !important;
@@ -315,7 +316,13 @@
     </ul>
     <div class="nav-bottom">
         
-        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-rss"></i> edit</button>
+        <button type="button" class="btn btn-outline-danger" 
+          data-toggle="modal" 
+          data-target=".bd-example-modal-lg"
+          id="nav_edit_btn">
+          <i class="fa fa-rss"></i> edit
+        </button>
+        <input type="hidden" id="naviTemp" value="" >
     </div>
   </div>
 
@@ -520,10 +527,10 @@
                   </form>
               </div>
               <div class="card-footer">
-                  <button type="submit" class="btn btn-primary btn-sm">
+                  <button type="button" id="btnAddNavi"  class="btn btn-primary btn-sm">
                       <i class="fa fa-dot-circle-o"></i> Submit
                   </button>
-                  <button type="reset" class="btn btn-danger btn-sm">
+                  <button type="button" class="btn btn-danger btn-sm">
                       <i class="fa fa-ban"></i> Reset
                   </button>
               </div>

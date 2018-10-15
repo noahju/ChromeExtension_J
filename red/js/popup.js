@@ -234,24 +234,19 @@ var ChromeStorageObj = {
     getStorage : function (){
         chrome.storage.sync.get(['todolist'], function(result) {
             $("#hid_todo").val('');
-            
+           
             if(result.todolist == undefined){
                 var temptodoitem = [
                     {
                         "origin": "1"
                     }
                 ]
-                console.log(JSON.stringify(temptodoitem)) ;
                 $("#hid_todo").val( JSON.stringify( temptodoitem));
             }else{
                 todo_obj = JSON.parse(result.todolist);
-            
-                $("#hid_todo").val(result.todolist);
-                console.log( JSON.parse( $("#hid_todo").val()));
+                $("#hid_todo").val(  result.todolist);
                 $("#chromeTodoList").empty();
-                
                 ChromeStorageObj.RenderHtmlByTemplate();
-                
             }
         });
     },
