@@ -271,7 +271,7 @@ var ChromeStorageObj = {
         while  (i--){
             if(ChromeStorageDtObj[i].origin == "1"
             ){
-                console.log(1);
+               //console.log(1);
                 ChromeStorageDtObj.splice(i,1);
             }
         }
@@ -512,7 +512,7 @@ var x = setInterval(function() {
         url: url,
         method: 'GET',
     }).done(function(result) {
-        console.log(JSON.stringify( result.response.docs))
+        //console.log(JSON.stringify( result.response.docs))
     }).fail(function(err) {
         throw err;
     });
