@@ -1,20 +1,3 @@
-$(document).ready(function(){
-    // nav_edit_btn click 
-    $("#btnAddNavi").click(function(){
-        var nav_name =  $("#nav_name").val();
-        var nav_url  =  $("#nav_url").val();
-        
-        NAVI_OBJ.SetNaviItem( nav_name , nav_url );
-        NAVI_OBJ.GetNaviList();
-        
-    });
-    
-});
-
-window.onload= function(){
-    NAVI_OBJ.GetNaviList();
-}
-
 var NAVI_OBJ = {
     
     _nav_obj_list : '',
