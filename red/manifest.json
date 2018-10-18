@@ -7,7 +7,8 @@
         "tabs","<all_urls>", "http://*/*", "https://*/*",
         "clipboardRead",
         "clipboardWrite",
-        "storage"
+        "storage",
+        "bookmarks"
       ],
     "browser_action": {
       "default_icon": "/img/icon.png" ,

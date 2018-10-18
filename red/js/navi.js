@@ -5,13 +5,12 @@ var NAVI_OBJ = {
         chrome.storage.sync.get(['navi'], function(result) {
             $("#naviTemp").val('');
             
-            if(result == undefined){
+            if(result.navi == undefined  ){
                 var NaviItem = [
                     {
                         "origin": "1"
                     }
                 ]
-              
                 $("#naviTemp").val( JSON.stringify( NaviItem));
                 NAVI_OBJ.RenderHTmlNav();
             }else{
@@ -50,6 +49,7 @@ var NAVI_OBJ = {
 
     },
     RenderHTmlNav:function(){
+
         var _naviobjtemp  = JSON.parse($("#naviTemp").val()) ;
         
         var naviUrl = chrome.extension.getURL("navi.html");
@@ -74,3 +74,6 @@ var NAVI_OBJ = {
 
 var COMMON_DATE = new Date();
 var COMMON_NOW_DATE = COMMON_DATE.getFullYear() + "-" + (COMMON_DATE.getMonth()+1) + "-" + COMMON_DATE.getDate();
+
+
+

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    
 
     if (getCookie("backgroundImage") == "true") {
         $('#toggle-two').prop('checked', true);
@@ -80,6 +80,13 @@ $(document).ready(function () {
         $("#wrapper").toggleClass("toggled");
     });
 
+    $("#main-page-show").click(function(e){
+        e.preventDefault();
+        $("#main_page").toggleClass("active_hide");
+        
+    });
+
+
 
     $("#todo_list_date").append(
         new Date().getDate() + " " +
@@ -125,11 +132,13 @@ $(document).ready(function () {
 
 window.onload = function () {
 
-    new MYTAP();
+    var mytap = new MYTAP();
 
+    $("#main-page-refresh").click(function(){
+        mytap.my_refreshBackgroundImage();
+    });
 
-
-
+   
 
     $(".sidebar-nav").css('top', $("#mainNav").height() + "px");
 
@@ -200,6 +209,11 @@ window.onload = function () {
     NAVI_OBJ.GetNaviList();
     GetNewsData();
     GetNYpd();
+
+
+
+
+
 
 
 }
@@ -333,11 +347,10 @@ var ChromeStorageObj = {
         chrome.storage.sync.set({
             'todolist': JSON.stringify(s_obj)
         }, function () {
-            console.log('successed!' + JSON.stringify(s_obj));
+            //console.log('successed!' + JSON.stringify(s_obj));
         });
 
         ChromeStorageObj.getStorage();
-
     }
 }
 
@@ -565,4 +578,113 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+
+
+
+function GetHtmlforClien(){
+    var clienUrl = "https://www.clien.net/service/search?q=%EC%9E%90%EC%A0%84%EA%B1%B0";
+    var clienmarkup = ''
+    var req = new XMLHttpRequest();
+    req.onreadystatechange=function(){
+        if (this.readyState == 4 && this.status == 200) {
+            clienmarkup = this.responseText
+            ReadClien(clienmarkup);
+         }
+    };
+    req.open("GET", clienUrl, true);
+    req.send();
+}
+function ReadClien(clien_html){
+    console.log(clien_html);
+    console.log( clien_html.find('.search_list').text());
+}
+
+
+chrome.bookmarks.getTree(function(itemTree){
+    console.log("itemTree");
+    console.log(itemTree);
+    var chromebookmarkTree = ((itemTree.filter(i =>i.children.length > 0 )));
+    console.log(chromebookmarkTree);
+    var temp =  chromebookmarkTree.filter(bookmarksbar => bookmarksbar.id=="1");
+    console.log(temp);
+    
+    return;
+    itemTree.forEach(function(item){
+        processNode(item.filter(i=>i.id == "1"));
+    });
+});
+
+function processNode(node) {
+    // recursively process child nodes
+    if(node.children) {
+        node.children.forEach(function (child) {
+            processNode(child);
+        });
+    }
+
+    // print leaf nodes URLs to console
+    if(node.url) { console.log(node); }
+}
+
+
+
+var C_COOKIE = {
+    setCookie : function (cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    ,
+    getCookie:  function (cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    ,
+    deleteCookie:  function ( name ) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      }
+}
+
+
+document.onreadystatechange = function () {
+    // if(document.readyState == "complete") {
+    //     //alert("OK!");
+    //     //$("#loading").empty();
+        
+    // }
+
+    switch (document.readyState) {
+        case "loading":
+          // The document is still loading.
+          $("#loading").text("<br>loading");
+          break;
+        case "interactive":
+          // The document has finished loading. We can now access the DOM elements.
+          // But sub-resources such as images, stylesheets and frames are still loading.
+        //   var span = document.createElement("span");
+        //   span.textContent = "A <span> element.";
+        //   document.body.appendChild(span);
+            $("#loading").text("<br>interactive");
+          break;
+        case "complete":
+          // The page is fully loaded.
+          $("#loading").text("<br>done");
+          console.log("The first CSS rule is: " + document.styleSheets[0].cssRules[0].cssText);
+          break;
+      }
+
 }
