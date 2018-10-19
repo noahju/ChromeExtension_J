@@ -16,281 +16,311 @@
   <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
   <script type="text/javascript" src="js/mytab.js"></script>
   <script type="text/javascript" src="js/background.js"></script>
-  <script type="text/javascript" src="js/Movie.js"></script>
+  <!-- <script type="text/javascript" src="js/Movie.js"></script> -->
   <script type="text/javascript" src="js/navi.js"></script>
   <script type='text/javascript' src='js/LocalDB.js'></script>
   <script type='text/javascript' src='js/pouchdb-7.0.0.js'></script>
-  <script type='text/javascript' src='js/chromLocalDac.js'></script>
+  <!-- <script type='text/javascript' src='js/chromLocalDac.js'></script> -->
+  <script type='text/javascript' src='js/PouchDac.js'></script>
   <script type="text/javascript" src="js/popup.js"></script>
-<style>
-html {
-/* background: url(images/bg.jpg) no-repeat center center fixed; */
--webkit-background-size: cover;
--moz-background-size: cover;
--o-background-size: cover;
-background-size: cover;
+  <style>
+  html {
+    /* background: url(images/bg.jpg) no-repeat center center fixed; */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 
 
-.footer_pop2{
-  position: fixed !important;
-  bottom:0 !important;
-  width:100% !important;
-  text-align: center !important;
-  padding: 1rem;
-  background-color: white;
-  z-index: 9999
+.footer_pop2 {
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+    padding: 1rem;
+    background-color: white;
+    z-index: 9999;
 }
-.container_popup2
-{
-display: none;
-padding-top: 10rem;
-background: -webkit-gradient(linear, left top, left bottom, from(#161616), color-stop(75%, rgba(22, 22, 22, 0.9)),
-to(rgba(22, 22, 22, 0.8)));
-background: linear-gradient(to bottom, #161616 0%, rgba(22, 22, 22, 0.9) 75%, rgba(22, 22, 22, 0.8) 100%);
-bottom:0 !important;
+
+.container_popup2 {
+    display: none;
+    padding-top: 10rem;
+    background: -webkit-gradient(linear, left top, left bottom, from(#161616), color-stop(75%, rgba(22, 22, 22, 0.9)), to(rgba(22, 22, 22, 0.8)));
+    background: linear-gradient(to bottom, #161616 0%, rgba(22, 22, 22, 0.9) 75%, rgba(22, 22, 22, 0.8) 100%);
+    bottom: 0 !important;
 }
-.collapse{
-display: block !important;
+
+.collapse {
+    display: block !important;
 }
 
 
-.masthead{
-display: block;
-position: relative;
-width: 100%;
-height: auto;
-min-height: 135rem;
-padding: 0.3rem 0;
-background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22,
-22, 0.5)), to(#161616));
-background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%);
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: scroll;
-background-size: cover;
+.masthead {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 135rem;
+    padding: 0.3rem 0;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.5)), to(#161616));
+    background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+    padding-top: 1rem;
 }
-.input_dv{
-position: relative;
-margin-top: 1rem;
-width: 100% ;
-}
-.rightline{
-left: 0;
-}
-#mainNav{
-min-height: 56px;
-/* background-color: white; */
 
-opacity:0.9 ;
+.input_dv {
+    position: relative;
+    margin-top: 1rem;
+    width: 100%;
 }
-.leftline{
-left: 0;
+
+.rightline {
+    left: 0;
 }
-textarea:focus, input:focus{
-outline: none !important;
+
+#mainNav {
+    min-height: 56px;
+    /* background-color: white; */
+    opacity: 0.9;
 }
+
+.leftline {
+    left: 0;
+}
+#now_timer{
+    color: #fff;
+    font-weight: 700;
+    outline: 0;
+    font-size: 1.5rem;
+}
+
+textarea:focus, input:focus {
+    outline: none !important;
+}
+
 #todolistInputform {
-display: none;
+    display: none;
 }
-#todolistInputform :active{
-opacity: 1;
-animation: fade 2s linear;
-display: block;
-}
-.searcharea {
-padding: 0.3rem;
-}
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-color: #fff;
-background-color: black !important;
-}
-a {
-color: black;
-text-decoration: none;
-background-color: transparent;
--webkit-text-decoration-skip: objects;
-}
-.btn-offwork{
-padding: 0.4rem;
-margin-bottom: 0.3rem;
-opacity: 0.88;
-display: none;
 
+    #todolistInputform :active {
+        opacity: 1;
+        animation: fade 2s linear;
+        display: block;
+    }
+
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: black !important;
 }
-.btn-offwork :active{
-opacity: 1;
-animation: fade 5s ease-in-out;
-display: block;
+.nav-link{
+  color: #fff;
 }
-.table-font{
-text-align: center
+
+.fas{
+  color:white !important;
 }
-table{
-text-align: center;
-max-height: 100%
+
+a {
+    color: black;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
 }
-.nav-bottom{
-bottom: 0;
-position: absolute;
-padding: 0.3rem;
+
+.btn-offwork {
+    padding: 0.4rem;
+    margin-bottom: 0.3rem;
+    opacity: 0.88;
+    display: none;
+}
+
+    .btn-offwork :active {
+        opacity: 1;
+        animation: fade 5s ease-in-out;
+        display: block;
+    }
+
+.table-font {
+    text-align: center;
+}
+
+table {
+    text-align: center;
+    max-height: 100%;
+}
+
+.nav-bottom {
+    bottom: 75px;
+    position: absolute;
+    padding: 0.3rem;
 }
 
 /* newscard */
 
 .brightsBox {
-margin: 0 auto;
-/* padding: 0 40px; */
+    margin: 0 auto;
+    /* padding: 0 40px; */
 }
 
 .brights {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-border-top: 1px #f0f0f0 solid;
-border-left: 1px #f0f0f0 solid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-top: 1px #f0f0f0 solid;
+    border-left: 1px #f0f0f0 solid;
 }
 
-.brights a {
-width: 300px;
-/* height: 300px; */
-background-color: #e0e0e0;
-box-sizing: border-box;
-border-bottom: 1px #f0f0f0 solid;
-border-right: 1px #f0f0f0 solid;
+    .brights a {
+        width: 300px;
+        /* height: 300px; */
+        background-color: #e0e0e0;
+        box-sizing: border-box;
+        border-bottom: 1px #f0f0f0 solid;
+        border-right: 1px #f0f0f0 solid;
+    }
+
+        .brights a:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
+            background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+            background-repeat: no-repeat;
+        }
+
+    .brights img {
+        width: 100%;
+        height: auto;
+        margin-top: -100%;
+        /* animation: 0.25s cubic-bezier(0,1,0,1) 0s 1 transitionIn; */
+    }
+
+.newscard {
+    padding: 5rem;
 }
 
-.brights a:before {
-content: "";
-display: block;
-width: 100%;
-height: 0;
-padding-bottom: 100%;
-background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
-background-repeat: no-repeat;
-}
-
-.brights img {
-width: 100%;
-height: auto;
-margin-top: -100%;
-/* animation: 0.25s cubic-bezier(0,1,0,1) 0s 1 transitionIn; */
-}
-.newscard{
-padding : 5rem;
-}
 @media only screen and (max-width: 2997px) {
-.brights {
-justify-content: left;
-}
+    .brights {
+        justify-content: left;
+    }
 }
 
 @media only screen and (min-width: 2665px) and (max-width: 2997px) {
-.brights a {
-width: 16.6%;
-}
+    .brights a {
+        width: 16.6%;
+    }
 
-.brights a:nth-child(9n):nth-last-child(-n+10) ~ a {
-display: none;
-}
+        .brights a:nth-child(9n):nth-last-child(-n+10) ~ a {
+            display: none;
+        }
 }
 
 @media only screen and (min-width: 2332px) and (max-width: 2664px) {
-.brights a {
-width: 16.6%;
-}
+    .brights a {
+        width: 16.6%;
+    }
 
-.brights a:nth-child(8n):nth-last-child(-n+9) ~ a {
-display: none;
-}
+        .brights a:nth-child(8n):nth-last-child(-n+9) ~ a {
+            display: none;
+        }
 }
 
 @media only screen and (min-width: 1999px) and (max-width: 2331px) {
     .brights a {
-    width: 16.6%;
+        width: 16.6%;
     }
 
-    .brights a:nth-child(7n):nth-last-child(-n+8) ~ a {
-    display: none;
-    }
+        .brights a:nth-child(7n):nth-last-child(-n+8) ~ a {
+            display: none;
+        }
+
     body {
-    background-size: cover;
-  }
+        background-size: cover;
+    }
 }
 
 @media only screen and (min-width: 1666px) and (max-width: 1998px) {
     .brights a {
-    width: 16.6%;
+        width: 16.6%;
     }
 
-    .brights a:nth-child(6n):nth-last-child(-n+7) ~ a {
-    display: none;
-    }
+        .brights a:nth-child(6n):nth-last-child(-n+7) ~ a {
+            display: none;
+        }
+
     body {
-    background-size: cover;
-  }
+        background-size: cover;
+    }
 }
 
 @media only screen and (min-width: 1333px) and (max-width: 1665px) {
-  .brights a {
-  width: 16.6%;
-  }
+    .brights a {
+        width: 16.6%;
+    }
 
-  .brights a:nth-child(5n):nth-last-child(-n+6) ~ a {
-  display: none;
-  }
-  }
+        .brights a:nth-child(5n):nth-last-child(-n+6) ~ a {
+            display: none;
+        }
+}
 
-  @media only screen and (min-width: 1000px) and (max-width: 1332px) {
-  .brights a {
-  width: 16.6%;
-  }
+@media only screen and (min-width: 1000px) and (max-width: 1332px) {
+    .brights a {
+        width: 16.6%;
+    }
 
-  .brights a:nth-child(4n):nth-last-child(-n+5) ~ a {
-  display: none;
-  }
-  body {
-    background-size: cover;
-  }
+        .brights a:nth-child(4n):nth-last-child(-n+5) ~ a {
+            display: none;
+        }
+
+    body {
+        background-size: cover;
+    }
 }
 
 @media only screen and (min-width: 667px) and (max-width: 999px) {
-  .brights a {
-  width: 19.8%;
-  }
+    .brights a {
+        width: 19.8%;
+    }
 
-  .brights a:nth-child(3n):nth-last-child(-n+4) ~ a {
-  display: none;
-  }
-  body {
-    background-size: cover;
-  }
+        .brights a:nth-child(3n):nth-last-child(-n+4) ~ a {
+            display: none;
+        }
+
+    body {
+        background-size: cover;
+    }
 }
 
 @media only screen and (max-width: 666px) {
-  .brights a {
-    width: 33%;
-  }
-  /* for the scroll bar*/
-  body {
-    background-size: auto;
-  }
+    .brights a {
+        width: 33%;
+    }
+    /* for the scroll bar*/
+    body {
+        background-size: auto;
+    }
 
-  .brights a:nth-child(2n):nth-last-child(-n+3) ~ a {
-  display: none;
-  }
+    .brights a:nth-child(2n):nth-last-child(-n+3) ~ a {
+        display: none;
+    }
 }
 
 .brights a {
-filter: brightness(40%);
+    filter: brightness(40%);
 }
 
-.brights a:hover {
-filter: brightness(100%);
-/* width:10rem; */
-padding:0.2rem;
-}
+    .brights a:hover {
+        filter: brightness(100%);
+        /* width:10rem; */
+        padding: 0.2rem;
+    }
 
 /*
 @keyframes transitionIn {
@@ -306,66 +336,141 @@ opacity: 1;
 */
 
 .brightsBox {
-margin: 1.3rem 0 365px 0;
-position: relative;
-z-index: 2;
+    margin: 1.3rem 0 365px 0;
+    position: relative;
+    z-index: 2;
 }
-.titleNews{
-text-align: center !important
+
+.titleNews {
+    text-align: center !important;
 }
-.active_hide{
-display: none !important;
-animation: fade 2s linear;
+
+.active_hide {
+    display: none !important;
+    animation: fade 2s linear;
 }
 
 .nav_btn_div button {
-  display:inline-block !important;
-  margin-right:10px;
-  /* background-color: white !important; */
+    display: inline-block !important;
+    margin-right: 10px;
+    /* background-color: white !important; */
 }
 
-.loading:after{
-content:' ';
-position: relative;;
-top:0;
-left:0;
-right:0;
-bottom:0;
-background:url('./img/1amw.gif') 50% 50% no-repeat;
-z-index:1000;
-background-color:rgba(0,0,0,0.3);
+.loading:after {
+    content: ' ';
+    position: relative;
+    ;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('./img/1amw.gif') 50% 50% no-repeat;
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.3);
 }
 
-.chrome_menu_btn{
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  min-width: 340px;
-  max-width: 340px;
+.chrome_menu_btn {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    min-width: 340px;
+    max-width: 340px;
 }
-.chrome_menu_btn button{
-  display:inline-block !important;
-  margin-right:10px;
+
+    .chrome_menu_btn button {
+        display: inline-block !important;
+        margin-right: 10px;
+    }
+
+    .chrome_menu_btn i {
+        opacity: 1;
+    }
+
+    .chrome_menu_btn button:hover {
+        background-color: black !important;
+        opacity: 0.2;
+    }
+
+    .chrome_menu_btn i:hover {
+        filter: brightness(100%);
+        opacity: 1;
+        display: inline-block !important;
+    }
+
+.nav_btn_div {
+    max-width: 240px;
+    min-width: 240px;
 }
-.chrome_menu_btn i{
-  opacity: 1;
+
+.chrome_menu_bar {
+    opacity: 1;
 }
-.chrome_menu_btn button:hover {
-  background-color: white !important;
-  opacity: 0.5;
+
+.intro_input {
+    background: 0;
+    border: 0;
+    border-top-color: initial;
+    border-top-style: initial;
+    border-top-width: 0px;
+    border-right-color: initial;
+    border-right-style: initial;
+    border-right-width: 0px;
+    border-bottom-color: initial;
+    border-bottom-style: initial;
+    border-bottom-width: 0px;
+    border-left-color: initial;
+    border-left-style: initial;
+    border-left-width: 0px;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    border-bottom: 3px solid #fff;
+
+    color: #fff;
+    font-weight: 500;
+    outline: 0;
+    font-size: 2.4rem;
 }
-.chrome_menu_btn i:hover {
-  filter: brightness(100%);
-  opacity: 0.5;
-  display: inline-block !important;
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
 }
-.nav_btn_div{
-  max-width: 240px;
-  min-width: 240px;
+
+input {
+    color: white;
 }
-.chrome_menu_bar{
-  opacity: 0.5;
+
+.searcharea nav {
+    text-align: center;
 }
-    </style>
+
+.t_search {
+    display: none;
+}
+
+.searcharea {
+    padding: 0.9rem;
+    
+    background: rgba(211,211,211, 0.4);
+    border-radius: 0.3rem;
+    padding: 1rem;
+}
+
+  .searcharea div {
+      opacity: 1 !important;
+      text-align: center;
+  }
+  .row{
+    margin-top: 0.6rem;
+  }
+  body{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+</style>
+
 </head>
 <body>
   <div id="wrapper">
@@ -447,48 +552,50 @@ background-color:rgba(0,0,0,0.3);
 
       </div>
     </div>
-    <div id="loading" style="z-index: 9999;">loading</div>
     
     <!--▶ ▶ ▶ chrome_menu_bar ▶ ▶ ▶ -->
     <div class="chrome_menu_bar container">
-      <div class="row">
-        <div class="col-md-12 chrome_menu_btn">
-          <button class="navbar-toggler"  >
-            <i class="fas fa-suitcase"></i>
-          </button>
-          <button class="navbar-toggler"  >
-            <i class="fas fa-download"></i>
-          </button>
-          <button class="navbar-toggler" >
-            <i class="fas fa-list"></i>
-          </button>
-          <button class="navbar-toggler"  >
-            <i class="fas fa-th-large"></i>
-          </button>
+      <div class="searcharea">
+        <div class="row">
+          <div class="col-md-12 chrome_menu_btn">
+            <button class="navbar-toggler"  >
+              <i class="fas fa-suitcase"></i>
+            </button>
+            <button class="navbar-toggler"  >
+              <i class="fas fa-download"></i>
+            </button>
+            <button class="navbar-toggler" >
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="navbar-toggler"  >
+              <i class="fas fa-th-large"></i>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active show" href="#">Google</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link  show" href="#">Baidu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link  show" href="#">naver</a>
-            </li>
-          </ul>
+      
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active show" href="#">Google</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link  show" href="#">Baidu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link  show" href="#">naver</a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
 
-      <div class="row searcharea">
-        <div class="col-md-12">
-          <input class="au-input au-input--xl" type="text" name="search" id="s_search" placeholder="Search for ...." autofocus >
-          <button class="au-btn au-btn--small" type="button" id="t_search">
-            Search
-          </button>
+        <div class="row">
+          <div class="col-md-12">
+            <input class="au-input au-input--xl intro_input" type="text" name="search" id="s_search" placeholder="Search for ...." autofocus >
+            <button class="au-btn au-btn--small t_search" type="button" id="t_search">
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -506,13 +613,15 @@ background-color:rgba(0,0,0,0.3);
           <div class="row">
             <div class="col-md-12">
               
-              <div class="row searcharea">
-                <div class="col-md-12" id="todolistInputform">
-                  <textarea name="s_storage"  id="s_storage"  cols="40" class="au-input au-input--xl" rows="5"></textarea>
-                  <button class="au-btn au-btn--small" type="button" id="s_storagebtn">save</button>
-                  <!-- <button class="au-btn au-btn--small" type="button" id="g_storagebtn" >getData</button> -->
+              <div class="searcharea" id="todolistInputform" >
+                <div class="row">
+                  <div class="col-md-12" >
+                    <textarea name="s_storage"  id="s_storage"  cols="40" class="au-input au-input--xl intro_input " rows="5"></textarea>
+                    <button class="au-btn au-btn--small" type="button" id="s_storagebtn">save</button>
+                    <!-- <button class="au-btn au-btn--small" type="button" id="g_storagebtn" >getData</button> -->
+                  </div>
                 </div>
-              </div>
+              </div>  
             </div>
 
           </div>

@@ -1,5 +1,16 @@
 // https://agnostic.github.io/LocalDB.js/
 // https://pouchdb.com/download.html
+
+
+
+//■ ■ ■ ■------------------------------------■ ■ ■ ■
+// 学生信息管理系统模板
+// http://www.mycodes.net/189/7304.htm
+// ManagementSystem
+// https://github.com/WAng91An/ManagementSystem
+//■ ■ ■ ■------------------------------------■ ■ ■ ■
+
+
 //var books = new LDB.Collection('books');
 // var item = {
 //     author: 'Author name123',
@@ -40,34 +51,4 @@
 
 //   books.find(function(results){
 //     console.log(results);
-//   });
-//import PouchDB from '../js/pouchdb-7.0.0.js';
-var db = new PouchDB('dbname');
-db.put({
-    _id: 'mydoc',
-    title: 'Heroes'
-  }).then(function (response) {
-    // handle response
-  }).catch(function (err) {
-    console.log(err);
-  });
-
-  db.get('mydoc').then(function(doc) {
-    return db.put({
-      _id: 'mydoc',
-      _rev: doc._rev,
-      title: "Let's Dance"
-    });
-  }).then(function(response) {
-    // handle response
-  }).catch(function (err) {
-    console.log(err);
-  });
-
-//   db.post({
-//     title: 'Ziggy Stardust'
-//   }).then(function (response) {
-//     // handle response
-//   }).catch(function (err) {
-//     console.log(err);
 //   });

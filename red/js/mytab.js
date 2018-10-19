@@ -40,14 +40,15 @@ MYTAP.prototype.my_backgoundImage = function(  ){
 }
 MYTAP.prototype.my_backgroundImageRandom = function( xml  ){
     var imagePath = ''
+    var imageDomainPath = "https://d3cbihxaqsuq0s.cloudfront.net/";
     //var cookiebackgroundImage = getCookie("");
     var cookiebackgroundImage = C_COOKIE.getCookie("backgroundImage")
-    console.log(cookiebackgroundImage);
+    console.log("image path : " +  imageDomainPath +  cookiebackgroundImage);
     if (cookiebackgroundImage != "") {
         imagePath = cookiebackgroundImage;
     }else{
         //document.cookie = "backgroundImage=" + imagePath + ";expires=Thu, 18 Dec 2020 12:00:00 UTC";
-        var imageDomainPath = "https://d3cbihxaqsuq0s.cloudfront.net/";
+        
         var backImageItemjson = xmlToJson(xml);
     
         var $Content = backImageItemjson.ListBucketResult.Contents;

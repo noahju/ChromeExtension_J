@@ -1,7 +1,7 @@
 $(document).ready(function () {
     
 
-    if (getCookie("backgroundImage") == "true") {
+    if (C_COOKIE.getCookie("backgroundImage") == "true") {
         $('#toggle-two').prop('checked', true);
 
     }
@@ -15,10 +15,6 @@ $(document).ready(function () {
     $("#newPage").click(function () {
         ///chrome.browserAction.setPopup({popup: "new.html"});
         window.location.href = "new.html";
-    });
-
-    $(".about").click(function () {
-        GetNYpd()
     });
 
     function showWeather(wi) {
@@ -122,10 +118,21 @@ $(document).ready(function () {
     $("#btnAddNavi").click(function () {
         var nav_name = $("#nav_name").val();
         var nav_url = $("#nav_url").val();
-
-        NAVI_OBJ.SetNaviItem(nav_name, nav_url);
-        NAVI_OBJ.GetNaviList();
-
+        if(nav_name == '' || nav_url == '' ){
+            alert('return ');
+            return ;
+        }
+        var navigationData = {
+            title : nav_name, 
+            url : nav_url , 
+            regdate : countDownDateForOffWork,
+            uptdate : countDownDateForOffWork,
+            auth : 'noah' 
+        }
+        var pouchdb = new POUCHBD_DAC('1');
+        pouchdb.INSERT_DATA(navigationData);
+        // NAVI_OBJ.SetNaviItem(nav_name, nav_url);
+        // NAVI_OBJ.GetNaviList();
     });
 
     $(".chrome_menu_btn button").click(function(e){
@@ -149,24 +156,34 @@ $(document).ready(function () {
                 break;
         }
     })
-
-
-
-
-
 });
 
 window.onload = function () {
 
     var mytap = new MYTAP();
-
+    
     $("#main-page-refresh").click(function(){
         mytap.my_refreshBackgroundImage();
     });
-    var movie = new MOVIE();
+
+    // ■ ■ ■----------------------
+    // Get Movie
+    // ■ ■ ■----------------------
+    //var movie = new MOVIE();
+    // ■ ■ ■----------------------
+
+
+    // ■ ■ ■----------------------
     //Get Storage Data
+    // ■ ■ ■----------------------
     ChromeStorageObj.getStorage();
    
+    // ■ ■ ■----------------------
+    //Get navi Data
+    // ■ ■ ■----------------------
+    var pouchdb = new POUCHBD_DAC('1');
+    pouchdb.GETALLDOC();
+
 
     $(".sidebar-nav").css('top', $("#mainNav").height() + "px");
     
@@ -251,16 +268,12 @@ window.onload = function () {
         openUrlCurrentTab('localhost:8080');
     });
 
-
-    NAVI_OBJ.GetNaviList();
-    GetNewsData();
-    GetNYpd();
+    //취소 처리 chrome storage to pouch db ( locastorage db )
+    //NAVI_OBJ.GetNaviList();
+    
     //set auto focus to search Input 
     setFocus()
     
-
-
-
 }
 
 Date.locale = {
@@ -400,101 +413,6 @@ var ChromeStorageObj = {
     }
 }
 
-
-
-
-
-//----------------------------------------------------------------------------
-// Excuse chrome.storage.sync data  start  End 
-//----------------------------------------------------------------------------
-
-
-
-///------------------------------------------------------
-/// get  background Image start 
-///---------------------------------------------------
-
-
-
-// function loadDoc() {
-//     var req = new XMLHttpRequest();
-//     //req.responseType = 'json';
-//     req.onreadystatechange = function () {
-//         if (this.readyState == 4 && this.status == 200) {
-//             ChangeBackImage(this.responseXML);
-//         }
-//     };
-//     req.open("GET", GetImageXmlUrl, true);
-//     req.send();
-// }
-
-// function ChangeBackImage(xml) {
-//     var backImageItemjson = xmlToJson(xml);
-
-//     var $Content = backImageItemjson.ListBucketResult.Contents;
-//     //Radndom Get one object 
-//     var ContentIndex = Math.floor(Math.random() * $Content.length) + 1
-//     var imagePath = GetImageXmlUrl + $Content[ContentIndex].Key['#text'];
-
-//     var cookiebackgroundImage = getCookie("backgroundImage");
-
-//     if (cookiebackgroundImage == "true") {
-//         imagePath = './img/53679405_xl.jpg'
-//     }
-//     //For test
-//     //imagePath = 'https://d3cbihxaqsuq0s.cloudfront.net/images/48244404_xl.jpg'
-//     //document.getElementById('mainContent').style.backgroundImage = "url('" + imagePath + "')";
-//     document.getElementById('masthead').style.backgroundImage = "url('" + imagePath + "')";
-// }
-
-
-
-
-
-// function xmlToJson(xml) {
-//     // Create the return object
-//     var obj = {};
-//     if (xml.nodeType == 1) { // element
-//         // do attributes
-//         if (xml.attributes.length > 0) {
-//             obj["@attributes"] = {};
-//             for (var j = 0; j < xml.attributes.length; j++) {
-//                 var attribute = xml.attributes.item(j);
-//                 obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-//             }
-//         }
-//     } else if (xml.nodeType == 3) { // text
-//         obj = xml.nodeValue;
-//     }
-
-//     // do children
-//     if (xml.hasChildNodes()) {
-//         for (var i = 0; i < xml.childNodes.length; i++) {
-//             var item = xml.childNodes.item(i);
-//             var nodeName = item.nodeName;
-//             if (typeof (obj[nodeName]) == "undefined") {
-//                 obj[nodeName] = xmlToJson(item);
-//             } else {
-//                 if (typeof (obj[nodeName].push) == "undefined") {
-//                     var old = obj[nodeName];
-//                     obj[nodeName] = [];
-//                     obj[nodeName].push(old);
-//                 }
-//                 obj[nodeName].push(xmlToJson(item));
-//             }
-//         }
-//     }
-//     return obj;
-// };
-
-///------------------------------------------------------
-/// get  background Image End  
-///---------------------------------------------------
-
-
-
-
-
 ///---------------------------------------------------
 /// Set timer  start 
 ///---------------------------------------------------
@@ -570,46 +488,16 @@ function renderingNews(newsObj) {
     })
 }
 
-function GetNewsData() {
-    var n_obj = ''
-    var Url = "https://api.washingtonpost.com/rainbow-tv/brights/";
-    $.ajax({
-        url: Url,
-        dataType: "json",
-        success: function (res) {
-            n_obj = res.brights
-        },
-        complete: function () {
 
-            ///var entry = n_obj[Math.floor(Math.random()*n_obj.length)];
-            renderingNews(n_obj);
-        }
-    });
-}
-
-function GetNYpd() {
-    // Built by LucyBot. www.lucybot.com
-    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-    url += '?' + $.param({
-        'api-key': "7778a6357a37473a84802d825dae0d3e"
-    });
-    $.ajax({
-        url: url,
-        method: 'GET',
-    }).done(function (result) {
-        //console.log(JSON.stringify( result.response.docs))
-    }).fail(function (err) {
-        throw err;
-    });
-}
 
 
 ///---------------------------------------------------
 /// Set News  End 
 ///---------------------------------------------------
 
-
-
+///---------------------------------------------------
+/// Get Cookie 
+///---------------------------------------------------
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -627,8 +515,9 @@ function getCookie(cname) {
 }
 
 
-
-
+///---------------------------------------------------
+//Get data from clien webSite 
+///---------------------------------------------------
 function GetHtmlforClien(){
     var clienUrl = "https://www.clien.net/service/search?q=%EC%9E%90%EC%A0%84%EA%B1%B0";
     var clienmarkup = ''
@@ -647,21 +536,9 @@ function ReadClien(clien_html){
     console.log( clien_html.find('.search_list').text());
 }
 
-
-chrome.bookmarks.getTree(function(itemTree){
-    
-    var chromebookmarkTree = ((itemTree.filter(i =>i.children.length > 0 )));
-    var bookmarktemp = chromebookmarkTree[0].children[0];
-    console.log(bookmarktemp)    
-
-    //var temp =  (chromebookmarkTree[0]).filter(bookmarksbar => bookmarksbar.id=="1");
-    processNode(bookmarktemp);
-    return;
-    itemTree.forEach(function(item){
-        processNode(item.filter(i=>i.id == "1"));
-    });
-});
-
+///---------------------------------------------------
+// logging  json object 
+///---------------------------------------------------
 function processNode(node) {
     // recursively process child nodes
     if(node.children) {
@@ -675,8 +552,9 @@ function processNode(node) {
     }
 }
 
-
-
+///---------------------------------------------------
+/// cookie object 
+///---------------------------------------------------
 var C_COOKIE = {
     setCookie : function (cname, cvalue, exdays) {
         // var d = new Date();
@@ -686,12 +564,11 @@ var C_COOKIE = {
         // date.setTime(date.getTime() + (60 * 1000));
 
         var date = new Date();
-        date.setTime(date.getTime() + (10 * 1000));
+        date.setTime(date.getTime() + (300 * 1000));
 
         var expires = "expires="+ date.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-    ,
+    },
     getCookie:  function (cname) {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -706,25 +583,69 @@ var C_COOKIE = {
             }
         }
         return "";
-    }
-    ,
+    },
     deleteCookie:  function ( name ) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       }
 }
 
 
+
+///---------------------------------------------------
+/// Get news OBJECT 
+///---------------------------------------------------
+var NEWS_DATA = {
+    ///---------------------------------------------------
+    /// Get news washingtonpost
+    ///---------------------------------------------------
+    GetNewsData : function () {
+        var n_obj = ''
+        var Url = "https://api.washingtonpost.com/rainbow-tv/brights/";
+        $.ajax({
+            url: Url,
+            dataType: "json",
+            success: function (res) {
+                n_obj = res.brights
+            },
+            complete: function () {
+                ///var entry = n_obj[Math.floor(Math.random()*n_obj.length)];
+                renderingNews(n_obj);
+            }
+        });
+    },
+    ///---------------------------------------------------
+    /// Get newyork times news 
+    ///---------------------------------------------------
+    GetNYpd :  function () {
+        // Built by LucyBot. www.lucybot.com
+        var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+        url += '?' + $.param({
+            'api-key': "7778a6357a37473a84802d825dae0d3e"
+        });
+        $.ajax({
+            url: url,
+            method: 'GET',
+        }).done(function (result) {
+            //console.log(JSON.stringify( result.response.docs))
+        }).fail(function (err) {
+            throw err;
+        });
+    }
+}
+
+
+///---------------------------------------------------
+/// document loading status  test 
+///---------------------------------------------------
 document.onreadystatechange = function () {
     // if(document.readyState == "complete") {
     //     //alert("OK!");
     //     //$("#loading").empty();
-        
     // }
-
     switch (document.readyState) {
         case "loading":
           // The document is still loading.
-            console.log("loading");
+            //console.log("loading");
             break;
         case "interactive":
           // The document has finished loading. We can now access the DOM elements.
@@ -732,16 +653,17 @@ document.onreadystatechange = function () {
         //   var span = document.createElement("span");
         //   span.textContent = "A <span> element.";
         //   document.body.appendChild(span);
-            console.log("interactive");
+            //console.log("interactive");
             break;
         case "complete":
           // The page is fully loaded.
-            console.log("conplete");
+            //console.log("conplete");
             //console.log("The first CSS rule is: " + document.styleSheets[0].cssRules[0].cssText);
             break;
       }
-
 }
 function setFocus(){
     $("#s_search").focus();
 }
+
+//https://goo.gl/7mznDM
