@@ -209,13 +209,11 @@ window.onload = function () {
     NAVI_OBJ.GetNaviList();
     GetNewsData();
     GetNYpd();
-
-
-
-
-
-
-
+    
+    $(document).on("click" , "#vuejstestbtn" , function(){
+        alert(1)
+        //openUrlCurrentTab('./index.html');
+    });
 }
 
 Date.locale = {
@@ -603,13 +601,13 @@ function ReadClien(clien_html){
 
 
 chrome.bookmarks.getTree(function(itemTree){
-    console.log("itemTree");
-    console.log(itemTree);
-    var chromebookmarkTree = ((itemTree.filter(i =>i.children.length > 0 )));
-    console.log(chromebookmarkTree);
-    var temp =  chromebookmarkTree.filter(bookmarksbar => bookmarksbar.id=="1");
-    console.log(temp);
     
+    var chromebookmarkTree = ((itemTree.filter(i =>i.children.length > 0 )));
+    var bookmarktemp = chromebookmarkTree[0].children[0];
+    console.log(bookmarktemp)    
+
+    //var temp =  (chromebookmarkTree[0]).filter(bookmarksbar => bookmarksbar.id=="1");
+    processNode(bookmarktemp);
     return;
     itemTree.forEach(function(item){
         processNode(item.filter(i=>i.id == "1"));
@@ -623,9 +621,10 @@ function processNode(node) {
             processNode(child);
         });
     }
-
     // print leaf nodes URLs to console
-    if(node.url) { console.log(node); }
+    if(node.url) { 
+        //console.log("nodeid : " + node.id   + " / " + node.parentId + " / " + node.title  + "/" + node.url); 
+    }
 }
 
 
@@ -670,21 +669,21 @@ document.onreadystatechange = function () {
     switch (document.readyState) {
         case "loading":
           // The document is still loading.
-          $("#loading").text("<br>loading");
-          break;
+            console.log("loading");
+            break;
         case "interactive":
           // The document has finished loading. We can now access the DOM elements.
           // But sub-resources such as images, stylesheets and frames are still loading.
         //   var span = document.createElement("span");
         //   span.textContent = "A <span> element.";
         //   document.body.appendChild(span);
-            $("#loading").text("<br>interactive");
-          break;
+            console.log("interactive");
+            break;
         case "complete":
           // The page is fully loaded.
-          $("#loading").text("<br>done");
-          console.log("The first CSS rule is: " + document.styleSheets[0].cssRules[0].cssText);
-          break;
+            console.log("conplete");
+            //console.log("The first CSS rule is: " + document.styleSheets[0].cssRules[0].cssText);
+            break;
       }
 
 }

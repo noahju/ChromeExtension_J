@@ -163,6 +163,7 @@ var getHTML = function(url , callback){
     img.onload = function() {
         $('body').css({
             'background-image': 'url(\'' + this.src + '\')'
+            ,'background-size': 'cover'
         }).removeClass('loading');
     };
 
