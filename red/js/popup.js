@@ -138,6 +138,8 @@ window.onload = function () {
         mytap.my_refreshBackgroundImage();
     });
 
+    var movie = new MOVIE();
+    
    
 
     $(".sidebar-nav").css('top', $("#mainNav").height() + "px");
