@@ -164,6 +164,7 @@ var getHTML = function(url , callback){
         $('body').css({
             'background-image': 'url(\'' + this.src + '\')'
             ,'background-size': 'cover'
+            ,'background-repeat': 'no-repeat'
         }).removeClass('loading');
     };
 

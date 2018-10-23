@@ -213,8 +213,8 @@ window.onload = function () {
     GetNYpd();
     
     $(document).on("click" , "#vuejstestbtn" , function(){
-        alert(1)
-        //openUrlCurrentTab('./index.html');
+        //alert(1)
+        openUrlCurrentTab('localhost:8080');
     });
 }
 
