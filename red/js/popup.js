@@ -128,6 +128,32 @@ $(document).ready(function () {
 
     });
 
+    $(".chrome_menu_btn button").click(function(e){
+        console.log($(this).index());
+        switch ($(this).index()){
+            case 0 : 
+                openUrlCurrentTab('chrome://extensions/');
+                break;
+            case 1 :
+                openUrlCurrentTab('chrome://downloads');
+                break;
+            case 2 : 
+                openUrlCurrentTab('chrome://history');
+                break;
+            case 3 :
+                openUrlCurrentTab('chrome://settings');
+                break;
+            default:
+                openUrlCurrentTab('chrome://settings');
+                break;
+                break;
+        }
+    })
+
+
+
+
+
 });
 
 window.onload = function () {
@@ -137,26 +163,36 @@ window.onload = function () {
     $("#main-page-refresh").click(function(){
         mytap.my_refreshBackgroundImage();
     });
-
     var movie = new MOVIE();
-    
+    //Get Storage Data
+    ChromeStorageObj.getStorage();
    
 
     $(".sidebar-nav").css('top', $("#mainNav").height() + "px");
-
+    
+    // update status to True 
     $(document).on('click', '#todoTemplate .au-checkbox input[type=checkbox]', function (e) {
         //console.log( $(this) );
         var valuetest = $(this).val();
-        console.log(valuetest);
+        console.log("valuetest : " + valuetest);
 
         todo_obj = JSON.parse($("#hid_todo").val());
         var testobj = ChromeStorageObj.getObjects(todo_obj, "todoId", valuetest);
-        console.log(testobj);
+        
+
+        var uptobj = JSON.parse( $("#hid_todo").val());
+        console.log(uptobj);
+        var i = uptobj.length;
+        while (i--) {
+            if (valuetest.indexOf(uptobj[i].todoId) != -1) {
+                uptobj[i].status = !testobj[0].status
+            }
+        }
+        ChromeStorageObj.saveItem(uptobj);
+        ChromeStorageObj.getStorage();
     });
-    ChromeStorageObj.getStorage();
 
-
-
+    // 
     $(document).on("click", "#todoTemplate button", function (e) {
         var valuetest = $(this).val();
         todo_obj = JSON.parse($("#hid_todo").val());
@@ -208,14 +244,23 @@ window.onload = function () {
         ChromeStorageObj.saveItem(uptobj);
         $("#exampleModal").modal('hide');
     });
-    NAVI_OBJ.GetNaviList();
-    GetNewsData();
-    GetNYpd();
     
+    //test for vue 
     $(document).on("click" , "#vuejstestbtn" , function(){
         //alert(1)
         openUrlCurrentTab('localhost:8080');
     });
+
+
+    NAVI_OBJ.GetNaviList();
+    GetNewsData();
+    GetNYpd();
+    //set auto focus to search Input 
+    setFocus()
+    
+
+
+
 }
 
 Date.locale = {
@@ -251,6 +296,7 @@ var ChromeStorageObj = {
             "todoId": todoId,
             "todoitem": add_message,
             "regdate": dataStr,
+            "uptdate" : dataStr,
             "status": false
         }
         todo_obj.push(todoitem);
@@ -633,9 +679,16 @@ function processNode(node) {
 
 var C_COOKIE = {
     setCookie : function (cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
+        // var d = new Date();
+        // d.setTime(d.getTime() + (exdays*24*60*60*1000));
+
+        // var date = new Date();
+        // date.setTime(date.getTime() + (60 * 1000));
+
+        var date = new Date();
+        date.setTime(date.getTime() + (10 * 1000));
+
+        var expires = "expires="+ date.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
     ,
@@ -688,4 +741,7 @@ document.onreadystatechange = function () {
             break;
       }
 
+}
+function setFocus(){
+    $("#s_search").focus();
 }

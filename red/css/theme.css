@@ -309,7 +309,7 @@ section {
 .main-content {
     padding-top: 0px;
     min-height: 56px;
-    background: white;
+    /* background: white; */
 }
 
 @media (max-width: 991px) {
