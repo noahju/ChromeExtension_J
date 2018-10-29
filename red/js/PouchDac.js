@@ -164,3 +164,22 @@ POUCHBD_DAC.prototype.FINDITEM = async function(_title){
 
 
 
+//test 
+POUCHBD_DAC.prototype.GETALLDATA_BACKUP =  async function (){
+    var retobj = ''
+    try {
+        var result = await db.allDocs({
+            include_docs: true,
+            attachments: true
+        });
+        
+        var _naviobjtemp  = result.rows;
+        retobj = _naviobjtemp;
+        
+    } catch (err) {
+        console.log(err);
+    }
+    this.CLOSEDB();
+    return retobj;
+}
+

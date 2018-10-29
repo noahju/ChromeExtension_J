@@ -414,7 +414,7 @@ input {
 
 .searcharea {
     padding: 0.9rem;
-    background: rgba(211,211,211, 0.4);
+    background: rgba(0,0,0, 0.4);
     border-radius: 0.3rem;
     padding: 1rem;
 }
@@ -481,13 +481,18 @@ body {
     font-size: 36px;
     margin-left: 50px;
     color: white;
+    z-index:1000;
 }
 
 .editExtensionMeno .editdivlist {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 15px;
     color: #818181;
     display: block;
     transition: 0.3s;
+}
+.editExtensionMenoArea{
+   padding-top:59px;
+   position:relative;
 }

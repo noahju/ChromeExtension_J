@@ -258,14 +258,20 @@ window.onload = function () {
         $("#alert-warn").toggle("show");
         setTimeout(() => {
             $("#alert-warn").toggle("show");
-    }, 1000);
-});
-//취소 처리 chrome storage to pouch db ( locastorage db )
-//NAVI_OBJ.GetNaviList();
+        }, 1000);
+    });
+    //취소 처리 chrome storage to pouch db ( locastorage db )
+    //NAVI_OBJ.GetNaviList();
+        
+    //set auto focus to search Input 
+    setFocus();
     
-//set auto focus to search Input 
-setFocus()
-    
+    $(document).on("click" ,"#create" , async function(){
+        
+        var pouchdb = new POUCHBD_DAC('1');
+        var jsbackup = await pouchdb.GETALLDATA_BACKUP();
+        
+    });
 
 }
 
@@ -275,6 +281,9 @@ Date.locale = {
         month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     }
 }
+
+
+
 
 //----------------------------------------------------------------------------
 // Excuse chrome.storage.sync data  start 
