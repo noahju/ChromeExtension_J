@@ -3,39 +3,39 @@
 var db = new PouchDB('NAVIGATIONLIST');
 var POUCHBD_DAC = function(dbstring){
   
-  switch(dbstring) {
-      case '1':
-        db = new PouchDB('NAVIGATIONLIST');
-          break;
-      case '2':
-        db = new PouchDB('tricycleTodoList');
-          break;
-      case '3':
-        db = new PouchDB('personalmemo');
-        break;          
-      default:
-        db = new PouchDB('NAVIGATIONLIST');
-  }
+    switch(dbstring) {
+        case '1':
+            db = new PouchDB('NAVIGATIONLIST');
+            break;
+        case '2':
+            db = new PouchDB('tricycleTodoList');
+            break;
+        case '3':
+            db = new PouchDB('personalmemo');
+            break;          
+        default:
+            db = new PouchDB('NAVIGATIONLIST');
+    }
 }
 ///--------------------------------
 /// insert data and auto- generate _id 
 ///--------------------------------
 POUCHBD_DAC.prototype.INSERT_DATA = async function(navigationData){    
     try {
-      var response = await db.post({
-        n_title: navigationData.title,
-        n_url : navigationData.url,
-        n_regdate : navigationData.regdate,
-        n_status : true,
-        n_uptdate : navigationData.uptdate,
-        n_auth : navigationData.auth
-      }).then(function(res){
-        console.log(res);
-      });
-      this.GETALLDOC();
+        var response = await db.post({
+            n_title: navigationData.title,
+            n_url : navigationData.url,
+            n_regdate : navigationData.regdate,
+            n_status : true,
+            n_uptdate : navigationData.uptdate,
+            n_auth : navigationData.auth
+        }).then(function(res){
+            console.log(res);
+        });
+        this.GETALLDOC();
 
     } catch (err) {
-      console.log(err);
+        console.log(err);
     }
 }
 
@@ -45,10 +45,10 @@ POUCHBD_DAC.prototype.INSERT_DATA = async function(navigationData){
 POUCHBD_DAC.prototype.GETDATABYID = function(s_id){
     db.get(s_id).then(function (doc) {
         console.log(doc);
-      }).catch(function (err) {
+    }).catch(function (err) {
         console.log(err);
-      });
-      this.CLOSEDB();
+    });
+    this.CLOSEDB();
 }
 
 ///--------------------------------
@@ -57,35 +57,35 @@ POUCHBD_DAC.prototype.GETDATABYID = function(s_id){
 POUCHBD_DAC.prototype.REMOVEDATA_1 = function(d_id){
     db.get(d_id).then(function(doc) {
         return db.remove(doc);
-        }).then(function (result) {
-            console.log(result);
-        }).catch(function (err) {
-            console.log(err);
-        });    
-        this.CLOSEDB();
+    }).then(function (result) {
+        console.log(result);
+    }).catch(function (err) {
+        console.log(err);
+    });    
+    this.CLOSEDB();
 }
 
 POUCHBD_DAC.prototype.REMOVEDATA_2 = function(d_id){
     db.get(d_id).then(function(doc) {
         return db.remove(doc._id, doc._rev);
-        }).then(function (result) {
-            console.log(result);
-        }).catch(function (err) {
-            console.log(err);
-        });
+    }).then(function (result) {
+        console.log(result);
+    }).catch(function (err) {
+        console.log(err);
+    });
     this.CLOSEDB();
 }
 
 POUCHBD_DAC.prototype.REMOVEDATA_3 = function(d_id){
-db.get(d_id).then(function(doc) {
-    doc._deleted = true;
-    return db.put(doc);
-  }).then(function (result) {
-    // handle result
-  }).catch(function (err) {
-    console.log(err);
-  });
-  this.CLOSEDB();
+    db.get(d_id).then(function(doc) {
+        doc._deleted = true;
+        return db.put(doc);
+    }).then(function (result) {
+        // handle result
+    }).catch(function (err) {
+        console.log(err);
+    });
+    this.CLOSEDB();
 }
 
 
@@ -99,10 +99,10 @@ POUCHBD_DAC.prototype.PUTLISTDATA_1 =  async function (){
           {title : 'Lisa Says', _id: 'doc1'},
           {title : 'Space Oddity', _id: 'doc2'}
         ]);
-      } catch (err) {
+    } catch (err) {
         console.log(err);
-      }
-      this.CLOSEDB();
+    }
+    this.CLOSEDB();
 }
 
 ///--------------------------------
@@ -111,8 +111,8 @@ POUCHBD_DAC.prototype.PUTLISTDATA_1 =  async function (){
 POUCHBD_DAC.prototype.GETALLDOC =  async function (){
     try {
         var result = await db.allDocs({
-          include_docs: true,
-          attachments: true
+            include_docs: true,
+            attachments: true
         });
         
         var _naviobjtemp  = result.rows;
@@ -127,37 +127,37 @@ POUCHBD_DAC.prototype.GETALLDOC =  async function (){
             },
             complete: function(){
                 $.template( "naviTemplate", naviMarkup );
-             // Render the template with the movies data and insert
-             // the rendered HTML under the "movieList" element
-             $("#naviTemplateArea").empty();
-             $.tmpl( "naviTemplate", _naviobjtemp ).appendTo( "#naviTemplateArea" );
+                // Render the template with the movies data and insert
+                // the rendered HTML under the "movieList" element
+                $("#naviTemplateArea").empty();
+                $.tmpl( "naviTemplate", _naviobjtemp ).appendTo( "#naviTemplateArea" );
             }
         })
-      } catch (err) {
+    } catch (err) {
         console.log(err);
-      }
-      this.CLOSEDB();
+    }
+    this.CLOSEDB();
 }
 
 POUCHBD_DAC.prototype.CLOSEDB = function(){
-  db.close().then(function () {
-    console.log('closeed');
-  });
+    db.close().then(function () {
+        console.log('closeed');
+    });
 }
 
 ///--------------------------------
 /// SELECT  DOC 
 ///--------------------------------
 POUCHBD_DAC.prototype.FINDITEM = async function(_title){
-  try {
-    var result = await db.find({
-      selector: {name: 'Mario'},
-      fields: ['_id', 'name'],
-      sort: ['name']
-    });
-  } catch (err) {
-    console.log(err);
-  }
+    try {
+        var result = await db.find({
+            selector: {name: 'Mario'},
+            fields: ['_id', 'name'],
+            sort: ['name']
+        });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 

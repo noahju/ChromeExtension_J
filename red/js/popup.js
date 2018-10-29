@@ -57,73 +57,73 @@ $(document).ready(function () {
     /// ■ ■ ■----------------------
     $("#t_search").click(item => {
         var sUrl = "";
-        var s_text = $("#s_search").val();
+    var s_text = $("#s_search").val();
 
-        var s_site = $("#pills-tab li").find(".active").text();
-        if (s_site == "Google") {
-            sUrl = 'https://www.google.com.tw/search?q=' + s_text;
-        } else if (s_site == "Baidu") {
-            sUrl = 'https://www.baidu.com/s?ie=UTF-8&wd=' + s_text;
-        } else if (s_site == "naver") {
-            sUrl = 'https://search.naver.com/search.naver?query=' + s_text;
-        }
-        openUrlCurrentTab(sUrl);
-    });
-
-
-
-    $("#btnAddNavi").click(function () {
-        var nav_name = $("#nav_name").val();
-        var nav_url = $("#nav_url").val();
-        if(nav_name == '' || nav_url == '' ){
-            alert('return ');
-            return ;
-        }
-        var navigationData = {
-            title : nav_name, 
-            url : nav_url , 
-            regdate : countDownDateForOffWork,
-            uptdate : countDownDateForOffWork,
-            auth : 'noah' 
-        }
-        var pouchdb = new POUCHBD_DAC('1');
-        pouchdb.INSERT_DATA(navigationData);
-        // NAVI_OBJ.SetNaviItem(nav_name, nav_url);
-        // NAVI_OBJ.GetNaviList();
-    });
-
-    $(".chrome_menu_btn button").click(function(e){
-        console.log($(this).index());
-        switch ($(this).index()){
-            case 0 : 
-                openUrlCurrentTab('chrome://extensions/');
-                break;
-            case 1 :
-                openUrlCurrentTab('chrome://downloads');
-                break;
-            case 2 : 
-                openUrlCurrentTab('chrome://history');
-                break;
-            case 3 :
-                openUrlCurrentTab('chrome://settings');
-                break;
-            default:
-                openUrlCurrentTab('chrome://settings');
-                break;
-                break;
-        }
-    })
-
-    // ■ ■ ■----------------------
-    ///set checkbox for backgroundimage 
-    // ■ ■ ■----------------------
-    var holdimagecookie = C_COOKIE.getCookie("HOLD_IMAGE");
-    console.log("holdimagecookie : " + holdimagecookie);
-    if(holdimagecookie != ""){
-        $("#holdImage").attr('checked', true);
-    }else{
-        $("#holdImage").attr('checked', false);
+    var s_site = $("#pills-tab li").find(".active").text();
+    if (s_site == "Google") {
+        sUrl = 'https://www.google.com.tw/search?q=' + s_text;
+    } else if (s_site == "Baidu") {
+        sUrl = 'https://www.baidu.com/s?ie=UTF-8&wd=' + s_text;
+    } else if (s_site == "naver") {
+        sUrl = 'https://search.naver.com/search.naver?query=' + s_text;
     }
+    openUrlCurrentTab(sUrl);
+});
+
+
+
+$("#btnAddNavi").click(function () {
+    var nav_name = $("#nav_name").val();
+    var nav_url = $("#nav_url").val();
+    if(nav_name == '' || nav_url == '' ){
+        alert('return ');
+        return ;
+    }
+    var navigationData = {
+        title : nav_name, 
+        url : nav_url , 
+        regdate : countDownDateForOffWork,
+        uptdate : countDownDateForOffWork,
+        auth : 'noah' 
+    }
+    var pouchdb = new POUCHBD_DAC('1');
+    pouchdb.INSERT_DATA(navigationData);
+    // NAVI_OBJ.SetNaviItem(nav_name, nav_url);
+    // NAVI_OBJ.GetNaviList();
+});
+
+$(".chrome_menu_btn button").click(function(e){
+    console.log($(this).index());
+    switch ($(this).index()){
+        case 0 : 
+            openUrlCurrentTab('chrome://extensions/');
+            break;
+        case 1 :
+            openUrlCurrentTab('chrome://downloads');
+            break;
+        case 2 : 
+            openUrlCurrentTab('chrome://history');
+            break;
+        case 3 :
+            openUrlCurrentTab('chrome://settings');
+            break;
+        default:
+            openUrlCurrentTab('chrome://settings');
+            break;
+            break;
+    }
+})
+
+// ■ ■ ■----------------------
+///set checkbox for backgroundimage 
+// ■ ■ ■----------------------
+var holdimagecookie = C_COOKIE.getCookie("HOLD_IMAGE");
+console.log("holdimagecookie : " + holdimagecookie);
+if(holdimagecookie != ""){
+    $("#holdImage").attr('checked', true);
+}else{
+    $("#holdImage").attr('checked', false);
+}
 
 });
 
@@ -234,8 +234,13 @@ window.onload = function () {
     //test for vue 
     $(document).on("click" , "#vuejstestbtn" , function(){
         //alert(1)
-        openUrlCurrentTab('localhost:8080');
+        //openUrlCurrentTab('localhost:8080');
+        $(".editExtensionMeno").addClass("active_memo");
     });
+    $(document).on("click" , ".editExtensionMeno .closebtn" , function(){
+        $(".editExtensionMeno").removeClass("active_memo");
+    });
+    
 
     // ■ ■ ■----------------------
     //hold background iamge 
@@ -253,13 +258,13 @@ window.onload = function () {
         $("#alert-warn").toggle("show");
         setTimeout(() => {
             $("#alert-warn").toggle("show");
-        }, 1000);
-    });
-    //취소 처리 chrome storage to pouch db ( locastorage db )
-    //NAVI_OBJ.GetNaviList();
+    }, 1000);
+});
+//취소 처리 chrome storage to pouch db ( locastorage db )
+//NAVI_OBJ.GetNaviList();
     
-    //set auto focus to search Input 
-    setFocus()
+//set auto focus to search Input 
+setFocus()
     
 
 }
@@ -514,7 +519,7 @@ function GetHtmlforClien(){
         if (this.readyState == 4 && this.status == 200) {
             clienmarkup = this.responseText
             ReadClien(clienmarkup);
-         }
+        }
     };
     req.open("GET", clienUrl, true);
     req.send();
@@ -569,7 +574,7 @@ var C_COOKIE = {
     },
     deleteCookie:  function ( name ) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-      }
+    }
 }
 
 
@@ -627,23 +632,23 @@ document.onreadystatechange = function () {
     // }
     switch (document.readyState) {
         case "loading":
-          // The document is still loading.
+            // The document is still loading.
             //console.log("loading");
             break;
         case "interactive":
-          // The document has finished loading. We can now access the DOM elements.
-          // But sub-resources such as images, stylesheets and frames are still loading.
-        //   var span = document.createElement("span");
-        //   span.textContent = "A <span> element.";
-        //   document.body.appendChild(span);
+            // The document has finished loading. We can now access the DOM elements.
+            // But sub-resources such as images, stylesheets and frames are still loading.
+            //   var span = document.createElement("span");
+            //   span.textContent = "A <span> element.";
+            //   document.body.appendChild(span);
             //console.log("interactive");
             break;
         case "complete":
-          // The page is fully loaded.
+            // The page is fully loaded.
             //console.log("conplete");
             //console.log("The first CSS rule is: " + document.styleSheets[0].cssRules[0].cssText);
             break;
-      }
+    }
 }
 function setFocus(){
     $("#s_search").focus();

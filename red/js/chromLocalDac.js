@@ -4,6 +4,13 @@
 
 
 //■ ■ ■ ■------------------------------------■ ■ ■ ■
+//css 
+//https://www.w3schools.com/howto/howto_js_snackbar.asp
+//■ ■ ■ ■------------------------------------■ ■ ■ ■
+
+
+
+//■ ■ ■ ■------------------------------------■ ■ ■ ■
 // 学生信息管理系统模板
 // http://www.mycodes.net/189/7304.htm
 // ManagementSystem
@@ -16,7 +23,7 @@
 //     author: 'Author name123',
 //     title: 'Book title test'
 //     };
-    
+
 // books.save(item, function(_item){
 //     console.log('New item:', _item);
 // });
@@ -30,7 +37,7 @@
 //     autor: 'Another author',
 //     title: 'New book'
 //   }];
-  
+
 // books.save(items, function(_items){
 //     console.log('New items:', _items);
 // });
