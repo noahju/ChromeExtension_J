@@ -11,6 +11,12 @@ MYTAP.prototype.my_backgoundImage = function(  ){
 
     var callback = this.my_backgroundImageRandom;
     var imagepath = this.GetImageXmlUrl;
+    var cookieholdimage = C_COOKIE.getCookie("HOLD_IMAGE");
+
+    if(cookieholdimage != ""){
+        loadImage(cookieholdimage);
+        return;
+    }
     if ( !window.XMLHttpRequest ) return;
 
     var xhr = new XMLHttpRequest();

@@ -10,11 +10,13 @@ var POUCHBD_DAC = function(dbstring){
       case '2':
         db = new PouchDB('tricycleTodoList');
           break;
+      case '3':
+        db = new PouchDB('personalmemo');
+        break;          
       default:
         db = new PouchDB('NAVIGATIONLIST');
   }
 }
-
 ///--------------------------------
 /// insert data and auto- generate _id 
 ///--------------------------------

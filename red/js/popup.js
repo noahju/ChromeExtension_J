@@ -1,74 +1,5 @@
 $(document).ready(function () {
-    
-
-    if (C_COOKIE.getCookie("backgroundImage") == "true") {
-        $('#toggle-two').prop('checked', true);
-
-    }
-    $('#toggle-two').change(function () {
-        var toggletwo = $(this).prop('checked');
-        document.cookie = "backgroundImage=" + toggletwo + ";expires=Thu, 18 Dec 2020 12:00:00 UTC";
-
-    })
     //loadDoc();
-
-    $("#newPage").click(function () {
-        ///chrome.browserAction.setPopup({popup: "new.html"});
-        window.location.href = "new.html";
-    });
-
-    function showWeather(wi) {
-        $('#city-weather').text(wi + 'thsi is djalsdjflkasjdflkjasdklfjlasjdfkl').show();
-    };
-
-
-    function getWeather(cityNum) {
-        showWeather(cityNum);
-    };
-
-    $('#weather-get').click(function () {
-        var curCity = $('#city-select').text();
-
-        if (curCity < 1) {
-            console.log("none");
-            return;
-        } else {
-            getWeather(curCity);
-        }
-
-    });
-    $("#g_search").click(item => {
-        var s_text = $("#googleSearch").val();
-        var g_search_url = "https://www.google.com.tw/search?q=" + s_text;
-        openUrlCurrentTab(g_search_url);
-    });
-
-    $("#s_search").on("keypress", function (e) {
-        if (e.keyCode == 13) {
-            $("#t_search").click();
-        }
-    });
-
-    $("#t_search").click(item => {
-        var sUrl = "";
-        var s_text = $("#s_search").val();
-
-        var s_site = $("#pills-tab li").find(".active").text();
-        if (s_site == "Google") {
-            sUrl = 'https://www.google.com.tw/search?q=' + s_text;
-        } else if (s_site == "Baidu") {
-            sUrl = 'https://www.baidu.com/s?ie=UTF-8&wd=' + s_text;
-        } else if (s_site == "naver") {
-            sUrl = 'https://search.naver.com/search.naver?query=' + s_text;
-        }
-        openUrlCurrentTab(sUrl);
-    });
-    $("#redmine_searchbtn").click(item => {
-        var s_text = $("#redmine_search").val();
-        var redmine_searchurl = "http://redmine.tricycle.co.kr/issues/" + s_text;
-        openUrlCurrentTab(redmine_searchurl);
-    })
-
 
     //toggle menu
     $("#menu-toggle").click(function (e) {
@@ -82,13 +13,11 @@ $(document).ready(function () {
         
     });
 
-
-
-    $("#todo_list_date").append(
-        new Date().getDate() + " " +
-        Date.locale.en.month_names[new Date().getMonth()] + " " +
-        new Date().getFullYear()
-    )
+    // $("#todo_list_date").append(
+    //     new Date().getDate() + " " +
+    //     Date.locale.en.month_names[new Date().getMonth()] + " " +
+    //     new Date().getFullYear()
+    // )
 
     //search Event 
     $("#pills-tab li a").click(function () {
@@ -113,6 +42,34 @@ $(document).ready(function () {
     $("#todoListAddBtn").click(function () {
         $("#todolistInputform").toggle("active");
     });
+
+    /// ■ ■ ■----------------------
+    /// serach site 
+    /// ■ ■ ■----------------------
+    $("#s_search").on("keypress", function (e) {
+        if (e.keyCode == 13) {
+            $("#t_search").click();
+        }
+    });
+
+    /// ■ ■ ■----------------------
+    /// serach site button click event 
+    /// ■ ■ ■----------------------
+    $("#t_search").click(item => {
+        var sUrl = "";
+        var s_text = $("#s_search").val();
+
+        var s_site = $("#pills-tab li").find(".active").text();
+        if (s_site == "Google") {
+            sUrl = 'https://www.google.com.tw/search?q=' + s_text;
+        } else if (s_site == "Baidu") {
+            sUrl = 'https://www.baidu.com/s?ie=UTF-8&wd=' + s_text;
+        } else if (s_site == "naver") {
+            sUrl = 'https://search.naver.com/search.naver?query=' + s_text;
+        }
+        openUrlCurrentTab(sUrl);
+    });
+
 
 
     $("#btnAddNavi").click(function () {
@@ -156,6 +113,18 @@ $(document).ready(function () {
                 break;
         }
     })
+
+    // ■ ■ ■----------------------
+    ///set checkbox for backgroundimage 
+    // ■ ■ ■----------------------
+    var holdimagecookie = C_COOKIE.getCookie("HOLD_IMAGE");
+    console.log("holdimagecookie : " + holdimagecookie);
+    if(holdimagecookie != ""){
+        $("#holdImage").attr('checked', true);
+    }else{
+        $("#holdImage").attr('checked', false);
+    }
+
 });
 
 window.onload = function () {
@@ -268,12 +237,31 @@ window.onload = function () {
         openUrlCurrentTab('localhost:8080');
     });
 
+    // ■ ■ ■----------------------
+    //hold background iamge 
+    // ■ ■ ■----------------------
+    $holdImage = $("#holdImage");
+    $(document).on("click" , "#holdImage" , function(){
+        var holdimagecookie = C_COOKIE.getCookie("HOLD_IMAGE");
+        if(holdimagecookie == "" ){
+            var background_image = $("body").css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1');
+            C_COOKIE.setCookie("HOLD_IMAGE" , background_image, 8 );    
+        }else{
+            C_COOKIE.deleteCookie("HOLD_IMAGE");
+        }  
+        $(".alert-msg").text("ublic int ImageBuilder_Manage_Update()!");
+        $("#alert-warn").toggle("show");
+        setTimeout(() => {
+            $("#alert-warn").toggle("show");
+        }, 1000);
+    });
     //취소 처리 chrome storage to pouch db ( locastorage db )
     //NAVI_OBJ.GetNaviList();
     
     //set auto focus to search Input 
     setFocus()
     
+
 }
 
 Date.locale = {
@@ -556,15 +544,10 @@ function processNode(node) {
 /// cookie object 
 ///---------------------------------------------------
 var C_COOKIE = {
-    setCookie : function (cname, cvalue, exdays) {
-        // var d = new Date();
-        // d.setTime(d.getTime() + (exdays*24*60*60*1000));
-
-        // var date = new Date();
-        // date.setTime(date.getTime() + (60 * 1000));
-
+    setCookie : function (cname, cvalue, exHour) {
         var date = new Date();
-        date.setTime(date.getTime() + (300 * 1000));
+        //날짜 * 시간 * 분 *  초 *  1000
+        date.setTime(date.getTime() + (exHour*60*60*1000));
 
         var expires = "expires="+ date.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";

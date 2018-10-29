@@ -469,6 +469,30 @@ input {
     margin: 0 !important;
     padding: 0 !important;
   }
+  #alert-warn {
+    position: fixed;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    z-index: 9999;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    display: none;
+    text-align: center;
+  }
+ #alert-warn:show {
+        opacity: 1;
+        animation: fade 5s ease-in-out;
+        display: block;
+  }
+  @-webkit-keyframes fadeinout {
+    0%,100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes fadeinout {
+    0%,100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
 </style>
 
 </head>
@@ -522,6 +546,9 @@ input {
     </div>
 
     <div class="main-content" id="mainContent">
+      <div id="alert-warn" class="alert-warning alert-top" role="alert">
+          <span class="alert-msg"></span>
+      </div>
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
           <div class="container">
@@ -543,6 +570,7 @@ input {
               <button class="navbar-toggler" id="vuejstestbtn">
                 <i class="fas fa-bars"></i>
               </button>
+              <input type="checkbox" name="holdImage" id="holdImage" value=""  >H<br>
             </div>
           </div>
         </nav>
@@ -793,6 +821,10 @@ input {
     <input type="hidden" value="" id="hid_todo" />
     <input type="hidden" value="" id="hid_nav" />
   </div>
+
+ 
+
+
   <div class="footer_pop2">
       <p class="text-muted">@ Noah </p>
   </div>
