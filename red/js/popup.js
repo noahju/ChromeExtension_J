@@ -112,7 +112,28 @@ $(".chrome_menu_btn button").click(function(e){
             break;
             break;
     }
+
+    var inputElement = $("#uploadbackupfile");
+    inputElement.addEventListener("change", handleFiles, false);
+    function handleFiles() {
+        var fileList = this.files; /* now you can work with the file list */
+        console.log(fileList);
+    }
+
 })
+
+
+$(window).scroll(function() {    
+    var scroll = $(window).scrollTop();
+    
+    if (scroll >= 12) {
+        $("#mainNav").addClass("darkHeader");
+    } else {
+        $("#mainNav").removeClass("darkHeader");
+    }
+});
+
+
 
 // ■ ■ ■----------------------
 ///set checkbox for backgroundimage 
@@ -269,11 +290,65 @@ window.onload = function () {
     $(document).on("click" ,"#create" , async function(){
         
         var pouchdb = new POUCHBD_DAC('1');
-        var jsbackup = await pouchdb.GETALLDATA_BACKUP();
+        var _jsbackup = await pouchdb.GETALLDATA_BACKUP();
         
+        var jsbackup = [];
+        _jsbackup.forEach(item=>{
+             jsbackup.push(item.doc);
+        });
+
+        var link = document.getElementById('downloadlink');
+        link.href = makeTextFile( jsbackup );
+        link.style.display = 'block';
     });
 
+
+
+    $(document).on("click" ,"#uploadbackupbtn" ,function(){
+        $("#uploadbackupfile").toggle();
+        if($("#uploadbackupfile").val() != ""){
+            var readText = readTextFile($("#uploadbackupfile").val());
+            console.log(readText);
+        }
+
+        var pouchdb = new POUCHBD_DAC('1');
+        pouchdb.BACKUP();
+        
+    });
+    
 }
+
+
+
+function makeTextFile(text){
+    var new_objtext =  JSON.stringify(text);
+    var data = new Blob([new_objtext], {type: 'text/plain'});
+
+    var textFile = window.URL.createObjectURL(data);
+    return textFile;
+}
+async function  readTextFile( file )
+{
+    var allText = ""
+    //var file = "file:///D:/sample_lee.json"
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = await function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                allText = rawFile.responseText;
+            }
+        }
+    }
+    rawFile.send(null);
+
+    return allText;
+}
+
+
 
 Date.locale = {
     en: {

@@ -58,7 +58,7 @@
 }
 
 #mainNav {
-    min-height: 56px;
+    min-height: 95px;
     /* background-color: white; */
     opacity: 0.9;
 }
@@ -315,7 +315,7 @@ table {
 
 .nav_btn_div button {
     display: inline-block !important;
-    margin-right: 10px;
+    margin-right: 0.1rem;
     /* background-color: white !important; */
 }
 
@@ -360,12 +360,13 @@ table {
     }
 
 .nav_btn_div {
-    max-width: 240px;
-    min-width: 240px;
+    max-width: 350px;
+    min-width: 350px;
 }
 
 .chrome_menu_bar {
     opacity: 1;
+    padding-top:79px;
 }
 
 .intro_input {
@@ -495,4 +496,19 @@ body {
 .editExtensionMenoArea{
    padding-top:59px;
    position:relative;
+}
+
+.darkHeader{
+    position: fixed;
+    background-color: rgba(0,0,0,0.66) !important;
+    height: 56px;
+    z-index: 9999;
+}
+.backupdownloaddv{
+    position: fixed;
+    height: 59px;   
+    z-index: 9999;
+}
+.backupdownloaddv a{
+    padding-top: 0.3rem;
 }

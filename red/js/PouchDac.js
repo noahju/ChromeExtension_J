@@ -183,3 +183,10 @@ POUCHBD_DAC.prototype.GETALLDATA_BACKUP =  async function (){
     return retobj;
 }
 
+
+POUCHBD_DAC.prototype.BACKUP = async function(){
+    var res  = await db.allDocs({include_docs: true, attachments: true}).then(JSON.stringify);
+
+    console.log(res);
+
+}

@@ -17,6 +17,7 @@
     <script type="text/javascript" src="lib/jquery-min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
+    <script type="text/javascript" src="lib/linq.js"></script>
     <script type="text/javascript" src="js/mytab.js"></script>
     <script type="text/javascript" src="js/background.js"></script>
     <!-- <script type="text/javascript" src="js/Movie.js"></script> -->
@@ -79,10 +80,15 @@
                             <button class="navbar-toggler" id="vuejstestbtn">
                                 <i class="fas fa-bars"></i>
                             </button>
-                            <button id="create" class="btn btn-form btnInsert"><i class="fas fa-download"></i></button>
-                            <a download="sample_lee.json" class="btn btn-form bg-success btndownloadInsert " id="downloadlink" style="display: none">Download</a>
-    
-                            </a>
+                            <button id="create" class="btnInsert navbar-toggler"><i class="fas fa-download"></i></button>
+                            <div class="backupdownloaddv">
+                                <a download="sample_red.json" class="btn btn-form bg-success btndownloadInsert " id="downloadlink" style="display: none">Download</a>
+                            </div>
+                            <button class="navbar-toggler" id="uploadbackupbtn">
+                                <i class="fas fa-ban"></i>
+                            <input type="file" id="uploadbackupfile" value="" onchange="handleFiles(this.files)" style="display: none" />
+                            </button>
+
                         </div>
                     </div>
                 </nav>
