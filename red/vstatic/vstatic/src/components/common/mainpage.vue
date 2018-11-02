@@ -3,6 +3,7 @@
     <div class="circular" v-bind:style="{ backgroundImage: 'url(' + image + ')' }"></div>
       {{ name }}
       <button id="btn" @click="getImage" >test </button>
+
     </div>
 </template>
 <script>
@@ -24,6 +25,10 @@ export default {
       getImage(){
         this.name = 'name changed'
         this.image = 'https://d3cbihxaqsuq0s.cloudfront.net/images/12231334_xl.jpg'
+
+        var pouchdb = new POUCHBD_DAC('1');
+        var _jsbackup = pouchdb.GETALLDATA_BACKUP();
+        console.log(_jsbackup);
       }
 
     }

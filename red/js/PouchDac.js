@@ -1,5 +1,6 @@
 //import PouchDB from '../js/pouchdb-7.0.0.js';
 
+
 var db = new PouchDB('NAVIGATIONLIST');
 var POUCHBD_DAC = function(dbstring){
   
@@ -12,6 +13,9 @@ var POUCHBD_DAC = function(dbstring){
             break;
         case '3':
             db = new PouchDB('personalmemo');
+            break;          
+        case '4':
+            db = new PouchDB('~/db/localtest');
             break;          
         default:
             db = new PouchDB('NAVIGATIONLIST');
@@ -117,6 +121,12 @@ POUCHBD_DAC.prototype.GETALLDOC =  async function (){
         
         var _naviobjtemp  = result.rows;
         console.log(_naviobjtemp);
+
+        _naviobjtemp.forEach(item => {
+            setFromTime( item.doc.n_uptdate);
+        });
+
+
         var naviUrl = chrome.extension.getURL("navi.html");
         var naviMarkup = ''
         $.ajax({
@@ -189,4 +199,22 @@ POUCHBD_DAC.prototype.BACKUP = async function(){
 
     console.log(res);
 
+}
+
+
+function setFromTime(paramDt){
+    
+    let totalSeconds = Date.now() - paramDt
+    let hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = totalSeconds % 60;
+
+    console.log("--------------start---------------------");
+    console.log(paramDt);
+    console.log(Date.now());
+    console.log("hours: " + hours);
+    console.log("minutes: " + minutes);
+    console.log("seconds: " + seconds);
+    console.log("--------------End---------------------");
 }

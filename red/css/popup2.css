@@ -9,7 +9,7 @@
 
 
 .footer_pop2 {
-    position: fixed !important;
+    position: relative !important;
     bottom: 0 !important;
     width: 100% !important;
     text-align: center !important;

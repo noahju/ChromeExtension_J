@@ -82,11 +82,11 @@ $("#btnAddNavi").click(function () {
     var navigationData = {
         title : nav_name, 
         url : nav_url , 
-        regdate : countDownDateForOffWork,
-        uptdate : countDownDateForOffWork,
+        regdate : Date.now(),
+        uptdate : Date.now(),
         auth : 'noah' 
     }
-    var pouchdb = new POUCHBD_DAC('1');
+    var pouchdb = new POUCHBD_DAC('4');
     pouchdb.INSERT_DATA(navigationData);
     // NAVI_OBJ.SetNaviItem(nav_name, nav_url);
     // NAVI_OBJ.GetNaviList();
@@ -171,7 +171,7 @@ window.onload = function () {
     // ■ ■ ■----------------------
     //Get navi Data
     // ■ ■ ■----------------------
-    var pouchdb = new POUCHBD_DAC('1');
+    var pouchdb = new POUCHBD_DAC('4');
     pouchdb.GETALLDOC();
 
 
@@ -289,7 +289,7 @@ window.onload = function () {
     
     $(document).on("click" ,"#create" , async function(){
         
-        var pouchdb = new POUCHBD_DAC('1');
+        var pouchdb = new POUCHBD_DAC('4');
         var _jsbackup = await pouchdb.GETALLDATA_BACKUP();
         
         var jsbackup = [];
@@ -311,7 +311,7 @@ window.onload = function () {
             console.log(readText);
         }
 
-        var pouchdb = new POUCHBD_DAC('1');
+        var pouchdb = new POUCHBD_DAC('4');
         pouchdb.BACKUP();
         
     });

@@ -8,12 +8,6 @@
     </div>
 </template>
 <style>
-    /*@import '../../../css/simple-sidebar.css';*/
-    @import '../../../../../css/theme.css';
-    @import '../../../../../vendor/bootstrap/css/bootstrap.css';
-    @import '../../../../../scss/_navbar.scss';
-    @import '../../../../../vendor/fontawesome-free/css/all.css';
-    @import "../../../static/css/mainpage.css"; 
 </style>
 
 <script>
