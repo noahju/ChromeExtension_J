@@ -110,36 +110,6 @@ function listCookies() {
 
 $(document).ready(
     function(){
-
-        //pasteit();
-      /*  $("#redid").keydown(function(key){
-            if (key.keyCode == 13) {
-                const redmineid = this.value.replace("#" , "");
-                var _url = 'http://redmine.tricycle.co.kr/issues/' + redmineid
-                chrome.tabs.create({ url: _url });
-            }
-        })
-        $("#search").click(function(){
-            const redmineid = $('#redid').val().replace("#" , "");
-            var _url = 'http://redmine.tricycle.co.kr/issues/' + redmineid
-            chrome.tabs.create({ url: _url });
-        });
-        $("#searchgoogle").click(function(){
-            var _url = 'https://www.baidu.com/s?ie=utf-8&wd=' + $('#redid').val()
-           chrome.tabs.create({ url: _url });
-        })
-        $("#searchNamu").click(function(){
-            var _url = 'https://namu.wiki/w/' + $('#redid').val()
-           chrome.tabs.create({ url: _url });
-        })
-
-        var myCookies = listCookies();
-        console.log(myCookies);
-        $("#cookielist").append(myCookies);
-
-
-*/
         
-
     }
 )

@@ -80,11 +80,11 @@ $("#btnAddNavi").click(function () {
         return ;
     }
     var navigationData = {
-        title : nav_name, 
-        url : nav_url , 
-        regdate : Date.now(),
-        uptdate : Date.now(),
-        auth : 'noah' 
+        n_title : nav_name, 
+        n_url : nav_url , 
+        n_regdate : Date.now(),
+        n_uptdate : Date.now(),
+        n_auth : 'noah' 
     }
     var pouchdb = new POUCHBD_DAC('4');
     pouchdb.INSERT_DATA(navigationData);
@@ -139,7 +139,7 @@ $(window).scroll(function() {
 ///set checkbox for backgroundimage 
 // ■ ■ ■----------------------
 var holdimagecookie = C_COOKIE.getCookie("HOLD_IMAGE");
-console.log("holdimagecookie : " + holdimagecookie);
+//console.log("holdimagecookie : " + holdimagecookie);
 if(holdimagecookie != ""){
     $("#holdImage").attr('checked', true);
 }else{
@@ -157,6 +157,15 @@ window.onload = function () {
     });
 
     // ■ ■ ■----------------------
+    // Get_peppermint news letter 
+    // ■ ■ ■----------------------
+    Get_peppermint();
+    
+        
+    
+    
+
+    // ■ ■ ■----------------------
     // Get Movie
     // ■ ■ ■----------------------
     //var movie = new MOVIE();
@@ -172,9 +181,13 @@ window.onload = function () {
     //Get navi Data
     // ■ ■ ■----------------------
     var pouchdb = new POUCHBD_DAC('4');
-    pouchdb.GETALLDOC();
+    var _navobje = pouchdb.GETALLDOC();
 
-
+    naviSetting(_navobje);
+    //pouchdb.FINDITEM("test3");
+    //pouchdb.FINDITEM("test9");
+    
+    
     $(".sidebar-nav").css('top', $("#mainNav").height() + "px");
     
     // update status to True 
@@ -316,6 +329,11 @@ window.onload = function () {
         
     });
     
+    $(document).on("click" , "#uploadResoreBtn" , item=>{
+        var pouchResore = new POUCHBD_DAC("4");
+        pouchResore.RESTORE_DATA();
+        pouchResore.GETALLDOC();
+    });
 }
 
 
@@ -444,7 +462,7 @@ var ChromeStorageObj = {
 
 
         //html template
-        var geturl__ = chrome.extension.getURL("todolist.html");
+        var geturl__ = chrome.extension.getURL("totolist2.html");
         var markup = '';
         // $.get( geturl__ , function( data ) {
         //     //console.log(data);     
@@ -739,3 +757,24 @@ function setFocus(){
 }
 
 //https://goo.gl/7mznDM
+function naviSetting(_naviobjtemp  ){
+    console.log(_naviobjtemp);
+    return;
+    var naviUrl = chrome.extension.getURL("navi.html");
+        var naviMarkup = ''
+        $.ajax({
+            url: naviUrl ,
+            dataType: "html",
+            success: function(res){
+                naviMarkup = res
+            },
+            complete: function(){
+                $.template( "naviTemplate", naviMarkup );
+                // Render the template with the movies data and insert
+                // the rendered HTML under the "movieList" element
+                $("#naviTemplateArea").empty();
+                $.tmpl( "naviTemplate", _naviobjtemp ).appendTo( "#naviTemplateArea" );
+            }
+        })
+}
+
