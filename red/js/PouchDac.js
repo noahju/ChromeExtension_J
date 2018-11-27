@@ -111,7 +111,7 @@ POUCHBD_DAC.prototype.PUTLISTDATA_1 =  async function (item){
     } catch (err) {
         console.log(err);
     }
-    this.CLOSEDB();
+    //this.CLOSEDB();
 }
 
 ///--------------------------------
@@ -125,7 +125,7 @@ POUCHBD_DAC.prototype.GETALLDOC =  async function (){
         });
         
         var _naviobjtemp  = result.rows;
-        console.log(_naviobjtemp);
+       // console.log(_naviobjtemp);
         return _naviobjtemp;
         
     } catch (err) {

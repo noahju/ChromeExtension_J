@@ -1,0 +1,21 @@
+﻿html {
+    /* background: url(images/bg.jpg) no-repeat center center fixed; */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.local_wrap { 
+    position:relative;
+    width:100%; 
+}
+.main_footer {
+    position: relative !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    margin-top: 0.3rem;
+    text-align: center !important;
+    background-color: white;
+    z-index: 9999;
+    font-size: 13
+}

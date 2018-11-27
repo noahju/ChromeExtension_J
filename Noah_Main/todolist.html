@@ -1,0 +1,33 @@
+    <tr>        
+        <td>
+            <label class="au-checkbox">
+                <input type="checkbox" value="${todoId}">
+                <span class="au-checkmark"></span>
+            </label>
+        </td>
+        <td>
+            <div class="table-data__info" style="display: none">
+                <h6>test</h6>
+                <span>
+                    <a href="#">                
+                        ${todoId}
+                    </a>
+                </span>
+            </div>
+        </td>
+        <td>
+            <span>${todoitem}</span>
+        </td>
+        <td>
+            <span>${regdate}</span>
+        </td>
+        <td>
+            ${status}
+        </td>
+        <td>    
+            <button type="button" class="au-btn au-btn--green"   data-toggle="modal" data-target="#exampleModal" value="${todoId}">
+                    X
+            </button> 
+        </td>
+    
+    </tr>

@@ -269,7 +269,8 @@ window.onload = function () {
     $(document).on("click" , "#vuejstestbtn" , function(){
         //alert(1)
         //openUrlCurrentTab('localhost:8080');
-        $(".editExtensionMeno").addClass("active_memo");
+        $(".editExtensionMeno").toggleClass("active_memo");
+        
     });
     $(document).on("click" , ".editExtensionMeno .closebtn" , function(){
         $(".editExtensionMeno").removeClass("active_memo");
@@ -294,7 +295,8 @@ window.onload = function () {
             $("#alert-warn").toggle("show");
         }, 1000);
     });
-    //취소 처리 chrome storage to pouch db ( locastorage db )
+    //취소 처리 chrome storage to pouch db ( locastorage db )Fvuejstestbtn
+
     //NAVI_OBJ.GetNaviList();
         
     //set auto focus to search Input 
@@ -312,7 +314,13 @@ window.onload = function () {
 
         var link = document.getElementById('downloadlink');
         link.href = makeTextFile( jsbackup );
-        link.style.display = 'block';
+        if(link.style.display == "block"){
+            link.style.display = 'none';
+        }else{
+            link.style.display = 'block';
+        }
+        
+        //link.toggel();
     });
 
 
@@ -333,6 +341,10 @@ window.onload = function () {
         var pouchResore = new POUCHBD_DAC("4");
         pouchResore.RESTORE_DATA();
         pouchResore.GETALLDOC();
+    });
+
+    $(document).on("click" , "#peppermintnews" , function(index){
+        console.log(this.find("p").text()) ;
     });
 }
 
@@ -757,7 +769,11 @@ function setFocus(){
 }
 
 //https://goo.gl/7mznDM
-function naviSetting(_naviobjtemp  ){
+async function naviSetting(_naviobjtemp_promiseObj  ){
+    var _naviobjtemp = ''
+    await _naviobjtemp_promiseObj.then(function(res){
+        _naviobjtemp = res;
+    })
     console.log(_naviobjtemp);
     return;
     var naviUrl = chrome.extension.getURL("navi.html");

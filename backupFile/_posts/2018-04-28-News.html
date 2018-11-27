@@ -1,0 +1,193 @@
+---
+layout: page
+title : title
+permalink: /news
+---
+
+{% assign b_title = "{{ bbcitem.title }}"%}
+{% assign b_url = "{{ bbcitem.url }}"%}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.6/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.0/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<div id="rssReader"></div>
+<div id="app">
+  <!-- el 부분 -->
+  {{text}}
+  {{ Get_data }}
+  <!-- data binding은 머스타치 템플릿 구문 사용 -->
+  <!-- 메서드의 changeText를 v-on디렉티브를 이용하여 바인드, @click="changeText"로 축약 가능 -->
+  <!--<button v-on:click="changeText">버튼!</button>-->
+  <div id="content">
+    <ul v-for="bbcitem in bbc">
+      <li>
+        <a v-bind:href="bbcitem.url">
+          <p>{{ b_title }}</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<script>
+  var app = new Vue({
+    el: '#app', // 마운트 할 DOM 엘리먼트
+    data: {
+      text: 'My Text',
+      componentText: 'Hi ??',
+      bbc: [],
+      bbcsample: [{
+          title: '1'
+        },
+        {
+          title: '2'
+        },
+        {
+          title: '3'
+        }
+      ]
+    },methods :{
+      Get_data : function(){
+        axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=89ae5267812741e5a9de2be235656c59').then(function(response) {
+            this.bbc = response.data.article;
+            $.each(this.bbc , function(index , value){
+                console.log(value);
+            });
+            for (bbcitems in this.bbc) {
+              console.log( "bbcitem.title : "  + bbcitem.title);
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    }
+  });
+
+  axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=89ae5267812741e5a9de2be235656c59')
+    .then(function(response) {
+      app.bbc = response.data.article;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+  /*axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=89ae5267812741e5a9de2be235656c59').then(
+         ({data}) => {
+             app.bbc = data.articles;
+             //console.log(this.bbc[0].url);
+         }).catch(
+           function(error){
+             console.log(error);
+           }
+         );
+  */
+</script>
+
+
+
+
+
+<style>
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    txt-decoration: underline;
+  }
+
+  a:hover,
+  a:visited,
+  a:link,
+  a:active {
+    text-decoration: none;
+  }
+
+  img {
+    height: 30%;
+    width: 30%
+  }
+  .content{
+    text-align: :center
+  }
+</style>
+
+
+<script>
+  //function (response) {
+  //    this.bbc = response.data.articles;
+  //    console.log(this.bbc[0].title);
+  //    console.log(this.bbc[0].url);
+  //    this.bbcsample = response.data.articles;
+  //}
+  //methods: {
+  //    changeText: function () {
+  //        axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=89ae5267812741e5a9de2be235656c59').then(
+  //            function (response) {
+  //                this.bbc = response.data.articles;
+  //                console.log(this.bbc[0].title)
+  //            }
+  //        );
+  //    }
+  //}
+  // ,
+  // methods: { // 기능 메서드 그룹
+  //     changeText: function() {
+  //         // this가 app 인스턴스로 사용되기 위해 화살표 함수를 사용하면 안됩니다.
+  //         this.text = 'My Changed Text'
+  //     }
+  // },
+  // computed: {
+  //     // 의존하고 있는 반응형 속성(data 객체)이 변경될 때 마다 다시 초기화 됩니다.
+  //     otherText: function() {
+  //         // 마찬가지로 화살표 함수를 사용하면 안됩니다.
+  //         return this.text + ', yeah!!' // this.text 의존
+  //     }
+  // },
+  // components: { // component 그룹, #app 에서만 사용 가능한 child component
+  //     'test-component': {
+  //         // this.$parent로 부모 인스턴스에 접근 합니다.
+  //         template: '<p><i>{{this.$parent.componentText}}</i></p>'
+  //     }
+  // }
+
+
+
+
+  // $(function() {
+  //   var apikey = '89ae5267812741e5a9de2be235656c59'
+  //       $.ajax({
+  //           type: "get",
+  //           url: "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=89ae5267812741e5a9de2be235656c59",
+  //           dataType: "json",
+  //           success: function(res){
+  //             renderHtml(res.articles);
+  //           },
+  //           error: function(xhr , status){
+  //             $("#rssReader").html(status);
+  //           },
+  //       });
+  //     });
+  ///
+
+  //function renderHtml(articles) {
+  //    $("#postcnt").html("news cnt : " + articles.length);
+
+  //    for (var i = 0; i < articles.length; i++) {
+  //        var ImageHtml = articles[i].urlToImage != null ? '<a href="' + articles[i].urlToImage + '" class="fancybox fancybox.image" rel="group">' + '<img class="centered fancybox fancybox.image"  src="' + articles[i].urlToImage + '"></a>' : '';
+
+  //        $("#rssReader").append(
+  //          '<div style="float:left;"><a href="' + articles[i].url + '">'
+  //          + articles[i].title + '</a></div>'
+  //          + '<div style="float:right;">' + ImageHtml + "</div><br>");
+  //    }
+  //}
+
+  //function getStuff() {
+  //    axios.get('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=89ae5267812741e5a9de2be235656c59').then(function (res) {
+  //        renderHtml(res.articles);
+  //        console.log()
+  //    })
+  //}
+</script>
