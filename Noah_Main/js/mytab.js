@@ -35,8 +35,6 @@ MYTAP.prototype.my_backgoundImage = function () {
             // });
             loadImage(backimagePath);
             //http://jsfiddle.net/gaby/CYFNc/2/
-
-
         }
     }
     // Get the HTML

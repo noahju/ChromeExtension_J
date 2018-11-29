@@ -5,23 +5,228 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link href="css/popup2.css" rel="stylesheet" />
-
     <script type="text/javascript" src="lib/jquery-min.js"></script>
-
     <script type='text/javascript' src='js/mytab.js'></script>
     <script type='text/javascript' src='js/main.js'></script>
+    <style>
+        body{
+            background-color: black;
+            background-size: cover;
+            background-repeat: no-repeat
+        }
+        .headarea{
+            width: 100%;
+            height: 3rem;
+            margin:auto;
+        }
+        .mainarea{
+            margin-top: 1rem;
+            border-bottom: 1px;
+            width: 100%;
+            height: auto;
+            margin-left:auto;
+            margin-right :auto;
+        }
+        .mainclockarea{
+            margin-top: 1rem;
+            /* background-color: bisque;
+            opacity: 0.5; */
+            width: 100%;
+            height: 15rem;
+            margin-left:auto;
+            margin-right :auto;
+        }
+        .digitalclockarea{
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: 14em;
+            color: white;
+            text-align: center;
+            text-shadow: 0 0.01em 1rem black;
+        }
+        .footer{
+            position: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: auto;
+            color: white;
+        }
+        
+        .btn {
+            position: relative;
+            display: inline-block;
+            margin: 0;
+            /* padding: 0.5rem 2.5rem; */
+            background: var(--color-primary-500);
+            color: var(--color-secondary-900);
+            font-family: inherit;
+            font-size: 0.7rem;
+            font-weight: 300;
+            line-height: normal;
+            border: 0;
+            border-radius: 0.4rem;
+            box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.4);
+            appearance: none;
+            cursor: pointer;
+            transition: background 250ms, box-shadow 250ms;
+            
+        }
+        button:hover{
+            background-color: black;
+            color: white;
+        }
+        .btn .text {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .fixedlayer{
+            display: none;
+            position: fixed;
+            height: 100%;
+            bottom: 0;
+            left: 60%;
+            right: 0;
+            background-color: dimgrey;
+            opacity: 0.8;
+            z-index: 9999 !important;
+            box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.9);
+        }
+        .quotes{
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: white;
+            font-size: 1rem;
+            /* background-color: rgba(0, 0, 0, 0.1); */
+            padding: 2rem;
+        }
+    </style>
+    <style>
+    .parent{
+        left: 0;
+        position: relative;
+    }
+.gear{
+  z-index: 9999;
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  margin: auto;
+  background: #fff;
+  border-radius: 50%;
+  animation-name: spin;
+  animation-duration: 10s; 
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
 
+.gear .center{
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+  width: 1rem;
+  height: 1rem;
+  background: white;
+  border-radius: 50%;
+}
+
+.tooth{
+  position: absolute;
+  top: -0.25rem;
+  left: 0.75rem;
+  z-index: 1;
+  width: 0.45rem;
+  height: 2.5rem;
+  background:#fff;
+}
+
+.tooth:nth-child(2){
+  transform: rotate(45deg);
+}
+
+.tooth:nth-child(3){
+  transform: rotate(90deg);
+}
+
+.tooth:nth-child(4){
+  transform: rotate(135deg);
+}
+
+@keyframes spin {
+  from {transform: rotate(0deg); }
+  to {transform: rotate(360deg);}
+}
+.doinglist input{
+    width: 90%;
+    border: none;
+    background: transparent;
+    line-height: 2em;
+    border-bottom: 1px solid #07ad90;
+    color: white;
+    outline: none;
+    margin-right: 0.4rem;
+}
+ul {
+  list-style-type: none;
+}
+
+    </style>
 </head>
 <body>
     <div class="local_wrap">
-
-
-
+        
+        <div class="headarea">
+            <button class="btn" id="btnchangeback">
+                <span class="text">Press Me!</span>
+            </button>
+        </div>
+        
+        <div class="mainclockarea">
+            <div class="digitalclockarea">
+                <span class="time"></span>        
+            </div>
+            
+            
+        </div>
+        <div class="mainarea">
+            <div class="quotes">
+                <span id="quotes"></span>                   
+            </div>
+        </div>
+        <div class="footer">
+            <span></span>
+            <div class="parent">
+                <div class="gear">
+                    <div class="center"></div>
+                    <div class="tooth"></div>
+                    <div class="tooth"></div>
+                    <div class="tooth"></div>
+                    <div class="tooth"></div>
+                </div>  
+            </div>    
+        </div>
     </div>
-    <!-- ▶ ▶ ▶ footer    ▶ ▶ ▶ -->
-    <!-- <div class="main_footer">
-        <p class="text-muted">@ Noah </p>
-    </div> -->
+
+    <!-- FIXED MENU -->
+    <div class="fixedlayer">
+        <div class="doinglist">
+            <ul>
+                <li>
+                    <input type="text" value="asdfasdfasdfasdfasdf" >
+                    <button class="btn">
+                        <span>X</span>
+                    </button>
+                </li>
+                <li>
+                    <input type="text" value="asdfasdfasdfasdfasdf">
+                    <button class="btn">
+                        <span>X</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,5 +1,16 @@
 $(document).ready(function(){
     var mytap = new MYTAP();
+    startTime();
+    getpoemdata();
+
+    $(document).on("click" , "#btnchangeback" , function(){
+        mytap.my_refreshBackgroundImage();
+    });
+    $(document).on("click" ,".gear" , function(){
+        $(".fixedlayer").toggle(500 , function(){
+            console.log("clicked!");
+        })
+    });
 });
 
 
@@ -33,4 +44,37 @@ var C_COOKIE = {
     deleteCookie:  function ( name ) {
         document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
+}
+
+
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    // document.getElementById('txt').innerHTML =
+    // h + ":" + m + ":" + s;
+    $(".digitalclockarea .time").html(h + ":" + m + ":" + s);
+
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+
+ function getpoemdata(){    
+    var geturl__ = chrome.extension.getURL("/lib/quotes.json");
+    
+    $.getJSON(geturl__ , function(res){
+        var myArray = res; 
+        var rand = myArray[(Math.random() * myArray.length) | 0];
+        console.log(rand);
+        $("#quotes").html(rand.text)
+    });
+
 }
