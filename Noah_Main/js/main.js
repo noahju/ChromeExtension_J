@@ -2,14 +2,49 @@ $(document).ready(function(){
     var mytap = new MYTAP();
     startTime();
     getpoemdata();
+    getData();
+
+    var fixedlayerCookie = C_COOKIE.getCookie("fixedlayer");
+    if (fixedlayerCookie != "" && fixedlayerCookie != null && fixedlayerCookie == true){
+        $(".fixedlayer").show();
+        console.log()
+    }else{
+        fixedlayerCookie = false;
+    }
 
     $(document).on("click" , "#btnchangeback" , function(){
         mytap.my_refreshBackgroundImage();
     });
     $(document).on("click" ,".gear" , function(){
-        $(".fixedlayer").toggle(500 , function(){
+        $(".fixedlayer").toggle(500  , function(){
             console.log("clicked!");
+            C_COOKIE.setCookie("fixedlayer" , !fixedlayerCookie , 1)
         })
+    });
+
+    $(document).on("click" , "#doingBtn" , function(){
+        var doingtxt =  $("#doingTxt").val();
+        if(doingtxt == ""){
+            alert('return ');
+            return;
+        }
+        var pouchDbobj = new POUCHBD_DAC("3");
+        var doingObj = {
+            n_title : doingtxt, 
+            n_regdate : Date.now(),
+            n_uptdate : Date.now(),
+            n_auth : 'noah' 
+        }
+        pouchDbobj.INSERT_DATA(doingObj);
+        getData();
+    });
+    
+    $(document).on("click" , ".doinglist .btn" , async function(){
+        var del_id = $(this).data('dataid');
+        var pouchDbobj = new POUCHBD_DAC("3");
+        var finish = await pouchDbobj.REMOVEDATA_2(del_id);
+        console.log(finish);
+        getData();
     });
 });
 
@@ -75,6 +110,24 @@ function checkTime(i) {
         var rand = myArray[(Math.random() * myArray.length) | 0];
         console.log(rand);
         $("#quotes").html(rand.text)
+    });
+
+}
+
+
+async function getData(){
+    var p_obj = new POUCHBD_DAC("3");
+    var p_data  = await p_obj.GETALLDOC();
+    console.log(p_data);
+    $(".doinglist ul").empty();
+    p_data.forEach( item => {
+        var html = "<li>"
+        + "<input type='text' value='" + item.doc.navigationData.n_title  +  "' >"
+        + "<button class='btn' data-dataid='" + item.id + "'>"
+        + "            <span>X</span>"
+        + "</button>"
+        + "</li>";
+        $(".doinglist ul").append(html);
     });
 
 }
