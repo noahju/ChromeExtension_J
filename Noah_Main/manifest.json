@@ -26,5 +26,5 @@
       "todolist.html",
       "img/*"
     ],
-    "content_security_policy": "script-src 'self' 'sha256-oObbjF5z/1CQHCDzUnGPvK/axvOrtFqpVp7V+0s+fwo='"
+    "content_security_policy": "script-src 'self' 'sha256-oObbjF5z/1CQHCDzUnGPvK/axvOrtFqpVp7V+0s+fwo=' "
 }

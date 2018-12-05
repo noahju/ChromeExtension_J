@@ -162,8 +162,9 @@
   from {transform: rotate(0deg); }
   to {transform: rotate(360deg);}
 }
+
 .doinglist input{
-    width: 90%;
+    width: 50%;
     border: none;
     background: transparent;
     line-height: 2em;
@@ -177,8 +178,10 @@
     size: 0.8rem;
     
 }
-.doinglist li{
+.doinglist span{
     /* box-shadow: 4px 8px 16px rgba(0, 2, 0, 0.3); */
+    color : white;
+    width: 10%;
 }
 ul {
   list-style-type: none;
@@ -196,30 +199,85 @@ ul {
 }
 .doinglist button{
     color: white;
+    position: absolute;
+    right: 0;
 }
+.doinglist ul{
+    left: 0 !important;
+    padding-inline-start: 2px !important;
+}
+.descpage{
+    width: 100%;
+}
+.intro_1{
+    display: block;
+}
+.intro_2{
+    display: none;
+}
+.intro_2 .newsArea{
+    color :white;
+}
+a{ 
+    color: inherit;
+    text-decoration: none;
+}
+.newsContent{
+  min-height: 100vh;
+  max-width: 28em;
+  display: block;
+  flex-flow: column nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color:white;
+  /* justify-content: center; */
+}
+/*---------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------------------------*/
     </style>
 </head>
 <body>
     <div class="local_wrap">
-        
         <div class="headarea">
             <button class="btn" id="btnchangeback">
                 <span class="text">Press Me!</span>
             </button>
+            <button class="btn" id="btnChangeDesk">
+                <span class="text">Press Me!</span>
+            </button>
         </div>
-        
-        <div class="mainclockarea">
-            <div class="digitalclockarea">
-                <span class="time"></span>        
+        <div class="descpage intro_1" id="desck_1">
+            <div class="mainclockarea">
+                <div class="digitalclockarea">
+                    <span class="time"></span>        
+                </div>
             </div>
-            
-            
-        </div>
-        <div class="mainarea">
-            <div class="quotes">
-                <span id="quotes"></span>                   
+            <div class="mainarea">
+                <div class="quotes">
+                    <span id="quotes"></span>                   
+                </div>
             </div>
         </div>
+        <div class="descpage intro_2" id="desck_2">
+            <div class="newsArea">
+                <div>
+                    <button class="btn" id="btnGetNews">
+                        <span class="text">Get!!!!</span>
+                    </button>
+                </div>
+                <div class="newsContent">
+                    <div>
+                            <details>
+                                <summary>Standard Room</summary>
+                                <p>A standard room of a standard size, with a standard number of beds. Comes with the standard number of facilities. The view is of, well the usual. No balcony.</p>
+                            <details>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="footer">
             <span></span>
             <div class="parent">
@@ -260,7 +318,6 @@ ul {
                 </div>
             </div>
         </div>
-        
     </div>
     <style>
             
