@@ -59,7 +59,8 @@ $(document).ready(function(){
     $(document).on("click" , "#btnGetNews" , function(){
         var nCode = "xinhua-net";
         nCode = "techcrunch-cn";
-        newsAPi(nCode);
+        nCountry = "kr"
+        newsAPi(nCode , nCountry);
     })
 
 
@@ -184,12 +185,14 @@ function getFormattedDate(n_regdateStr) {
 
 
 
-  var newsAPi = function( news_Type ){
+  var newsAPi = function( news_Type , country  ){
     var Init_key = "cce2ec7aae82464aa36126ae2e7f43bc";
     var Init_Url = "https://newsapi.org/v2/everything";
+    var Init_HeadLine_url = "https://newsapi.org/v2/top-headlines"
 
     //https://newsapi.org/v2/everything?sources=xinhua-net&apiKey=cce2ec7aae82464aa36126ae2e7f43bc
-    var makeCallUrl = Init_Url + "?sources=" + news_Type + "&apiKey=" + Init_key; 
+    //var makeCallUrl = Init_HeadLine_url + "?sources=" + news_Type + "&apiKey=" + Init_key; 
+    var makeCallUrl = Init_HeadLine_url + "?country=" + country + "&apiKey=" + Init_key; 
     //makeCallUrl = "https://newsapi.org/v2/everything?sources=xinhua-net&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
     var param = {  };
     
@@ -206,16 +209,26 @@ function getFormattedDate(n_regdateStr) {
     }
     $(".newsContent div").empty();
     obj.articles.forEach( item => {
-        var html = "<details>"
-        //+ " <a href='" + item.url  + "' target='_blank' >"
-        + " <summary>" + item.title  +  "</summary>"
-        + " <span>" +  getFormattedDate(item.publishedAt) + "</span>  "
-        //+ " </a>"
-        // + " <button class='btn' data-dataid='" + item.id + "'>"
-        // + "         <span>X</span>"
-        // + " </button>"
-        + "<p>" + item.description + "</p>"
-        + "</details>";
+        var html = 
+        // "<details>"
+        // //+ " <a href='" + item.url  + "' target='_blank' >"
+        // + " <summary>" + item.title  +  "</summary>"
+        // + " <span>" +  getFormattedDate(item.publishedAt) + "</span>  "
+        // //+ " </a>"
+        // // + " <button class='btn' data-dataid='" + item.id + "'>"
+        // // + "         <span>X</span>"
+        // // + " </button>"
+        // + "<p>" + item.description + "</p>"
+        // + "</details>";
+
+    +"<div class=''>"
+    +"  <article>"
+    +"    <h1>"+item.title+"</h1>"
+    +"    <p>" + item.description + "</p>"
+    +"  </article>"
+    +"</div>";
+
+
         $(".newsContent div").append(html);
     });
   }

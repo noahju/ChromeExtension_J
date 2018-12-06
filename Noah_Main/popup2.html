@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="css/bootmin.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="lib/jquery-min.js"></script>
     <script type='text/javascript' src='js/mytab.js'></script>
     <script type='text/javascript' src='js/pouchdb-7.0.0.js'></script>
@@ -15,7 +16,8 @@
         body{
             background-color: black;
             background-size: cover;
-            background-repeat: no-repeat
+            background-repeat: no-repeat;
+            
         }
         .headarea{
             width: 100%;
@@ -209,34 +211,55 @@ ul {
 .descpage{
     width: 100%;
 }
+a{ 
+    color: inherit;
+    text-decoration: none;
+}
+
+
 .intro_1{
     display: block;
 }
 .intro_2{
     display: none;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    
+    /* background: rgba(90, 93, 165, .8);
+    background: linear-gradient(to bottom, rgba(90, 93, 165, 1), rgba(0, 0, 0, .7)) */
 }
-.intro_2 .newsArea{
-    color :white;
+
+.newsContent{
+    width: 15rem;
 }
-a{ 
-    color: inherit;
-    text-decoration: none;
+.blog-container{
+    width: 15rem;
+}
+.newsArea div{
+    top: 0;
+    display: inline-block;
+    color: white;
+    height: 35rem;
+}
+.blog-container{
+    border-radius: 0.5rem;
+    background: rgba(90, 93, 165, .8);
+    background: linear-gradient(to bottom, rgba(90, 93, 165, 1), rgba(0, 0, 0, .7));
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
 .newsContent{
-  min-height: 100vh;
-  max-width: 28em;
-  display: block;
-  flex-flow: column nowrap;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color:white;
-  /* justify-content: center; */
+    border-radius: 0.5rem;
+    background: rgba(90, 93, 165, .8);
+    background: linear-gradient(to bottom, rgba(90, 93, 165, 1), rgba(0, 0, 0, .7));
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
 /*---------------------------------------------------------------------------------------------*/
 
 /*----------------------------------------------------------------------------------------------*/
     </style>
 </head>
-<body>
+<body  >
     <div class="local_wrap">
         <div class="headarea">
             <button class="btn" id="btnchangeback">
@@ -245,6 +268,9 @@ a{
             <button class="btn" id="btnChangeDesk">
                 <span class="text">Press Me!</span>
             </button>
+            <a href="./popup3.html"  class="btn">
+                <span class="text">Press Me!</span>
+            </a>
         </div>
         <div class="descpage intro_1" id="desck_1">
             <div class="mainclockarea">
@@ -259,25 +285,59 @@ a{
             </div>
         </div>
         <div class="descpage intro_2" id="desck_2">
+            <div>
+                <button class="btn" id="btnGetNews">
+                    <span class="text">Get!!!!</span>
+                </button>
+            </div>
             <div class="newsArea">
-                <div>
-                    <button class="btn" id="btnGetNews">
-                        <span class="text">Get!!!!</span>
-                    </button>
-                </div>
                 <div class="newsContent">
                     <div>
-                            <details>
-                                <summary>Standard Room</summary>
-                                <p>A standard room of a standard size, with a standard number of beds. Comes with the standard number of facilities. The view is of, well the usual. No balcony.</p>
-                            <details>
+                        <details>
+                            <summary>Standard Room</summary>
+                            <p>A standard room of a standard size, with a standard number of beds. Comes with the standard number of facilities. The view is of, well the usual. No balcony.</p>
+                        <details>
                     </div>
                 </div>
+                <div class="blog-container">
+                        <div class="blog-header">
+                            <div class="blog-author--no-cover">
+                                <h3>Russ Beye</h3>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-body">
+                            <div class="blog-title">
+                            <h1><a href="#">This Post Has No Cover Image</a></h1>
+                            </div>
+                            <div class="blog-summary">
+                            <p>Here is an example of a post without a cover image. You don't always have to have a cover image. In fact, leaving them out from time to time and disrupt the predictive flow and make the overall design more interesting. Something to think about.</p>
+                            </div>
+                            <div class="blog-tags">
+                            <ul>
+                                <li><a href="#">design</a></li>
+                                <li><a href="#">web dev</a></li>
+                                <li><a href="#">css</a></li>
+                            </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="blog-footer">
+                            <ul>
+                            <li class="published-date">12 days ago</li>
+                            <li class="comments"><a href="#"><svg class="icon-bubble"><use xlink:href="#icon-bubble"></use></svg><span class="numero">8</span></a></li>
+                            <li class="shares"><a href="#"><svg class="icon-star"><use xlink:href="#icon-star"></use></svg><span class="numero">3</span></a></li>
+                            </ul>
+                        </div>
+                        
+                </div>
+
+
             </div>
+            
         </div>
-
-
-
+        
+       
         <div class="footer">
             <span></span>
             <div class="parent">
