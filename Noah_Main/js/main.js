@@ -75,6 +75,52 @@ $(document).ready(function(){
     //         .removeAttr("open");
     // });
 
+    //news click event 
+    //-------------------------------------------------------------------------------------------------------
+//    var o = new Option("option text", "value");
+//    /// jquerify the DOM object 'o' so we can use the html method
+//    $(o).html("option text");
+//    $("#n_selectBox").append(o);
+    var n_items = [
+        {"value" : "xinhua-net" , "text": "t_1"},
+        {"value" : "xinhua-net" , "text": "t_2"},
+        {"value" : "xinhua-net" , "text": "t_3"},
+        {"value" : "xinhua-net" , "text": "t_4"},
+        {"value" : "xinhua-net" , "text": "t_5"},
+        {"value" : "xinhua-net" , "text": "t_6"},
+        {"value" : "xinhua-net" , "text": "t_7"}
+    ]
+            
+    var get_news_url__ = chrome.extension.getURL("/lib/NEWS_SOURCE.json");
+    
+    $.getJSON(get_news_url__ , function(res){
+       
+        $.each(res , function (i, item) {
+            $("#n_selectBox").append($('<option>', { 
+                value: item.value,
+                text : item.title 
+            }));
+        });
+    });
+
+    var $n_items =document.getElementById("n_selectBox");
+    $n_items.addEventListener("change", function(e) {
+        console.log(this.value)
+        newsAPi(this.value, "");
+    });
+ 
+ //---get source from open api ----------------------------------------------------------------------------------------------------
+    var nsourcetemp = [];
+    
+    var nstemp = document.getElementById("NEWS_SOURCE").getElementsByClassName("source");
+    console.log(nstemp.length)
+    $.each(nstemp, function(i , item){
+        
+        nsourcetemp.push({"title": $(item).attr("title") , "value" :$(item).attr('href').replace('/s/' , '') })
+    });
+
+    console.log( JSON.stringify(nsourcetemp) );
+//-------------------------------------------------------------------------------------------------------
 
 
 });
@@ -142,8 +188,10 @@ function checkTime(i) {
         console.log(rand);
         $("#quotes").html(rand.text)
     });
-
 }
+
+
+
 
 
 async function getData(){
@@ -192,55 +240,70 @@ function getFormattedDate(n_regdateStr) {
 
     //https://newsapi.org/v2/everything?sources=xinhua-net&apiKey=cce2ec7aae82464aa36126ae2e7f43bc
     //var makeCallUrl = Init_HeadLine_url + "?sources=" + news_Type + "&apiKey=" + Init_key; 
-    var makeCallUrl = Init_HeadLine_url + "?country=" + country + "&apiKey=" + Init_key; 
-    //makeCallUrl = "https://newsapi.org/v2/everything?sources=xinhua-net&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
+    //var makeCallUrl = Init_HeadLine_url + "?country=" + country + "&apiKey=" + Init_key; 
+    var makeCallUrl = "https://newsapi.org/v2/everything?sources=" + news_Type + "&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
     var param = {  };
     
     var ajaxobj = new fnAjaxObj();
     news_1(makeCallUrl);
-    // ajaxobj.fnajax( makeCallUrl ,param , function(res){
-    //     rendernewsHtml(res);
-    //     console.log(res);
-    // });
   }
   var rendernewsHtml = function(obj){
     if(obj.length <= 0){
         return;
     }
+    
+    $(".newsContent").show();
     $(".newsContent div").empty();
-    obj.articles.forEach( item => {
-        var html = 
-        // "<details>"
-        // //+ " <a href='" + item.url  + "' target='_blank' >"
-        // + " <summary>" + item.title  +  "</summary>"
-        // + " <span>" +  getFormattedDate(item.publishedAt) + "</span>  "
-        // //+ " </a>"
-        // // + " <button class='btn' data-dataid='" + item.id + "'>"
-        // // + "         <span>X</span>"
-        // // + " </button>"
-        // + "<p>" + item.description + "</p>"
-        // + "</details>";
+    $(".blog-title a").empty();
+    $(".blog-summary p").empty();
 
-    +"<div class=''>"
-    +"  <article>"
-    +"    <h1>"+item.title+"</h1>"
-    +"    <p>" + item.description + "</p>"
-    +"  </article>"
-    +"</div>";
-
-
+    obj.articles.forEach( (item , index)  => {
+        var html = "  <article data-id = '" + index + "'>"
+        +"    <h5>" + item.title + "</h5>"
+        +"  </article>"
         $(".newsContent div").append(html);
+        html = "";
     });
+
+    document.querySelector(".newsContent").addEventListener('click' , function(event){
+        
+        if (event.target.tagName.toLowerCase() === 'h5') {
+            // do your action on your 'li' or whatever it is you're listening for
+            var news_id = $(event.target).parent().data("id");
+            var news_selector = obj.articles[news_id];
+            $(".blog-title a").empty();
+            $(".blog-title a").append(news_selector.title);
+            $(".blog-summary p").empty();
+            $(".blog-summary p").html(news_selector.description);
+            
+            $(".blog-title").find("a").attr("href", news_selector.url);
+            $(".blog-title").find("a").attr("target", "_blank");
+            //$(".blog-title").find("a").target="_blank";
+            $(".blog-container").show();
+          }
+    })
+    // var newContetn = document.getElementsByClassName("newsContent");
+    
+    // console.log(newContetn);
+    // newContetn.forEach(item=>{
+    //     $(item).addEventListener("click" , item =>{
+    //         if(item.target && item.target.nodeName === "article"){
+    //             consoel.log(item.target);
+    //         }
+    //     });
+    // });
+    
+
   }
 
 
 function news_1( n_url ){
+    console.log(n_url);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
             if (xmlhttp.status == 200) {
                 let articles = JSON.parse(xmlhttp.responseText);
-                console.log(articles);
                 rendernewsHtml(articles);
             }
         }
