@@ -1,6 +1,13 @@
-var MYTAP = function () {
+var MYTAP = function ( bg_count ) {
     this.GetImageXmlUrl = 'https://d3cbihxaqsuq0s.cloudfront.net/';
-    this.init();
+    this.BgCount = bg_count || 0 ;
+    //this.init();
+    console.log("this.BgCount : " + this.BgCount);
+    if(this.BgCount > 0 ){
+        this.getback2();
+    }else{
+        this.init();
+    }
 }
 
 MYTAP.prototype.init = function () {
@@ -18,23 +25,15 @@ MYTAP.prototype.my_backgoundImage = function () {
         return;
     }
     if (!window.XMLHttpRequest) return;
+    if(this.BgCount > 0 ){
 
+    }
+    
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (callback && typeof (callback) === 'function') {
             var backimagePath = imagepath + callback(this.responseXML);
-            //document.getElementById('masthead').style.backgroundImage = "url('" + backimagePath + "')";
-            // $('body').css({background : 'url(' + backimagePath + ')  no-repeat fixed bottom left'})
-            //     .waitForImages(function() {
-            //             alert('Background image done loading');
-            //             // This *does* work
-            //     }, $.noop, true);
-            // $('<img/>').attr('src', backimagePath).on('load', function() {
-            //     $(this).remove(); // prevent memory leaks as @benweet suggested
-            //     $('body').css('background-image', 'url('+backimagePath+')');
-            // });
             loadImage(backimagePath);
-            //http://jsfiddle.net/gaby/CYFNc/2/
         }
     }
     // Get the HTML
@@ -43,6 +42,7 @@ MYTAP.prototype.my_backgoundImage = function () {
     xhr.send();
 }
 MYTAP.prototype.my_backgroundImageRandom = function (xml) {
+    console.log(xml);
     var imagePath = ''
     var imageDomainPath = "https://d3cbihxaqsuq0s.cloudfront.net/";
     //var cookiebackgroundImage = getCookie("");
@@ -51,8 +51,6 @@ MYTAP.prototype.my_backgroundImageRandom = function (xml) {
     if (cookiebackgroundImage != "") {
         imagePath = cookiebackgroundImage;
     } else {
-        //document.cookie = "backgroundImage=" + imagePath + ";expires=Thu, 18 Dec 2020 12:00:00 UTC";
-
         var backImageItemjson = xmlToJson(xml);
 
         var $Content = backImageItemjson.ListBucketResult.Contents;
@@ -62,27 +60,58 @@ MYTAP.prototype.my_backgroundImageRandom = function (xml) {
 
         C_COOKIE.setCookie("backgroundImage", imagePath, 1);
     }
-    // imagePath =  'images/56298672_xl.jpg';
-    //imagePath = 'https://d3cbihxaqsuq0s.cloudfront.net/images/48244404_xl.jpg'
-    //document.getElementById('masthead').style.backgroundImage = "url('" + imagePath + "')";
-
-    // chrome.storage.sync.set({
-    //     'backgroundImage': JSON.stringify(backImageItemjson.ListBucketResult.Contents)
-    // }, function () {
-    //     console.log('successed!' + JSON.stringify(backImageItemjson.ListBucketResult.Contents));
-    // });
-
-
     return imagePath;
 },
 MYTAP.prototype.my_refreshBackgroundImage = function () {
     C_COOKIE.deleteCookie("backgroundImage");
     this.my_backgoundImage();
+},
+MYTAP.prototype.my_backgroundImageRandomMulti =  function(xml){
+    
+    var imagePath = [];
+    var imageDomainPath = "https://d3cbihxaqsuq0s.cloudfront.net/";
+    //쿠키 체크 
+    var cookiebackgroundImage = C_COOKIE.getCookie("backgroundImageMulti");
+    console.log(cookiebackgroundImage);
+    // if (cookiebackgroundImage != "") {
+    if(false){
+        imagePath = cookiebackgroundImage;
+    } else {
+        var backImageItemjson = xmlToJson(xml);
+        var $Content = backImageItemjson.ListBucketResult.Contents;
+        //Radndom Get one object
+        console.log("this.BgCount : " + this.BgCount);
+        for(i = 0 ; i < this.BgCount ; i ++ ){
+            var ContentIndex = Math.floor(Math.random() * $Content.length) + 1
+            var imagetemp = imageDomainPath + $Content[ContentIndex].Key['#text'];
+            imagePath.push(imagetemp);
+        }
+        C_COOKIE.setCookie("backgroundImageMulti", imagePath, 1);
+    }
+    
+    return imagePath;
+},
+MYTAP.prototype.makeRequest2 = function(callback){
+    return new Promise(
+        function(resolve , reject){
+            var callImageUrl = "https://d3cbihxaqsuq0s.cloudfront.net/";
+            $.get( callImageUrl, function(res){
+                resolve(res);
+            });
+        }
+    );
 }
-
-
-
-
+,MYTAP.prototype.getback2 = async function(){
+    var obj;
+    await this.makeRequest2().then(function(res){
+        obj = res;
+    });
+    var selectedImage = this.my_backgroundImageRandomMulti(obj);
+    console.log(selectedImage.length);
+    selectedImage.forEach((item , index )=>{
+        $(".bgimg-" + (index + 1) ).css({'background-image' : 'url(\'' + item + '\')'})
+    });
+}
 
 var getHTML = function (url, callback) {
 
@@ -162,7 +191,7 @@ MYTAP.prototype.fnXmlToJson = function (xml) {
 }
 
 
-function loadImage(url) {
+function loadImage(url  ) {
     $('body').addClass('loading');
     var img = new Image();
     img.onload = function () {
@@ -172,6 +201,5 @@ function loadImage(url) {
             , 'background-repeat': 'no-repeat'
         }).removeClass('loading');
     };
-
     img.src = url;
 }

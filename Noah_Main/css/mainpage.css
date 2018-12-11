@@ -1,0 +1,376 @@
+body{
+    background-color: black;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, rgb(209, 209, 209 , .7), rgba(0, 0, 0, .7));
+}
+a:hover{
+    color: inherit; /* Inherits color property from its parent */
+    text-decoration: none;
+}
+.headarea{
+    width: 100%;
+    height: 3rem;
+    margin:auto;
+}
+.mainarea{
+    margin-top: 1rem;
+    border-bottom: 1px;
+    width: 100%;
+    height: auto;
+    margin-left:auto;
+    margin-right :auto;
+}
+.mainclockarea{
+    margin-top: 1rem;
+    /* background-color: bisque;
+    opacity: 0.5; */
+    width: 100%;
+    height: 30rem;
+    margin-left:auto;
+    margin-right :auto;
+}
+.digitalclockarea{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 10em;
+    color: white;
+    text-align: center;
+    text-shadow: 0 0.01em 1rem black;
+}
+.footer{
+    position: fixed;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    left: 0;
+    bottom: 0;
+    padding-bottom: 1rem;
+    width: 100%;
+    height: auto;
+    color: white;
+}
+
+.btn {
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    /* padding: 0.5rem 2.5rem; */
+    background: var(--color-primary-500);
+    color: var(--color-secondary-900);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 100;
+    line-height: normal;
+    border: 0;
+    border-radius: 0.4rem;
+    box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.4);
+    appearance: none;
+    cursor: pointer;
+    transition: background 250ms, box-shadow 250ms;
+    
+}
+button:hover{
+    background-color: black;
+    color: white !important;
+}
+.btn .text {
+    position: relative;
+    z-index: 2;
+}
+
+.fixedlayer{
+    display: none;
+    position: fixed;
+    height: 100%;
+    bottom: 0;
+    left: 60%;
+    right: 0;
+    background-color: dimgrey;
+    opacity: 0.8;
+    z-index: 9999 !important;
+    box-shadow: -1px 1px 8px rgba(0, 0, 0, 0.9);
+}
+.quotes{
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 1.5rem;
+    /* background-color: rgba(0, 0, 0, 0.1); */
+    padding: 2rem;
+}
+</style>
+<style>
+.parent{
+left: 0;
+position: relative;
+}
+.gear{
+z-index: 9999;
+position: relative;
+width: 2rem;
+height: 2rem;
+margin: auto;
+background: #fff;
+border-radius: 50%;
+animation-name: spin;
+animation-duration: 10s; 
+animation-iteration-count: infinite;
+animation-timing-function: linear;
+}
+
+.gear .center{
+position: absolute;
+top: 0.5rem;
+left: 0.5rem;
+z-index: 10;
+width: 1rem;
+height: 1rem;
+background: gray;
+border-radius: 50%;
+}
+
+.tooth{
+position: absolute;
+top: -0.25rem;
+left: 0.75rem;
+z-index: 1;
+width: 0.45rem;
+height: 2.5rem;
+background:#fff;
+}
+
+.tooth:nth-child(2){
+transform: rotate(45deg);
+}
+
+.tooth:nth-child(3){
+transform: rotate(90deg);
+}
+
+.tooth:nth-child(4){
+transform: rotate(135deg);
+}
+
+@keyframes spin {
+from {transform: rotate(0deg); }
+to {transform: rotate(360deg);}
+}
+
+.doinglist input{
+width: 50%;
+border: none;
+background: transparent;
+line-height: 2em;
+/* border-bottom: 1px solid #07ad90; */
+color: white;
+outline: none;
+margin-right: 0.4rem;
+cursor: default;
+padding:0.4rem;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+size: 0.8rem;
+
+}
+.doinglist span{
+/* box-shadow: 4px 8px 16px rgba(0, 2, 0, 0.3); */
+color : white;
+width: 10%;
+}
+ul {
+list-style-type: none;
+}
+.doingInputArea{
+position: absolute;
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+right: 10%;
+left: 10%;
+bottom: 10rem;
+text-align: center;
+
+}
+.doingInputArea button{
+color: white
+}
+.doinglist button{
+color: white;
+position: absolute;
+right: 0;
+}
+.doinglist ul{
+left: 0 !important;
+padding-inline-start: 2px !important;
+}
+.descpage{
+width: 100%;
+}
+a{ 
+color: inherit;
+text-decoration: none;
+}
+
+
+.intro_1{
+display: block;
+}
+.intro_2{
+display: none;
+overflow-y:scroll; 
+height: 500px;
+/* background: rgba(90, 93, 165, .8);
+background: linear-gradient(to bottom, rgba(90, 93, 165, 1), rgba(0, 0, 0, .7)) */
+}
+
+.newsContent{
+/* width: 15rem; */
+color: whitesmoke;
+display:none;
+margin-right: 1rem;
+margin-left:  1rem;
+margin-top: 1rem;
+}
+.blog-container{
+/* width: 15rem; */
+color: whitesmoke;
+display: none;
+margin-right: 1rem;
+margin-left:  1rem;
+margin-top: 1rem;
+}
+.intro_2 button{
+margin-right: 1rem;
+margin-left:  1rem;
+margin-top: 1rem;
+}
+.newsArea div{
+top: 0;
+display: inline-block;
+color: white;
+height: 35rem;
+}
+.blog-container{
+border-radius: 0.5rem;
+background: rgba(90, 93, 165, 0.3);
+background: linear-gradient(to bottom,  #666b0f9c, rgba(0, 0, 0, .3));
+box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+}
+.newsContent{
+position: relative;
+border-radius: 0.5rem;
+background: rgba(90, 93, 165, .8);
+background: linear-gradient(to bottom,  #66aece82, rgba(0, 0, 0, .3));
+box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+}
+/*---------------------------------------------------------------------------------------------*/
+::-webkit-scrollbar {
+display: none;
+}
+/*----------------------------------------------------------------------------------------------*/
+/*the container must be positioned relative:*/
+.custom-select {
+position: relative;
+font-family: Arial;
+}
+.custom-select select {
+display: none; /*hide original SELECT element:*/
+}
+.select-selected {
+background-color: #66aece82;
+}
+/*style the arrow inside the select element:*/
+.select-selected:after {
+position: absolute;
+content: "";
+top: 14px;
+right: 10px;
+width: 0;
+height: 0;
+border: 6px solid transparent;
+border-color: #fff transparent transparent transparent;
+}
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+border-color: transparent transparent #fff transparent;
+top: 7px;
+}
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+color: #ffffff;
+padding: 8px 16px;
+border: 1px solid transparent;
+border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+cursor: pointer;
+}
+/*style items (options):*/
+.select-items {
+position: absolute;
+background-color: #66aece82;
+top: 100%;
+left: 0;
+right: 0;
+z-index: 99;
+}
+/*hide the items when the select box is closed:*/
+.select-hide {
+display: none;
+}
+.select-items div:hover, .same-as-selected {
+background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+/*--- fixed area -------------------------------------------------------------------------------------------*/
+
+.flex-form input[type="submit"] {
+    position: absolute;
+    background: #ef3f5a;
+    border: 1px solid #ef3f5a;
+    color: #fff;
+    padding: 0 0px;
+    right: 0;
+    cursor: pointer;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    transition: all 0.2s;
+    width: 20%;
+    height: 3.4rem;
+}
+
+.flex-form input[type="submit"]:hover {
+    position: absolute;
+    background: #d73851;
+    border: 1px solid #d73851;
+    right: 0;
+    width: 20%;
+}
+
+.flex-form {
+    position: absolute;
+    display: -webkit-box;
+    display: flex;
+    z-index: 10;
+    position: relative;
+    width: 500px;
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.3);
+} 
+
+.flex-form > * {
+    border: 0;
+    padding: 0 0 0 0px;
+    background: #fff;
+    line-height: 2rem;
+    font-size: 1.21rem;
+    border-radius: 0;
+    outline: 0;
+    -webkit-appearance: none;
+}
+
+input[type="search"] {
+    flex-basis: 50%;
+    width: 80%;
+    position: absolute;
+}
+
+
+/*--------------------------------------------*/

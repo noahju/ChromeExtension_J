@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    var mytap = new MYTAP();
+    var mytap = new MYTAP(4);
+    
     startTime();
     getpoemdata();
     getData();
@@ -110,16 +111,13 @@ $(document).ready(function(){
     });
  
  //---get source from open api ----------------------------------------------------------------------------------------------------
-    var nsourcetemp = [];
-    
-    var nstemp = document.getElementById("NEWS_SOURCE").getElementsByClassName("source");
-    console.log(nstemp.length)
-    $.each(nstemp, function(i , item){
-        
-        nsourcetemp.push({"title": $(item).attr("title") , "value" :$(item).attr('href').replace('/s/' , '') })
-    });
+    // var nsourcetemp = [];
+    // var nstemp = document.getElementById("NEWS_SOURCE").getElementsByClassName("source");
+    // $.each(nstemp, function(i , item){
+    //     nsourcetemp.push({"title": $(item).find(".name").attr("title") , "value" : $(item).find("kbd").html() })
+    // });
 
-    console.log( JSON.stringify(nsourcetemp) );
+    // console.log( JSON.stringify(nsourcetemp) );
 //-------------------------------------------------------------------------------------------------------
 
 
