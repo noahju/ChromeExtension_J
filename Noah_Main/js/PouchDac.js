@@ -41,6 +41,21 @@ POUCHBD_DAC.prototype.INSERT_DATA = async function(navigationData){
     }
 }
 
+POUCHBD_DAC.prototype.INSERT_DATA_2 = async function(Obj){    
+    try {
+        var response = await db.post({
+            Obj
+        }).then(function(res){
+            console.log(res);
+        });
+        this.GETALLDOC();
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
 ///--------------------------------
 /// get data via _id 
 ///--------------------------------

@@ -238,11 +238,26 @@ function getFormattedDate(n_regdateStr) {
             // do your action on your 'li' or whatever it is you're listening for
             var news_id = $(event.target).parent().data("id");
             var news_selector = obj.articles[news_id];
+            console.log(news_selector);
+            console.log(news_selector.title);
             $(".blog-title a").empty();
             $(".blog-title a").append(news_selector.title);
             $(".blog-summary p").empty();
-            $(".blog-summary p").html(news_selector.description);
-            
+            $(".blog-summary p").html(news_selector.content || news_selector.description);
+            if(news_selector.urlToImage != ''){
+                $(".blog-container").css({
+                    'background-image':'url(\'' + news_selector.urlToImage +'\')'
+                    ,'background-size':'cover'
+                    ,'background-repeat':'no-repeat'
+                });
+/*
+$('body').css({
+            'background-image': 'url(\'' + this.src + '\')'
+            , 'background-size': 'cover'
+            , 'background-repeat': 'no-repeat'
+        }).removeClass('loading');*/
+
+            }
             $(".blog-title").find("a").attr("href", news_selector.url);
             $(".blog-title").find("a").attr("target", "_blank");
             //$(".blog-title").find("a").target="_blank";
@@ -332,49 +347,37 @@ fnAjaxObj.prototype.fnAjaxCallback = function(res){
     console.log(res);
 }
 
-var weather = function(){
+var weather = async function(){
     var get_weather_url__ = "https://api.darksky.net/forecast/67e07d1121f1c1ada1b11c382679de00/37.56621,126.9779";
+    var get_weather_obj = new POUCHBD_DAC("5");
     
-    var weatherCookie = C_COOKIE.getCookie("weatherCookie");
-    if(weatherCookie == undefined || weatherCookie == null || weatherCookie == ""){
+    var weatherCookie = await get_weather_obj.GETALLDOC();
+    /*
+    console.log(weatherCookie[0].doc.Obj);
+    weatherRender(weatherCookie[0].doc.Obj);
+    return;
+    */
+    if(weatherCookie[0].doc.Obj == undefined || weatherCookie[0].doc.Obj == null || weatherCookie[0].doc.Obj == ""){
         
         $.getJSON(get_weather_url__ , function(res){
             console.log(res)
             weatherRender(res);
-        //     $(".weather .content").empty();
-        //     $(".weather .content").append(
-        //             "<h3>" + ConvertToDate(res.currently.time) + "</h3>"
-        //             + "<div class='degrees'> temperature : " + res.currently.temperature + "</div>"
-        //             + "<div class='data'>"          
-        //             +"<h2>" + res.currently.summary + "</h2>"
-        //             +"<div>Wind: " + res.currently.windSpeed + "</div>"
-        //             +"<div>Humidity: "+ Math.floor((res.currently.humidity*100)) + "%</div>"
-        //             + "</div>"
-        //     );
-    
-        //     $(".weather .icon i").removeClass().addClass(res.currently.icon);
-        //     //$(".weather .icon i").removeClass().addClass("sleet");
-    
-        //   var dailyweatherObj = res.daily.data;
-    
-        //   dailyweatherObj.forEach((item, index )=>{
-        //     console.log("-------");
-        //     console.log("time: " + ConvertToDate( item.time ));
-        //     console.log("summary: " + item.summary );
-        //     console.log("sunriseTime: " + ConvertToDate( item.sunriseTime ));
-        //     console.log("sunsetTime: " + ConvertToDate( item.sunsetTime ));
-        //     console.log("-------");
-        //   })
-          C_COOKIE.setCookie("weatherCookie" , res , 2);
+            var weather_obj = new POUCHBD_DAC("5");
+            
+            weather_obj.INSERT_DATA_2(res);
+            
+            //C_COOKIE.setCookie("weatherCookie" , JSON.stringify(res)  , 2);
         });
     }else{
         /*블반*/
-        weatherRender(weatherCookie);
+        weatherRender(weatherCookie[0].doc.Obj);
+        console.log("here1")
     }    
 }
 
 var weatherRender  = function(weatherObj ){
-    console.log( weatherObj);
+    console.log(  "render : " +  weatherObj);
+    
     $(".weather .content").empty();
             $(".weather .content").append(
                     "<h3>" + ConvertToDate(weatherObj.currently.time) + "</h3>"

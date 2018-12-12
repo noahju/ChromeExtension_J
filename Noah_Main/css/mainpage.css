@@ -102,8 +102,7 @@ button:hover{
     /* background-color: rgba(0, 0, 0, 0.1); */
     padding: 2rem;
 }
-</style>
-<style>
+
 .parent{
 left: 0;
 position: relative;
@@ -235,15 +234,34 @@ margin-top: 1rem;
 article{
     cursor: pointer;
 }
-
-.blog-container{
-/* width: 15rem; */
-color: whitesmoke;
-display: none;
-margin-right: 1rem;
-margin-left:  1rem;
-margin-top: 1rem;
+.news{
+    height: 380px;
+    overflow: scroll;
 }
+.blog-container{
+    /* width: 15rem; */
+    color: whitesmoke;
+    display: none;
+    margin-right: 1rem;
+    margin-left:  1rem;
+    margin-top: 1rem;
+    height: 100%;
+    
+    border-radius: 0.5rem;
+    background: rgba(90, 93, 165, 0.3);
+    /* background: linear-gradient(to bottom,  #666b0f9c, rgba(0, 0, 0, .3)); */
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+    
+}
+blog-body::after{
+    
+    background: rgba(90, 93, 165, 1);
+}
+.blog-container::after{
+    opacity: 1 !important;
+    text-shadow: 0 0.01em 1rem black;
+}
+
 .intro_2 button{
 margin-right: 1rem;
 margin-left:  1rem;
@@ -254,12 +272,6 @@ top: 0;
 display: inline-block;
 color: white;
 height: 35rem;
-}
-.blog-container{
-border-radius: 0.5rem;
-background: rgba(90, 93, 165, 0.3);
-background: linear-gradient(to bottom,  #666b0f9c, rgba(0, 0, 0, .3));
-box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
 .newsContent{
 position: relative;
