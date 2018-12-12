@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var mytap = new MYTAP(4);
+    //var mytap = new MYTAP(3);
     
     startTime();
     getpoemdata();
@@ -26,8 +26,8 @@ $(document).ready(function(){
     });
 
     $(document).on("click" , "#btnChangeDesk" , function(){
-        $("#desck_1").toggle(500  );    
-        $("#desck_2").toggle(500 );
+        $("#desck_1").toggle( );    
+        $("#desck_2").toggle( );
     });
 
 
@@ -62,36 +62,7 @@ $(document).ready(function(){
         nCode = "techcrunch-cn";
         nCountry = "kr"
         newsAPi(nCode , nCountry);
-    })
-
-
-
-
-
-    // $("details").on("click", function() {
-    //     document.querySelectorAll('details').removeAttr('open');
-
-    //     $("details[open]")
-    //         .not(this)
-    //         .removeAttr("open");
-    // });
-
-    //news click event 
-    //-------------------------------------------------------------------------------------------------------
-//    var o = new Option("option text", "value");
-//    /// jquerify the DOM object 'o' so we can use the html method
-//    $(o).html("option text");
-//    $("#n_selectBox").append(o);
-    var n_items = [
-        {"value" : "xinhua-net" , "text": "t_1"},
-        {"value" : "xinhua-net" , "text": "t_2"},
-        {"value" : "xinhua-net" , "text": "t_3"},
-        {"value" : "xinhua-net" , "text": "t_4"},
-        {"value" : "xinhua-net" , "text": "t_5"},
-        {"value" : "xinhua-net" , "text": "t_6"},
-        {"value" : "xinhua-net" , "text": "t_7"}
-    ]
-            
+    })            
     var get_news_url__ = chrome.extension.getURL("/lib/NEWS_SOURCE.json");
     
     $.getJSON(get_news_url__ , function(res){
@@ -119,8 +90,6 @@ $(document).ready(function(){
 
     // console.log( JSON.stringify(nsourcetemp) );
 //-------------------------------------------------------------------------------------------------------
-
-
 });
 
 
@@ -326,7 +295,7 @@ var fnAjaxObj = function(){
 }
 fnAjaxObj.prototype.fnajax =  function( url , param , fnCallback ){
     fnObj = this.fnAjaxCallback ;
-    if(typeof fnCallback != "undefined"){
+    if(typeof fnCallback != "undefined" || typeof fnCallback == ''){
         fnObj = fnCallback;
     }
     if(url == ""){
@@ -338,7 +307,7 @@ fnAjaxObj.prototype.fnajax =  function( url , param , fnCallback ){
         url: url ,
         data: param,
         dataType: 'jsonp', 
-        jsonpCallback: "myCallback",
+        jsonpCallback: fnObj ,
         beforeSend: function (jqXHR, opts) {
             //전송중일때
             if (this.fnAjaxCall) {
@@ -354,10 +323,169 @@ fnAjaxObj.prototype.fnajax =  function( url , param , fnCallback ){
             this.fnAjaxCall = false;
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            alert('서버와 통신중 에러가 발생했습니다. ' + errorThrown);
+            console.log(errorThrown  + " __ " + textStatus + " __ " + jqXHR.status);
+            //alert('서버와 통신중 에러가 발생했습니다. ' + errorThrown);
         }
     });
 }
 fnAjaxObj.prototype.fnAjaxCallback = function(res){
     console.log(res);
 }
+
+var weather = function(){
+    var get_weather_url__ = "https://api.darksky.net/forecast/67e07d1121f1c1ada1b11c382679de00/37.56621,126.9779";
+    
+    var weatherCookie = C_COOKIE.getCookie("weatherCookie");
+    if(weatherCookie == undefined || weatherCookie == null || weatherCookie == ""){
+        
+        $.getJSON(get_weather_url__ , function(res){
+            console.log(res)
+            weatherRender(res);
+        //     $(".weather .content").empty();
+        //     $(".weather .content").append(
+        //             "<h3>" + ConvertToDate(res.currently.time) + "</h3>"
+        //             + "<div class='degrees'> temperature : " + res.currently.temperature + "</div>"
+        //             + "<div class='data'>"          
+        //             +"<h2>" + res.currently.summary + "</h2>"
+        //             +"<div>Wind: " + res.currently.windSpeed + "</div>"
+        //             +"<div>Humidity: "+ Math.floor((res.currently.humidity*100)) + "%</div>"
+        //             + "</div>"
+        //     );
+    
+        //     $(".weather .icon i").removeClass().addClass(res.currently.icon);
+        //     //$(".weather .icon i").removeClass().addClass("sleet");
+    
+        //   var dailyweatherObj = res.daily.data;
+    
+        //   dailyweatherObj.forEach((item, index )=>{
+        //     console.log("-------");
+        //     console.log("time: " + ConvertToDate( item.time ));
+        //     console.log("summary: " + item.summary );
+        //     console.log("sunriseTime: " + ConvertToDate( item.sunriseTime ));
+        //     console.log("sunsetTime: " + ConvertToDate( item.sunsetTime ));
+        //     console.log("-------");
+        //   })
+          C_COOKIE.setCookie("weatherCookie" , res , 2);
+        });
+    }else{
+        /*블반*/
+        weatherRender(weatherCookie);
+    }    
+}
+
+var weatherRender  = function(weatherObj ){
+    console.log( weatherObj);
+    $(".weather .content").empty();
+            $(".weather .content").append(
+                    "<h3>" + ConvertToDate(weatherObj.currently.time) + "</h3>"
+                    + "<div class='degrees'> temperature : " + weatherObj.currently.temperature + "</div>"
+                    + "<div class='data'>"          
+                    +"<h2>" + weatherObj.currently.summary + "</h2>"
+                    +"<div>Wind: " + weatherObj.currently.windSpeed + "</div>"
+                    +"<div>Humidity: "+ Math.floor((weatherObj.currently.humidity*100)) + "%</div>"
+                    + "</div>"
+            );
+    
+            $(".weather .icon i").removeClass().addClass(weatherObj.currently.icon);
+}
+
+weather();
+
+var ConvertToDate = function(dateStr){
+       var timestamp = dateStr;
+       var now = new Date(timestamp*1000);
+       
+       var today = now.toDateString();
+       var time = now.toLocaleTimeString();
+       var hours = now.getHours();
+       var minutes = now.getMinutes();
+       var seconds = now.getSeconds();
+       var milliseconds = now.getMilliseconds();
+       var newSeconds = seconds + (milliseconds/1000);
+
+       return today + " " + time ;
+}
+
+
+
+///////------------------------------------------
+//   https://darksky.net/dev/docs
+//   https://api.darksky.net/forecast/67e07d1121f1c1ada1b11c382679de00/37.56621,126.9779
+///////==========================================
+
+
+
+
+
+//*****----------------------------------------------------------//
+// canvas test for clock 
+window.onload = init;
+
+var init = function(){
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#28d1fa';
+    
+    ctx.lineWidth = 17;
+    ctx.lineCap = 'round';
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#28d1fa';
+    var canvas = document.getElementById('canvas');    
+
+
+    setInterval(renderTime, 40);
+    
+}
+
+
+
+
+function degToRad(degree) {
+  var factor = Math.PI/180;
+  return degree*factor;
+}
+
+function renderTime() {
+  
+  var now = new Date();
+  var today = now.toDateString();
+  var time = now.toLocaleTimeString();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+  var seconds = now.getSeconds();
+  var milliseconds = now.getMilliseconds();
+  var newSeconds = seconds+ (milliseconds/1000);
+  
+  // Background
+  gradient = ctx.createRadialGradient(200,200,5,200,200,300);
+  gradient.addColorStop(0,'#09303a');
+  gradient.addColorStop(1, '#000000');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,400,400);
+  
+  // Hours
+  ctx.beginPath();
+  ctx.arc(200, 200, 170, degToRad(270), degToRad((hours*30)-90));
+  ctx.stroke();
+  
+  // Minutes
+   ctx.beginPath();
+  ctx.arc(200, 200, 140, degToRad(270), degToRad((minutes*6)-90));
+  ctx.stroke();
+  // Seconds
+   ctx.beginPath();
+  ctx.arc(200, 200, 110, degToRad(270), degToRad((newSeconds*6)-90));
+  ctx.stroke();
+  // Date 
+  ctx.font = "20px Helvetica";
+  ctx.fillStyle = '#28d1fa';
+  ctx.fillText(today, 140, 200);
+  
+  // Time
+  ctx.font = "15px Helvetica";
+  ctx.fillStyle = '#28d1fa';
+  ctx.fillText(time, 140, 230);
+  
+}
+
+
+//------------------------------------------------------------------

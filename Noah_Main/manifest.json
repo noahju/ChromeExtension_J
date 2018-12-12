@@ -25,7 +25,8 @@
     "web_accessible_resources": [
       "todolist.html",
       "img/*"
-    ],
-    // "content_security_policy": "script-src 'self' 'sha256-oObbjF5z/1CQHCDzUnGPvK/axvOrtFqpVp7V+0s+fwo=' "
-    "content_security_policy": "script-src 'self' 'sha256-vd5eWSTNuzOWz1YphevaQCrdhIgIGxVJw5ijhAmuaUI='; object-src 'self'"
+    ]
+        // ,"content_security_policy": "script-src 'self' 'sha256-oObbjF5z/1CQHCDzUnGPvK/axvOrtFqpVp7V+0s+fwo=' "
+       // ,"content_security_policy": "script-src 'self' 'sha256-vd5eWSTNuzOWz1YphevaQCrdhIgIGxVJw5ijhAmuaUI='; object-src 'self'"
+       ,"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

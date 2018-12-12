@@ -11,8 +11,8 @@
     <script type="text/javascript" src="lib/bootstrap.min.js"></script>
     <script type='text/javascript' src='js/mytab.js'></script>
     <script type='text/javascript' src='js/pouchdb-7.0.0.js'></script>
-    <script type='text/javascript' src='js/pouchdbfind.js'></script>
-    <script type='text/javascript' src='js/PouchDac.js'></script>
+    <!-- <script type='text/javascript' src='js/pouchdbfind.js'></script>  -->
+    <script type='text/javascript' src='js/PouchDac.js'></script> 
     <script type='text/javascript' src='js/main.js'></script>
     <style>
        @media only screen and (max-device-width: 1024px) {
@@ -20,41 +20,100 @@
             background-attachment: scroll;
           } 
         }
-        
+        /*
+        */
+        .bgimg-0 {
+            background-image: url("img/22390016_xl.jpg"); 
+            min-height: 980px;
+        }
         .bgimg-1 {
-          /* background-image: url("img_parallax.jpg"); */
-          min-height: 100%;
+          background-image: url("img/42729399_xl.jpg"); 
+          min-height: 980px;
         }
         
         .bgimg-2 {
-          /* background-image: url("img_parallax2.jpg"); */
-          min-height: 100%;
+          background-image: url("img/53679405_xl.jpg"); 
+          min-height: 980px;
         }
         
         .bgimg-3 {
-          /* background-image: url("img_parallax3.jpg"); */
-          min-height: 100%;
+          background-image: url("img/729399_xl.jpg"); 
+          min-height: 980px;
         }
         .bgimg-4 {
           /* background-image: url("img_parallax3.jpg"); */
-          min-height: 100%;
+          min-height: 980px;
         }
-        .bgimg-1, .bgimg-2, .bgimg-3 , .bgimg-4 {
+        .bgimg-1, .bgimg-2, .bgimg-3 , .bgimg-4 , .bgimg-0{
           position: relative;
           opacity: 0.65;
           background-attachment: fixed;
           background-position: center;
           background-repeat: no-repeat;
           background-size: cover;
+            
+        }
         
-        }
-        body, html {
-          height: 100%;
-          margin: 0;
-          font: 400 15px/1.8 "Lato", sans-serif;
-          color: #777;
-        }
 
+/*---canvas test for clock----*/
+#canvas {
+  display:block;
+  margin:5vh auto;
+  border-radius:50%;
+  box-shadow: 0 5px 14px black;
+}
+/*-------*/
+
+/*-----wheather icon setting -----*/
+.clear-day{  background-image: url('/img/weather/clear-day.png')  }
+.clear-night{  background-image: url('/img/weather/clear-night.png') }
+.cloudy{  background-image: url('/img/weather/cloudy.png')  }
+.fog{  background-image : url('/img/weather/fog.png') ; }
+.partly-cloudy-day{  background-image: url('/img/weather/partly-cloudy-day.png') }
+.partly-cloudy-night{  background-image: url('/img/weather/partly-cloudy-night.png')  }
+.rain{  background-image: url('/img/weather/rain.png')  }
+.sleet{  background-image: url('/img/weather/sleet.png')  }
+.snow{  background-image: url('/img/weather/snow.png')  }
+.wind{  background-image: url('/img/weather/wind.png')  }
+.weather{
+    color: white;
+    max-width: 65rem;;
+    min-width: 55rem;
+    padding:1rem;
+    opacity: 0.7;
+}
+.weather .icon{
+    z-index: -1;
+    font-family: 'weathericons';
+    top: 1rem;
+    left: 1rem;
+    height: 50px;
+    z-index: 9999;
+    float:left;
+    
+}
+.weather .content{
+    margin-left: 1rem;
+    float: right;;
+}
+i {
+    display: inline-block;
+    height: 15rem;
+    width: 15rem;
+    margin-top: 3rem;
+    border-radius: 50%;
+    background-size: auto 100%; 
+    background-repeat: no-repeat;
+    background-attachment: inherit;
+    /* background-image: url(/img/weather/rain.png); */
+    /* stay rotate icon image */ 
+    -webkit-animation:spin 4s linear infinite; 
+     -moz-animation:spin 4s linear infinite; 
+     animation:spin 10s linear infinite; 
+}
+/*----------*/
+
+ 
     </style>
 </head>
 <body>
@@ -66,9 +125,12 @@
             <button class="btn" id="btnChangeDesk">
                 <span class="text">Press Me!</span>
             </button>
-            <a href="./popup3.html"  class="btn">
+            <a href="./clockpurecss.html"  class="btn">
                 <span class="text">Press Me!</span>
             </a>
+            <button class="btn" id="delCookie">
+                <span class="text">DeleteCookie</span>
+            </button>
         </div>
         <div class="descpage intro_1" id="desck_1">
             <div class="bgimg-1">
@@ -84,46 +146,52 @@
                 </div>
             </div>
             <div class="bgimg-2">
-                <div class="caption">
-                     <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">LESS HEIGHT</span>
-                </div>
-            </div>
-            <div class="bgimg-3">
-                <div class="caption">
-                    <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span>
-                </div>
-            </div>
-            <div class="bgimg-4">
-                <div class="caption">
-                    <span class="border">COOL!</span>
+                <div class="row_container">
+                    <div class="weather time-morning active">
+                        <div class="icon">
+                            <i class="clear-night"></i>
+                        </div>
+                        <div class="content">
+                            <h3>Morning</h3>
+                            <div class="degrees">- 1</div>
+                            <div class="data">          
+                            <h2>Sunny</h2>
+                            <div>Wind: E 7 mph</div>
+                            <div>Humidity: 91%</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="container intro_2" id="desck_2">
-            <div class="row" >
-                <button class="btn" id="btnGetNews">
-                    <span class="text">Get!!!!</span>
-                </button>
-                <select class="custom-select" id="n_selectBox">
-                </select>
-            </div>
-            <div class="row">
-                <div class="newsContent col-sm-4">
-                    <div>
-                        <details>
-                            <summary>Standard Room</summary>
-                            <p>A standard room of a standard size, with a standard number of beds. Comes with the standard number of facilities. The view is of, well the usual. No balcony.</p>
-                        <details>
+        <div class="intro_2 bgimg-0" id="desck_2">
+            <div class="">
+                <div class="row" >
+                    <div class="row_container">
+                        <button class="btn" id="btnGetNews">
+                            <span class="text">Get!!!!</span>
+                        </button>
+                        <select class="custom-select" id="n_selectBox">
+                        </select>
                     </div>
                 </div>
-                <div class="blog-container col-sm-6">
-                    <div class="blog-body">
-                        <div class="blog-title">
-                        <h1><a href="#"></a></h1>
+                <div class="row">
+                    <div class="newsContent col-sm-4">
+                        <div>
+                            <details>
+                                <summary>Standard Room</summary>
+                                <p>A standard room of a standard size, with a standard number of beds. Comes with the standard number of facilities. The view is of, well the usual. No balcony.</p>
+                            <details>
                         </div>
-                        <div class="blog-summary">
-                        <p></p>
+                    </div>
+                    <div class="blog-container col-sm-6">
+                        <div class="blog-body">
+                            <div class="blog-title">
+                            <h1><a href="#"></a></h1>
+                            </div>
+                            <div class="blog-summary">
+                            <p></p>
+                            </div>
                         </div>
                     </div>
                 </div>

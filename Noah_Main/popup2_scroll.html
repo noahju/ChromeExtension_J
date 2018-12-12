@@ -4,7 +4,7 @@
                 <link href="css/bootmin.css" rel="stylesheet" type="text/css" />
                 <script type="text/javascript" src="lib/jquery-min.js"></script>
                 <script type="text/javascript" src="lib/bootstrap.min.js"></script>
-                <script type='text/javascript' src='js/mytab.js'></script>
+                
                 <script type='text/javascript' src='js/main_scrollDownMain.js'></script>
         <style>
         body, html {
@@ -71,39 +71,16 @@
             background-attachment: scroll;
           } 
         }
+        #canvas {
+          display:block;
+          margin:5vh auto;
+          border-radius:50%;
+          box-shadow: 0 5px 14px black;
+        }
+
         </style>
         </head>
         <body>
-        
-        <div class="bgimg-1">
-          <div class="caption">
-          <span class="border">SCROLL DOWN</span>
-          </div>
-        </div>
-        
-        
-        
-        <div class="bgimg-2">
-          <div class="caption">
-          <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">LESS HEIGHT</span>
-          </div>
-        </div>
-        
-        
-        
-        <div class="bgimg-3">
-          <div class="caption">
-          <span class="border" style="background-color:transparent;font-size:25px;color: #f7f7f7;">SCROLL UP</span>
-          </div>
-        </div>
-        
-        
-        
-        <div class="bgimg-4">
-          <div class="caption">
-          <span class="border">COOL!</span>
-          </div>
-        </div>
-        
+            <canvas id="canvas" width="400" height="400"></canvas>
         </body>
         </html>
