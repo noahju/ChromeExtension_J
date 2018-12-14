@@ -63,6 +63,7 @@ $(document).ready(function(){
         nCountry = "kr"
         newsAPi(nCode , nCountry);
     })            
+    ///----- add newspaper Co -----------
     var get_news_url__ = chrome.extension.getURL("/lib/NEWS_SOURCE.json");
     
     $.getJSON(get_news_url__ , function(res){
@@ -80,7 +81,34 @@ $(document).ready(function(){
         console.log(this.value)
         newsAPi(this.value, "");
     });
- 
+    ///----- add newspaper Co End-----------
+    ///----- add Country Co -----------
+    var get_newsCountry_url__ = chrome.extension.getURL("/lib/NEWS_COUNTRY.json");
+    $.getJSON(get_newsCountry_url__ , function(res){
+       $("#ncountry_selectBox").empty();
+        $.each(res , function (i, item) {
+            $("#ncountry_selectBox")
+            .append($('<a>', { 
+                href: "javascritp:;",
+                value : item.title 
+                })
+                .append("<img src='"+getImageUrl(item.title)+"'>")
+            );
+        });
+    });
+
+    /// add event listener 
+    var $n_items =document.getElementById("ncountry_selectBox");
+    $n_items.addEventListener("click", function(e) {
+        if(e.target && e.target.matches("a")){
+            var obj = e.target;   
+            newsAPi("",  obj.getAttribute("value"));
+        } 
+    });
+    ///----- add Country Co End-----------
+
+
+
  //---get source from open api ----------------------------------------------------------------------------------------------------
     // var nsourcetemp = [];
     // var nstemp = document.getElementById("NEWS_SOURCE").getElementsByClassName("source");
@@ -92,6 +120,9 @@ $(document).ready(function(){
 //-------------------------------------------------------------------------------------------------------
 });
 
+function getImageUrl(str){
+    return "https://newsapi.org/images/flags/" + str + ".svg"
+}
 
 ///---------------------------------------------------
 /// cookie object 
@@ -165,19 +196,26 @@ async function getData(){
     var p_obj = new POUCHBD_DAC("3");
     var p_data  = await p_obj.GETALLDOC();
     console.log(p_data);
-    $(".doinglist ul").empty();
+    // $(".doinglist ul").empty();
     
-    p_data.forEach( item => {
-        var html = "<li>"
-        + "<input type='text' value='" + item.doc.navigationData.n_title  +  "' />"
-        + " <span>" +  getFormattedDate(item.doc.navigationData.n_regdate) + "</span>  "
-        + "<button class='btn' data-dataid='" + item.id + "'>"
-        + "         <span>X</span>"
-        + "</button>"
-        + "</li>";
-        $(".doinglist ul").append(html);
+    // p_data.forEach( item => {
+    //     var html = "<li>"
+    //     + "<input type='text' value='" + item.doc.navigationData.n_title  +  "' />"
+    //     + " <span>" +  getFormattedDate(item.doc.navigationData.n_regdate) + "</span>  "
+    //     + "<button class='btn' data-dataid='" + item.id + "'>"
+    //     + "         <span>X</span>"
+    //     + "</button>"
+    //     + "</li>";
+    //     $(".doinglist ul").append(html);
+    // });
+    $(".doingTime_container").empty();
+    p_data.forEach( (item , index ) =>{
+        $(".doingTime_container").append(
+            " <div class='doingTime_content'>" 
+            + "<span>" + ConvertToDate(item.doc.navigationData.n_regdate, 2 ) + "</span>"
+            + "<p>" + item.doc.navigationData.n_title + "</p>"
+        )
     });
-
 }
 
 
@@ -195,11 +233,6 @@ function getFormattedDate(n_regdateStr) {
     return month + "-" + day + "-" + year;
   }
 
-  
-
-
-
-
   var newsAPi = function( news_Type , country  ){
     var Init_key = "cce2ec7aae82464aa36126ae2e7f43bc";
     var Init_Url = "https://newsapi.org/v2/everything";
@@ -208,21 +241,32 @@ function getFormattedDate(n_regdateStr) {
     //https://newsapi.org/v2/everything?sources=xinhua-net&apiKey=cce2ec7aae82464aa36126ae2e7f43bc
     //var makeCallUrl = Init_HeadLine_url + "?sources=" + news_Type + "&apiKey=" + Init_key; 
     //var makeCallUrl = Init_HeadLine_url + "?country=" + country + "&apiKey=" + Init_key; 
-    var makeCallUrl = "https://newsapi.org/v2/everything?sources=" + news_Type + "&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
-    var param = {  };
+    var makeCallUrl = Init_Url;
+    if( news_Type == "" && country.length > 0 ){
+        makeCallUrl = "https://newsapi.org/v2/top-headlines?country=" + country + "&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
+    }else{
+        makeCallUrl = "https://newsapi.org/v2/everything?sources=" + news_Type + "&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
+    }
     
+    var param = {  };
     var ajaxobj = new fnAjaxObj();
     news_1(makeCallUrl);
   }
-  var rendernewsHtml = function(obj){
-    if(obj.length <= 0){
+  var rendernewsHtml = function(obj_param){
+    if(obj_param.length <= 0){
         return;
     }
-    
+
+    var obj = null;
+    obj = obj_param;
+
+
     $(".newsContent").show();
     $(".newsContent div").empty();
     $(".blog-title a").empty();
     $(".blog-summary p").empty();
+
+    document.querySelector(".newsContent").removeEventListener("click" , null );
 
     obj.articles.forEach( (item , index)  => {
         var html = "  <article data-id = '" + index + "'>"
@@ -238,8 +282,8 @@ function getFormattedDate(n_regdateStr) {
             // do your action on your 'li' or whatever it is you're listening for
             var news_id = $(event.target).parent().data("id");
             var news_selector = obj.articles[news_id];
-            console.log(news_selector);
-            console.log(news_selector.title);
+            console.log("news_selector : " + news_selector);
+            console.log("title : " + news_selector.title);
             $(".blog-title a").empty();
             $(".blog-title a").append(news_selector.title);
             $(".blog-summary p").empty();
@@ -250,13 +294,6 @@ function getFormattedDate(n_regdateStr) {
                     ,'background-size':'cover'
                     ,'background-repeat':'no-repeat'
                 });
-/*
-$('body').css({
-            'background-image': 'url(\'' + this.src + '\')'
-            , 'background-size': 'cover'
-            , 'background-repeat': 'no-repeat'
-        }).removeClass('loading');*/
-
             }
             $(".blog-title").find("a").attr("href", news_selector.url);
             $(".blog-title").find("a").attr("target", "_blank");
@@ -264,18 +301,6 @@ $('body').css({
             $(".blog-container").show();
           }
     })
-    // var newContetn = document.getElementsByClassName("newsContent");
-    
-    // console.log(newContetn);
-    // newContetn.forEach(item=>{
-    //     $(item).addEventListener("click" , item =>{
-    //         if(item.target && item.target.nodeName === "article"){
-    //             consoel.log(item.target);
-    //         }
-    //     });
-    // });
-    
-
   }
 
 
@@ -352,12 +377,27 @@ var weather = async function(){
     var get_weather_obj = new POUCHBD_DAC("5");
     
     var weatherCookie = await get_weather_obj.GETALLDOC();
+    console.log(weatherCookie);
     /*
     console.log(weatherCookie[0].doc.Obj);
     weatherRender(weatherCookie[0].doc.Obj);
     return;
     */
-    if(weatherCookie[0].doc.Obj == undefined || weatherCookie[0].doc.Obj == null || weatherCookie[0].doc.Obj == ""){
+    var tempnow = new Date((weatherCookie[0].doc.Obj.currently.time)*1000);
+    var tempToday = tempnow.getFullYear() + "" + (tempnow.getMonth()+1) + "" +  tempnow.getDate();
+     
+    var _tempnow = new Date();
+    var _tempToday = _tempnow.getFullYear() + "" + (_tempnow.getMonth()+1) + "" +  _tempnow.getDate();
+     
+     
+    if( weatherCookie.length < 1 ||
+        weatherCookie == null ||
+        weatherCookie[0].doc == null ||
+        weatherCookie[0].doc.Obj == undefined || 
+        weatherCookie[0].doc.Obj == null || 
+        weatherCookie[0].doc.Obj == "" ||
+        ( tempToday != _tempToday )
+    ){
         
         $.getJSON(get_weather_url__ , function(res){
             console.log(res)
@@ -380,12 +420,12 @@ var weatherRender  = function(weatherObj ){
     
     $(".weather .content").empty();
             $(".weather .content").append(
-                    "<h3>" + ConvertToDate(weatherObj.currently.time) + "</h3>"
-                    + "<div class='degrees'> temperature : " + weatherObj.currently.temperature + "</div>"
+                    "<h3> 時刻 : " + ConvertToDate(weatherObj.currently.time, 3) + "</h3>"
+                    + "<div class='degrees'> 体感温度 : " + weatherObj.currently.apparentTemperature + "</div>"
                     + "<div class='data'>"          
-                    +"<h2>" + weatherObj.currently.summary + "</h2>"
-                    +"<div>Wind: " + weatherObj.currently.windSpeed + "</div>"
-                    +"<div>Humidity: "+ Math.floor((weatherObj.currently.humidity*100)) + "%</div>"
+                    +"<h2> 概要 : " + weatherObj.currently.summary + "</h2>"
+                    +"<div> 風速 : " + weatherObj.currently.windSpeed + "</div>"
+                    +"<div> 湿度 : "+ Math.floor((weatherObj.currently.humidity*100)) + "%</div>"
                     + "</div>"
             );
     
@@ -394,19 +434,38 @@ var weatherRender  = function(weatherObj ){
 
 weather();
 
-var ConvertToDate = function(dateStr){
+var ConvertToDate = function(dateStr , d_type ){
+       var retStr ;
        var timestamp = dateStr;
        var now = new Date(timestamp*1000);
        
        var today = now.toDateString();
        var time = now.toLocaleTimeString();
+       var todayDate = now.getDate();
+       var todayMonth = now.getMonth() + 1;
+       var todayYear = now.getFullYear();
+
        var hours = now.getHours();
        var minutes = now.getMinutes();
        var seconds = now.getSeconds();
        var milliseconds = now.getMilliseconds();
        var newSeconds = seconds + (milliseconds/1000);
 
-       return today + " " + time ;
+    switch(d_type){
+        case 1:
+            retStr =  today + " " + time ;
+            break;
+        case 2:
+            retStr =  todayYear + "" + todayMonth + "" + todayDate;
+            break;
+        default :
+            retStr =  today;
+            break;
+        break;
+    }
+        
+    return retStr;
+       
 }
 
 

@@ -1,4 +1,97 @@
 {
+//   currently
+// 項目名	内容
+// time	時刻
+// summry	概要
+// icon	アイコン
+// nerestStormDistnce	近くの嵐までの距離
+// nerestStormBering	近くの嵐の向き
+// precipIntensity	降水量
+// precipProbbility	降水確率
+// temperture	温度
+// pprentTemperture	体感温度
+// dewPoint	露点
+// humidity	湿度
+// pressure	圧力
+// windSpeed	風速
+// windGust	暴風
+// windBering	風向き
+// cloudCover	雲
+// uvIndex	UV指数
+// visibility	可視性
+// ozone	オゾン
+// minutely
+// 項目名	内容
+// time	時刻
+// precipIntensity	降水量
+// precipProbbility	降水確率
+
+
+// hourly
+// 項目名	内容
+// time	時刻
+// summry	概要
+// icon	アイコン
+// precipIntensity	降水量
+// precipProbbility	降水確率
+// temperture	温度
+// pprentTemperture	体感温度
+// dewPoint	露点
+// humidity	湿度
+// pressure	圧力
+// windSpeed	風速
+// windGust	暴風
+// windBering	風向き
+// cloudCover	雲
+// uvIndex	UV指数
+// visibility	可視性
+// ozone	オゾン
+// daily
+// 最後の8項目は、よく分かりませんでした。
+
+// 項目名	内容
+// time	時刻
+// summry	概要
+// icon	アイコン
+// sunriseTime	日の出時間
+// sunsetTime	日没時間
+// moonPhse	月相
+// precipIntensity	降水量
+// precipIntensityMx	最大降水量
+// precipProbbility	降水確率
+// tempertureHigh	最高気温
+// tempertureHighTime	最高気温時刻
+// tempertureLow	最低気温
+// tempertureLowTime	最低気温時刻
+// pprentTempertureHigh	体感最高気温
+// pprentTempertureHighTime	体感最高気温時刻
+// pprentTempertureLow	体感最低気温
+// pprentTempertureLowTime	体感最低気温時刻
+// dewPoint	露点
+// humidity	湿度
+// pressure	圧力
+// windSpeed	風速
+// windGust	暴風
+// windGustTime	暴風時刻
+// windBering	風向き
+// cloudCover	雲
+// uvIndex	UV指数
+// uvIndexTime	UV指数時刻
+// visibility	可視性
+// ozone	オゾン
+// tempertureMin	最高気温？
+// tempertureMinTime	最高気温時刻？
+// tempertureMx	最低気温？
+// tempertureMxTime	最低気温時刻？
+// pprentTempertureMin	体感最高気温？
+// pprentTempertureMinTime	体感最高気温時刻？
+// pprentTempertureMx	体感最低気温？
+// pprentTempertureMxTime	体感最低気温時刻？
+
+
+
+
+
     "latitude": 37.56621,
     "longitude": 126.9779,
     "timezone": "Asia/Seoul",

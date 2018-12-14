@@ -12,32 +12,33 @@
     <script type='text/javascript' src='js/mytab.js'></script>
     <script type='text/javascript' src='js/pouchdb-7.0.0.js'></script>
     <!-- <script type='text/javascript' src='js/pouchdbfind.js'></script>  -->
-    <script type='text/javascript' src='js/PouchDac.js'></script> 
+    <script type='text/javascript' src='js/PouchDac.js'></script>
     <script type='text/javascript' src='js/main.js'></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <style>
        @media only screen and (max-device-width: 1024px) {
           .bgimg-1, .bgimg-2, .bgimg-3 {
             background-attachment: scroll;
-          } 
+          }
         }
         /*
         */
         .bgimg-0 {
-            background-image: url("img/22390016_xl.jpg"); 
+            background-image: url("img/22390016_xl.jpg");
             min-height: 980px;
         }
         .bgimg-1 {
-          background-image: url("img/42729399_xl.jpg"); 
+          background-image: url("img/42729399_xl.jpg");
           min-height: 980px;
         }
-        
+
         .bgimg-2 {
-          background-image: url("img/53679405_xl.jpg"); 
+          background-image: url("img/53679405_xl.jpg");
           min-height: 980px;
         }
-        
+
         .bgimg-3 {
-          background-image: url("img/729399_xl.jpg"); 
+          background-image: url("img/729399_xl.jpg");
           min-height: 980px;
         }
         .bgimg-4 {
@@ -46,14 +47,14 @@
         }
         .bgimg-1, .bgimg-2, .bgimg-3 , .bgimg-4 , .bgimg-0{
           position: relative;
-           opacity: 0.65; 
+           opacity: 0.65;
           background-attachment: fixed;
           background-position: center;
           background-repeat: no-repeat;
           background-size: cover;
-            
+
         }
-        
+
 
 /*---canvas test for clock----*/
 #canvas {
@@ -90,30 +91,212 @@
     height: 50px;
     z-index: 9999;
     float:left;
-    
+
 }
 .weather .content{
     margin-left: 1rem;
     float: right;;
 }
-i {
+.weather i {
     display: inline-block;
     height: 15rem;
     width: 15rem;
     margin-top: 3rem;
     border-radius: 50%;
-    background-size: auto 100%; 
+    background-size: auto 100%;
     background-repeat: no-repeat;
     background-attachment: inherit;
     /* background-image: url(/img/weather/rain.png); */
-    /* stay rotate icon image */ 
-    -webkit-animation:spin 4s linear infinite; 
-     -moz-animation:spin 4s linear infinite; 
-     animation:spin 10s linear infinite; 
+    /* stay rotate icon image */
+    -webkit-animation:spin 4s linear infinite;
+     -moz-animation:spin 4s linear infinite;
+     animation:spin 10s linear infinite;
+}
+/*-------------------------------*/
+
+
+.news_country{
+  position: relative;
+  width: 16rem;
+  z-index: 9999;
+}
+.n_btn{
+  border:none;
+  color: white;
+  background: #2ecc71;
+  padding: 8px, 12px;
+  cursor: pointer;
+  font-size: 2rem;
+  width:inherit;
+  border-radius: 0.7rem;
+}
+.n_country_content{
+  width: inherit;
+  position: absolute;
+  height: 25rem;
+  overflow: scroll;
+}
+.n_country_content a{
+  text-decoration: none;
+  color:white;
+  background: #27ae60;
+  padding : 8px 2px;
+  font-size: 1rem;
+  display: none;
+  text-align: center;
+}
+.n_country_content a img{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+.n_country_content a:hover{
+  background: #16a085;
+}
+.news_country:hover >.n_country_content a{
+  display: block;
+  animation: 1s ease-in-out;
 }
 /*----------*/
+ /*--------doinglist time line ----------------------------------------------*/
+ .doingTime_container{
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+    font-family: sans-serif;
+    height: 60rem;
+    overflow: scroll;
+}
+.doingTime_container span{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 300;
+    font-size: 2rem;
 
- 
+}
+.doingTime_container:before{
+    content:'';
+    width:10px;
+    height:100%;
+    background: #313131;
+    position: absolute;
+    left:20px;
+}
+.doingTime_content{
+    background: white;
+    padding: 20px;
+    height: 8rem;
+    margin:20px 60px;
+    width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+.doingTime_content::before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: white;
+    position: absolute;
+    left: -10px;
+    top:50%;
+    transform:translateY(-50%) rotate(45deg);
+}
+.doingTime_content::after{
+    content:'';
+    width:20px;
+    top : 50%;
+    height: 20px;
+    background: #2ecc71;
+    position: absolute;
+    left: -55px;
+    border-radius: 50%;
+    transform:translateY(-50%);
+}
+
+/*--------doinglist time line ----------------------------------------------*/
+ /* ----------------bottom animation  bar ----------------*/
+ .middle{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,50%)
+}
+.bar{
+    display: inline-block;
+    width: 0.5rem;
+    height: 1rem;
+    background: #2ecc56;
+    transform-origin: bottom center;
+    animation: loading 1.5s ease-in-out infinite;
+}
+.bar1{ animation-delay: 0.1s}
+.bar2{ animation-delay: 0.2s}
+.bar3{ animation-delay: 0.3s}
+.bar4{ animation-delay: 0.4s}
+.bar5{ animation-delay: 0.5s}
+.bar6{ animation-delay: 0.6s}
+.bar7{ animation-delay: 0.7s}
+.bar8{ animation-delay: 0.8s}
+.bar9{ animation-delay: 0.9s}
+@keyframes loading{
+    0%{
+        transform: scaleY(1);
+        background: #2ecc56;
+    }
+    50%{
+        transform: scaleY(0.1);
+        background: #2ecc71;
+    }
+    100%{
+        transform: scaleY(1);
+        background: #2ecc56;
+    }
+}
+/* ----------------bottom bar End----------------*/
+    /* ----------------search ----------------*/
+.search_box{
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #2ecc71;
+    height: 5rem;
+    border-radius: 40px;
+    padding:10px;
+    transition:0.7s;
+}
+.search_btn{
+    display: flex;
+    float: right;
+    width: 3rem;
+    height:  3rem;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: #e74c3c;
+}
+.search_txt{
+    border:none;
+    background: none;
+    outline: none;
+    float: left;
+    font-size: 2rem;
+    line-height: 0.8rem;
+    transition: 1s;
+    color: white;
+    width: 0rem;
+}
+.search_box:hover > .search_txt{
+    padding:0,6rem;
+    width: 11rem;
+}
+.search_box:hover {
+    width: 20rem;
+}
+.search_box:hover > .search_btn{
+    background: #2ecc71;
+}
+/* ----------------search End ----------------*/
     </style>
 </head>
 <body>
@@ -136,14 +319,15 @@ i {
             <div class="bgimg-1">
                 <div class="mainclockarea">
                     <div class="digitalclockarea">
-                        <span class="time"></span>        
+                        <span class="time"></span>
                     </div>
                 </div>
                 <div class="mainarea">
                     <div class="quotes">
-                        <span id="quotes"></span>                   
+                        <span id="quotes"></span>
                     </div>
                 </div>
+
             </div>
             <div class="bgimg-2">
                 <div class="row_container">
@@ -154,7 +338,7 @@ i {
                         <div class="content">
                             <h3>Morning</h3>
                             <div class="degrees">- 1</div>
-                            <div class="data">          
+                            <div class="data">
                             <h2>Sunny</h2>
                             <div>Wind: E 7 mph</div>
                             <div>Humidity: 91%</div>
@@ -162,6 +346,7 @@ i {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="intro_2 bgimg-0" id="desck_2">
@@ -173,6 +358,13 @@ i {
                         </button>
                         <select class="custom-select" id="n_selectBox">
                         </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="news_country">
+                        <input type="button" class="n_btn" value="country">
+                        <div class="n_country_content" id="ncountry_selectBox">
+                        </div>
                     </div>
                 </div>
                 <div class="row news">
@@ -206,41 +398,75 @@ i {
                     <div class="tooth"></div>
                     <div class="tooth"></div>
                     <div class="tooth"></div>
-                </div>  
-            </div>    
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- FIXED MENU -->
     <div class="fixedlayer">
         <div class="fixedlayer_head">
-            
+
         </div>
         <div class="doinglist">
             <ul>
-                
+
             </ul>
         </div>
+
+        <div class="doingTime_container">
+            <div class="doingTime_content">
+                <h2>10 min</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+            </div>
+            <div class="doingTime_content">
+                <h2>10 min</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+            </div>
+            <div class="doingTime_content">
+                <h2>10 min</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+            </div>
+            <div class="doingTime_content">
+                <h2>10 min</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+            </div>
+        </div>
+
+
         <div class="doingInputArea">
             <!-- <div>
                 <input type="text" value="" id="doingTxt" placeholder="...">
                 <button id="doingBtn" class="btn" >add</button>
                 <button id="deleteBtn" class="btn" >delete All</button>
             </div> -->
-            <div>
+            <!-- <div>
                 <div class="flex-form">
                     <label for="from">
                         <i class="ion-location"></i>
                     </label>
-                    <input type="search" class="form-control" id="doingTxt" placeholder="What's your target today ?">
-                    <input type="submit" class="btn-light" id="doingBtn" value="Save Todo">
+                    <input type="search" class="form-control"  placeholder="What's your target today ?">
+                    <input type="submit" class="btn-light"  value="Save Todo">
                 </div>
+            </div> -->
+            <div class="search_box">
+                <input class="search_txt" type="text" placeholder="text here" id="doingTxt" >
+                <a class="search_btn" href="#" id="doingBtn" >
+                    <i class="fas fa-igloo"></i>
+                </a>
             </div>
         </div>
-    </div>
-    <style>
-            
-       
-</style>
+        <div class="middle">
+            <div class="bar bar1"></div>
+            <div class="bar bar2"></div>
+            <div class="bar bar3"></div>
+            <div class="bar bar4"></div>
+            <div class="bar bar5"></div>
+            <div class="bar bar6"></div>
+            <div class="bar bar7"></div>
+            <div class="bar bar8"></div>
+            <div class="bar bar9"></div>
+        </div>
+    </div>    
 </body>
 </html>
