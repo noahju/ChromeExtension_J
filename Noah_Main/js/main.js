@@ -1,11 +1,11 @@
 $(document).ready(function(){
     //var mytap = new MYTAP(3);
-    
+
     startTime();
     getpoemdata();
     getData();
     //console.log(chrome.bookmarks);
-    
+
 
     var fixedlayerCookie = C_COOKIE.getCookie("fixedlayer");
     if (fixedlayerCookie != "" && fixedlayerCookie != null && fixedlayerCookie == true){
@@ -26,7 +26,7 @@ $(document).ready(function(){
     });
 
     $(document).on("click" , "#btnChangeDesk" , function(){
-        $("#desck_1").toggle( );    
+        $("#desck_1").toggle( );
         $("#desck_2").toggle( );
     });
 
@@ -40,15 +40,15 @@ $(document).ready(function(){
         }
         var pouchDbobj = new POUCHBD_DAC("3");
         var doingObj = {
-            n_title : doingtxt, 
+            n_title : doingtxt,
             n_regdate : Date.now(),
             n_uptdate : Date.now(),
-            n_auth : 'noah' 
+            n_auth : 'noah'
         }
         pouchDbobj.INSERT_DATA(doingObj);
         getData();
     });
-    
+
     $(document).on("click" , ".doinglist .btn" , async function(){
         var del_id = $(this).data('dataid');
         var pouchDbobj = new POUCHBD_DAC("3");
@@ -62,16 +62,16 @@ $(document).ready(function(){
         nCode = "techcrunch-cn";
         nCountry = "kr"
         newsAPi(nCode , nCountry);
-    })            
+    })
     ///----- add newspaper Co -----------
     var get_news_url__ = chrome.extension.getURL("/lib/NEWS_SOURCE.json");
-    
+
     $.getJSON(get_news_url__ , function(res){
-       
+
         $.each(res , function (i, item) {
-            $("#n_selectBox").append($('<option>', { 
+            $("#n_selectBox").append($('<option>', {
                 value: item.value,
-                text : item.title 
+                text : item.title
             }));
         });
     });
@@ -88,22 +88,22 @@ $(document).ready(function(){
        $("#ncountry_selectBox").empty();
         $.each(res , function (i, item) {
             $("#ncountry_selectBox")
-            .append($('<a>', { 
+            .append($('<a>', {
                 href: "javascritp:;",
-                value : item.title 
+                value : item.title
                 })
                 .append("<img src='"+getImageUrl(item.title)+"'>")
             );
         });
     });
 
-    /// add event listener 
+    /// add event listener
     var $n_items =document.getElementById("ncountry_selectBox");
     $n_items.addEventListener("click", function(e) {
         if(e.target && e.target.matches("a")){
-            var obj = e.target;   
+            var obj = e.target;
             newsAPi("",  obj.getAttribute("value"));
-        } 
+        }
     });
     ///----- add Country Co End-----------
 
@@ -125,7 +125,7 @@ function getImageUrl(str){
 }
 
 ///---------------------------------------------------
-/// cookie object 
+/// cookie object
 ///---------------------------------------------------
 var C_COOKIE = {
     setCookie : function (cname, cvalue, exHour) {
@@ -177,11 +177,11 @@ function checkTime(i) {
 }
 
 
- function getpoemdata(){    
+ function getpoemdata(){
     var geturl__ = chrome.extension.getURL("/lib/quotes.json");
-    
+
     $.getJSON(geturl__ , function(res){
-        var myArray = res; 
+        var myArray = res;
         var rand = myArray[(Math.random() * myArray.length) | 0];
         console.log(rand);
         $("#quotes").html(rand.text)
@@ -197,7 +197,7 @@ async function getData(){
     var p_data  = await p_obj.GETALLDOC();
     console.log(p_data);
     // $(".doinglist ul").empty();
-    
+
     // p_data.forEach( item => {
     //     var html = "<li>"
     //     + "<input type='text' value='" + item.doc.navigationData.n_title  +  "' />"
@@ -211,7 +211,7 @@ async function getData(){
     $(".doingTime_container").empty();
     p_data.forEach( (item , index ) =>{
         $(".doingTime_container").append(
-            " <div class='doingTime_content'>" 
+            " <div class='doingTime_content'>"
             + "<span>" + ConvertToDate(item.doc.navigationData.n_regdate, 2 ) + "</span>"
             + "<p>" + item.doc.navigationData.n_title + "</p>"
         )
@@ -223,13 +223,13 @@ async function getData(){
 function getFormattedDate(n_regdateStr) {
     var n_date = new Date(n_regdateStr);
     var year = n_date.getFullYear();
-  
+
     var month = (1 + n_date.getMonth()).toString();
     month = month.length > 1 ? month : '0' + month;
-  
+
     var day = n_date.getDate().toString();
     day = day.length > 1 ? day : '0' + day;
-    
+
     return month + "-" + day + "-" + year;
   }
 
@@ -239,15 +239,15 @@ function getFormattedDate(n_regdateStr) {
     var Init_HeadLine_url = "https://newsapi.org/v2/top-headlines"
 
     //https://newsapi.org/v2/everything?sources=xinhua-net&apiKey=cce2ec7aae82464aa36126ae2e7f43bc
-    //var makeCallUrl = Init_HeadLine_url + "?sources=" + news_Type + "&apiKey=" + Init_key; 
-    //var makeCallUrl = Init_HeadLine_url + "?country=" + country + "&apiKey=" + Init_key; 
+    //var makeCallUrl = Init_HeadLine_url + "?sources=" + news_Type + "&apiKey=" + Init_key;
+    //var makeCallUrl = Init_HeadLine_url + "?country=" + country + "&apiKey=" + Init_key;
     var makeCallUrl = Init_Url;
     if( news_Type == "" && country.length > 0 ){
         makeCallUrl = "https://newsapi.org/v2/top-headlines?country=" + country + "&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
     }else{
         makeCallUrl = "https://newsapi.org/v2/everything?sources=" + news_Type + "&apiKey=cce2ec7aae82464aa36126ae2e7f43bc";
     }
-    
+
     var param = {  };
     var ajaxobj = new fnAjaxObj();
     news_1(makeCallUrl);
@@ -277,7 +277,7 @@ function getFormattedDate(n_regdateStr) {
     });
 
     document.querySelector(".newsContent").addEventListener('click' , function(event){
-        
+
         if (event.target.tagName.toLowerCase() === 'h5') {
             // do your action on your 'li' or whatever it is you're listening for
             var news_id = $(event.target).parent().data("id");
@@ -346,7 +346,7 @@ fnAjaxObj.prototype.fnajax =  function( url , param , fnCallback ){
         type: 'GET',
         url: url ,
         data: param,
-        dataType: 'jsonp', 
+        dataType: 'jsonp',
         jsonpCallback: fnObj ,
         beforeSend: function (jqXHR, opts) {
             //전송중일때
@@ -375,7 +375,7 @@ fnAjaxObj.prototype.fnAjaxCallback = function(res){
 var weather = async function(){
     var get_weather_url__ = "https://api.darksky.net/forecast/67e07d1121f1c1ada1b11c382679de00/37.56621,126.9779";
     var get_weather_obj = new POUCHBD_DAC("5");
-    
+
     var weatherCookie = await get_weather_obj.GETALLDOC();
     console.log(weatherCookie);
     /*
@@ -383,52 +383,63 @@ var weather = async function(){
     weatherRender(weatherCookie[0].doc.Obj);
     return;
     */
-    var tempnow = new Date((weatherCookie[0].doc.Obj.currently.time)*1000);
-    var tempToday = tempnow.getFullYear() + "" + (tempnow.getMonth()+1) + "" +  tempnow.getDate();
-     
-    var _tempnow = new Date();
-    var _tempToday = _tempnow.getFullYear() + "" + (_tempnow.getMonth()+1) + "" +  _tempnow.getDate();
-     
-     
-    if( weatherCookie.length < 1 ||
-        weatherCookie == null ||
-        weatherCookie[0].doc == null ||
-        weatherCookie[0].doc.Obj == undefined || 
-        weatherCookie[0].doc.Obj == null || 
-        weatherCookie[0].doc.Obj == "" ||
-        ( tempToday != _tempToday )
+    if(
+      weatherCookie.length < 1 ||
+          weatherCookie == null ||
+          weatherCookie[0].doc == null ||
+          weatherCookie[0].doc.Obj == undefined ||
+          weatherCookie[0].doc.Obj == null ||
+          weatherCookie[0].doc.Obj == ""
+
     ){
-        
-        $.getJSON(get_weather_url__ , function(res){
-            console.log(res)
-            weatherRender(res);
-            var weather_obj = new POUCHBD_DAC("5");
-            
-            weather_obj.INSERT_DATA_2(res);
-            
-            //C_COOKIE.setCookie("weatherCookie" , JSON.stringify(res)  , 2);
-        });
-    }else{
-        /*블반*/
+      $.getJSON(get_weather_url__ , function(res){
+          console.log(res)
+          weatherRender(res);
+          var weather_obj = new POUCHBD_DAC("5");
+
+          weather_obj.INSERT_DATA_2(res);
+
+          //C_COOKIE.setCookie("weatherCookie" , JSON.stringify(res)  , 2);
+      });
+    }
+    else{
+      var tempnow = new Date((weatherCookie[0].doc.Obj.currently.time)*1000);
+      var tempToday = tempnow.getFullYear() + "" + (tempnow.getMonth()+1) + "" +  tempnow.getDate();
+
+      var _tempnow = new Date();
+      var _tempToday = _tempnow.getFullYear() + "" + (_tempnow.getMonth()+1) + "" +  _tempnow.getDate();
+
+      if( tempToday != _tempToday){
+        console.log('its here');
+          $.getJSON(get_weather_url__ , function(res){
+              console.log(res)
+              weatherRender(res);
+              var weather_obj = new POUCHBD_DAC("5");
+
+              weather_obj.INSERT_DATA_2(res);
+
+              //C_COOKIE.setCookie("weatherCookie" , JSON.stringify(res)  , 2);
+          });
+      }else{
         weatherRender(weatherCookie[0].doc.Obj);
-        console.log("here1")
-    }    
+      }
+    }
 }
 
 var weatherRender  = function(weatherObj ){
     console.log(  "render : " +  weatherObj);
-    
+
     $(".weather .content").empty();
             $(".weather .content").append(
                     "<h3> 時刻 : " + ConvertToDate(weatherObj.currently.time, 3) + "</h3>"
                     + "<div class='degrees'> 体感温度 : " + weatherObj.currently.apparentTemperature + "</div>"
-                    + "<div class='data'>"          
+                    + "<div class='data'>"
                     +"<h2> 概要 : " + weatherObj.currently.summary + "</h2>"
                     +"<div> 風速 : " + weatherObj.currently.windSpeed + "</div>"
                     +"<div> 湿度 : "+ Math.floor((weatherObj.currently.humidity*100)) + "%</div>"
                     + "</div>"
             );
-    
+
             $(".weather .icon i").removeClass().addClass(weatherObj.currently.icon);
 }
 
@@ -438,7 +449,7 @@ var ConvertToDate = function(dateStr , d_type ){
        var retStr ;
        var timestamp = dateStr;
        var now = new Date(timestamp*1000);
-       
+
        var today = now.toDateString();
        var time = now.toLocaleTimeString();
        var todayDate = now.getDate();
@@ -463,9 +474,9 @@ var ConvertToDate = function(dateStr , d_type ){
             break;
         break;
     }
-        
+
     return retStr;
-       
+
 }
 
 
@@ -480,22 +491,22 @@ var ConvertToDate = function(dateStr , d_type ){
 
 
 //*****----------------------------------------------------------//
-// canvas test for clock 
+// canvas test for clock
 window.onload = init;
 
 var init = function(){
     const ctx = canvas.getContext('2d');
     ctx.strokeStyle = '#28d1fa';
-    
+
     ctx.lineWidth = 17;
     ctx.lineCap = 'round';
     ctx.shadowBlur = 15;
     ctx.shadowColor = '#28d1fa';
-    var canvas = document.getElementById('canvas');    
+    var canvas = document.getElementById('canvas');
 
 
     setInterval(renderTime, 40);
-    
+
 }
 
 
@@ -507,7 +518,7 @@ function degToRad(degree) {
 }
 
 function renderTime() {
-  
+
   var now = new Date();
   var today = now.toDateString();
   var time = now.toLocaleTimeString();
@@ -516,19 +527,19 @@ function renderTime() {
   var seconds = now.getSeconds();
   var milliseconds = now.getMilliseconds();
   var newSeconds = seconds+ (milliseconds/1000);
-  
+
   // Background
   gradient = ctx.createRadialGradient(200,200,5,200,200,300);
   gradient.addColorStop(0,'#09303a');
   gradient.addColorStop(1, '#000000');
   ctx.fillStyle = gradient;
   ctx.fillRect(0,0,400,400);
-  
+
   // Hours
   ctx.beginPath();
   ctx.arc(200, 200, 170, degToRad(270), degToRad((hours*30)-90));
   ctx.stroke();
-  
+
   // Minutes
    ctx.beginPath();
   ctx.arc(200, 200, 140, degToRad(270), degToRad((minutes*6)-90));
@@ -537,16 +548,16 @@ function renderTime() {
    ctx.beginPath();
   ctx.arc(200, 200, 110, degToRad(270), degToRad((newSeconds*6)-90));
   ctx.stroke();
-  // Date 
+  // Date
   ctx.font = "20px Helvetica";
   ctx.fillStyle = '#28d1fa';
   ctx.fillText(today, 140, 200);
-  
+
   // Time
   ctx.font = "15px Helvetica";
   ctx.fillStyle = '#28d1fa';
   ctx.fillText(time, 140, 230);
-  
+
 }
 
 
