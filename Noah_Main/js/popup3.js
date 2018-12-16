@@ -24,8 +24,12 @@ window.onload = function() {
    HistoryOfThisday(param);
    $(".historyofday").empty();
    $(".historyofday").append("History of the " + monthNames[selectedDt.getMonth()] +  ". " + item.target.innerHTML);
+   $(".modal").toggle();
  });
 
+$(document).on("click" ,".closebtn_btn" ,function() {
+    $(".modal").hide();
+});
 
 
 
