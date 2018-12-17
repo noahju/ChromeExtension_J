@@ -5,6 +5,8 @@ window.onload = function() {
 
   RenderCalendar(dt);
   HistoryOfThisday();
+
+  getData();
   $(".historyofday").append("History of the " + monthNames[selectedDt.getMonth()] +  ". " + selectedDt.getDate());
 
   $(document).on("click" ,".right" ,(item)=>{
@@ -18,12 +20,13 @@ window.onload = function() {
     selectedDt = BeforeDay;
   })
 
-
  $(document).on("click" ,".days li" ,(item) =>{
   var param  = "/" +  (selectedDt.getMonth() + 1) + "/" + item.target.innerHTML;
    HistoryOfThisday(param);
    $(".historyofday").empty();
    $(".historyofday").append("History of the " + monthNames[selectedDt.getMonth()] +  ". " + item.target.innerHTML);
+   $('.txtb_title p').empty();
+   $('.txtb_title p').append( selectedDt.getFullYear() + "-" + (selectedDt.getMonth()+ 1) + "-" + item.target.innerHTML  )
    $(".modal").toggle();
  });
 
@@ -31,12 +34,33 @@ $(document).on("click" ,".closebtn_btn" ,function() {
     $(".modal").hide();
 });
 
+$(document).on("click" , "#modal_btn" ,function(){
+  var date_doSomething = {
+      c_date : $(".txtb_title p").text(),
+      title : $('#modal_title').val(),
+      description : $('#modal_description').val(),
+      description2 : $('#modal_description2').val(),
+      description3 : $('#modal_description3').val()
+  }
+  console.log(date_doSomething);
+  var pouchdb = new POUCHBD_DAC("4");
+  pouchdb.INSERT_DATA(date_doSomething);
+  getData();
+});
+//* @公历转农历：calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
 
 
+//console.log(calendar.solar2lunar(selectedDt.getFullYear(),(selectedDt.getMonth()+1),selectedDt.getDate()));
+calendar.solar2lunarMonth(selectedDt.getFullYear(),(selectedDt.getMonth()+1));
 
 
 }
 
+var getData = async function() {
+  var pouchdbGet = new POUCHBD_DAC("4");
+  var pouch_calendarObj = await pouchdbGet.GETALLDOC();
+  console.log(pouch_calendarObj);
+}
 
 var RenderCalendar = function(millSecStr) {
   var today = new Date();
@@ -98,8 +122,5 @@ var HistoryOfThisday = function (dtparma) {
             $(".pro_event ul").append(sHtml);
        });
    });
-
-
-
 
 }
