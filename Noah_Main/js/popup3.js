@@ -3,7 +3,8 @@ window.onload = function() {
   var dt =  new Date();
   var selectedDt = dt;
 
-  RenderCalendar(dt);
+  //RenderCalendar(dt);
+  RenderChineseCalendar(dt);
   HistoryOfThisday();
 
   getData();
@@ -11,12 +12,12 @@ window.onload = function() {
 
   $(document).on("click" ,".right" ,(item)=>{
      var BeforeDay = new Date(selectedDt.getFullYear(), selectedDt.getMonth() + 1, 1);
-     RenderCalendar(BeforeDay);
+     RenderChineseCalendar(BeforeDay);
      selectedDt = BeforeDay;
   })
   $(document).on("click" ,".left" ,(item)=>{
     var BeforeDay = new Date(selectedDt.getFullYear(), selectedDt.getMonth() - 1, 1);
-    RenderCalendar(BeforeDay);
+    RenderChineseCalendar(BeforeDay);
     selectedDt = BeforeDay;
   })
 
@@ -48,10 +49,8 @@ $(document).on("click" , "#modal_btn" ,function(){
   getData();
 });
 //* @公历转农历：calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
-
-
 //console.log(calendar.solar2lunar(selectedDt.getFullYear(),(selectedDt.getMonth()+1),selectedDt.getDate()));
-calendar.solar2lunarMonth(selectedDt.getFullYear(),(selectedDt.getMonth()+1));
+//var chineseCalendar =  calendar.solar2lunarMonth(selectedDt.getFullYear(),(selectedDt.getMonth()+1));
 
 
 }
@@ -122,5 +121,43 @@ var HistoryOfThisday = function (dtparma) {
             $(".pro_event ul").append(sHtml);
        });
    });
+
+}
+
+var RenderChineseCalendar = function (millSecStr) {
+  var today = new Date();
+  if (millSecStr != undefined ||
+    millSecStr != ""||
+    typeof millSecStr != undefined
+   ) {
+     today = new Date(millSecStr);
+  }
+  $(".today span").empty();
+  $(".today span").append(
+    today.getDate() + " - " + (today.getMonth()+1)  + " - " + today.getFullYear()
+  );
+  //* @公历转农历：calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
+  //console.log(calendar.solar2lunar(selectedDt.getFullYear(),(selectedDt.getMonth()+1),selectedDt.getDate()));
+  var chineseCalendar =  calendar.solar2lunarMonth(today.getFullYear(),(today.getMonth()+1));
+
+  console.log(chineseCalendar);
+  var firstDay = new Date(chineseCalendar[0].cYear, (chineseCalendar[0].cMonth-1),chineseCalendar[0].cDay );
+  var firtstdayWeek  = firstDay.getDay();
+
+  var sHtml = "";
+  for (var j = 0; j < firtstdayWeek; j++) {
+    sHtml +=  "<li></li>";
+  }
+  for (var i = 0; i < chineseCalendar.length ; i++) {
+        sHtml += "<li>"
+         +"<div class='c_date'>"+ chineseCalendar[i].cDay +"</div>"
+         +"<div class='c_astr'>"+ chineseCalendar[i].astro +"</div>"
+         +"<div class='chinese_date'>" +
+         chineseCalendar[i].IDayCn + "/" +chineseCalendar[i].IMonthCn
+            + "</div>"
+         +"</li>";
+  }
+  $(".days ul").empty();
+  $(".days ul").append(sHtml);
 
 }
