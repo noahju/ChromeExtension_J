@@ -106,7 +106,54 @@ $(document).ready(function(){
         }
     });
     ///----- add Country Co End-----------
+    ///------exchange Info ------------
+    var exchange_country_url = "https://free.currencyconverterapi.com/api/v6/countries";
+    $.getJSON(exchange_country_url , (item)=>{
 
+        // alpha3: "AND"
+        // currencyId: "EUR"
+        // currencyName: "European euro"
+        // currencySymbol: "€"
+        // id: "AD"
+        // name: "Andorra"
+        $.each(item.results , function (itemname , item) {
+
+             $("#excountry1").append($('<option>', {
+                 value: item.currencyId,
+                 text : item.currencyName
+             }));
+             $("#excountry2").append($('<option>', {
+                 value: item.currencyId,
+                 text : item.currencyName
+             }));
+        });
+        $("#excountry1, #excountry2").on("change" ,function (e) {
+          var selectedStr = $("#excountry1").val() +"_" + $("#excountry2").val();
+          var param ={"q": selectedStr }
+            $.ajax({
+              url:"https://free.currencyconverterapi.com/api/v6/convert",
+              type: 'GET',
+              data: param,
+              dataType: 'json',
+              success: function (res) {
+                //console.log(res.results);
+                //console.log(res.results[selectedStr]);
+                $(".ExchangeInfo span").empty();
+                $(".ExchangeInfo span").html("The Exchange from " + res.results[selectedStr].fr + " To " + res.results[selectedStr].to + " is "+ res.results[selectedStr].val)
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                  console.log(errorThrown  + " __ " + textStatus + " __ " + jqXHR.status);
+                  //alert('서버와 통신중 에러가 발생했습니다. ' + errorThrown);
+              }
+            })
+        })
+    });
+
+
+
+
+
+    ///------exchange Info End---------
 
 
  //---get source from open api ----------------------------------------------------------------------------------------------------
@@ -183,7 +230,7 @@ function checkTime(i) {
     $.getJSON(geturl__ , function(res){
         var myArray = res;
         var rand = myArray[(Math.random() * myArray.length) | 0];
-        console.log(rand);
+      //console.log(rand);
         $("#quotes").html(rand.text);
         $(".quotes p").html(rand.from);
     });
@@ -211,9 +258,10 @@ async function getData(){
     // });
     $(".doingTime_container").empty();
     p_data.forEach( (item , index ) =>{
+
         $(".doingTime_container").append(
             " <div class='doingTime_content'>"
-            + "<span>" + ConvertToDate(item.doc.navigationData.n_regdate, 2 ) + "</span>"
+            + "<span>" + ConvertToDate(item.doc.navigationData.n_regdate, 0 ) + "</span>"
             + "<p>" + item.doc.navigationData.n_title + "</p>"
         )
     });
@@ -378,7 +426,7 @@ var weather = async function(){
     var get_weather_obj = new POUCHBD_DAC("5");
 
     var weatherCookie = await get_weather_obj.GETALLDOC();
-    console.log(weatherCookie);
+    //console.log(weatherCookie);
     /*
     console.log(weatherCookie[0].doc.Obj);
     weatherRender(weatherCookie[0].doc.Obj);
@@ -428,7 +476,7 @@ var weather = async function(){
 }
 
 var weatherRender  = function(weatherObj ){
-    console.log(  "render : " +  weatherObj);
+    //console.log(  "render : " +  weatherObj);
 
     $(".weather .content").empty();
             $(".weather .content").append(
@@ -449,7 +497,10 @@ weather();
 var ConvertToDate = function(dateStr , d_type ){
        var retStr ;
        var timestamp = dateStr;
-       var now = new Date(timestamp*1000);
+       if (timestamp < 10000000000) {
+         timestamp = timestamp*1000;
+       }
+       var now = new Date(timestamp);
 
        var today = now.toDateString();
        var time = now.toLocaleTimeString();
