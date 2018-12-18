@@ -107,15 +107,12 @@
     overflow: hidden;
   }
   .days ul li:hover{
-    background:  rgba(85,239,196,1.0);
-    box-shadow: -1px 1px 40px rgba(85,239,196,1.0);
-
-
+    box-shadow: -1px 1px 40px rgba(39, 174, 96,1.0);
   }
 
   .Events{
     position: relative;
-    background:linear-gradient(45deg , #55efc4 0% , #74b9ff 50%, #a29bfe 100%);
+    background:linear-gradient(45deg , #27ae60 0% , #2ecc71 50%, #1abc9c 100%);
     background-size: 400%;
     animation: bganimation 12s infinite;
     float: left;
@@ -207,7 +204,7 @@
     box-sizing: border-box;
 
 
-    background: #16a085;
+    background: #27ae60;
     border-radius:1rem;
     box-sizing: border-box;
     text-align: center;
@@ -371,19 +368,29 @@
   height: 2.5rem;
   font-size: 2rem;
 }
+.c_date:hover{
+  background: rgba(39, 174, 96,1.0);
+  color: white;
+}
+
 .c_astr{
   height: 1rem;
   display: block;
   font-size: 0.5rem;
-  background: #000;
-  color: white;
+  background: #ecf0f1;
+  color: #2c3e50;
   padding-top:0.2rem;
+}
+.c_date:hover > .c_astr{
+  background: rgba(46, 204, 113,1.0);
+  color: white;
 }
 .chinese_date{
   display: block;
-  background: #eee;
+  background: #ecf0f1;
   font-size: 0.3rem;
   height: 1rem;
+  color: #2c3e50
 }
   </style>
 </head>

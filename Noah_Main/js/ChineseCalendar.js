@@ -599,7 +599,6 @@ var calendar = {
 
             retDT.push(dtObj);
         }
-        console.log(retDT);
         return retDT;
         /*
         Animal: "狗"

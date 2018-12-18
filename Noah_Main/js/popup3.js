@@ -6,7 +6,7 @@ window.onload = function() {
   //RenderCalendar(dt);
   RenderChineseCalendar(dt);
   HistoryOfThisday();
-
+  boriboriBest100();
   getData();
   $(".historyofday").append("History of the " + monthNames[selectedDt.getMonth()] +  ". " + selectedDt.getDate());
 
@@ -43,7 +43,6 @@ $(document).on("click" , "#modal_btn" ,function(){
       description2 : $('#modal_description2').val(),
       description3 : $('#modal_description3').val()
   }
-  console.log(date_doSomething);
   var pouchdb = new POUCHBD_DAC("4");
   pouchdb.INSERT_DATA(date_doSomething);
   getData();
@@ -140,7 +139,6 @@ var RenderChineseCalendar = function (millSecStr) {
   //console.log(calendar.solar2lunar(selectedDt.getFullYear(),(selectedDt.getMonth()+1),selectedDt.getDate()));
   var chineseCalendar =  calendar.solar2lunarMonth(today.getFullYear(),(today.getMonth()+1));
 
-  console.log(chineseCalendar);
   var firstDay = new Date(chineseCalendar[0].cYear, (chineseCalendar[0].cMonth-1),chineseCalendar[0].cDay );
   var firtstdayWeek  = firstDay.getDay();
 
@@ -159,5 +157,26 @@ var RenderChineseCalendar = function (millSecStr) {
   }
   $(".days ul").empty();
   $(".days ul").append(sHtml);
+}
 
+//http://m.halfclub.com/partner/linkprice_best.aspx
+//http://www.halfclub.com/Shop/Best100ItemList
+// http://m.halfclub.com/caching/json/best/hf/main_mobile_best_product_all.json
+var boriboriBest100 = function () {
+    $.get('http://www.boribori.co.kr/shop/Best100ItemList' , item=>{
+      console.log('boriboris');
+      console.log(item);
+    });
+
+    $.get('http://m.halfclub.com/caching/json/best/hf/main_mobile_best_product_all.json' , item=>{
+      console.log('halfclub');
+      console.log(item);
+
+    });
+
+    //
+    // $.get('http://m.halfclub.com/caching/json/best/hf/main_mobile_best_product_all.json' item=>{
+    //   console.log('halfclub');
+    //   console.log(item);
+    // });
 }

@@ -184,7 +184,8 @@ function checkTime(i) {
         var myArray = res;
         var rand = myArray[(Math.random() * myArray.length) | 0];
         console.log(rand);
-        $("#quotes").html(rand.text)
+        $("#quotes").html(rand.text);
+        $(".quotes p").html(rand.from);
     });
 }
 
