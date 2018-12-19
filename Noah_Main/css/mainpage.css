@@ -1,6 +1,7 @@
 
 html, body{
     min-height:100%;
+    font-size: 12px;
 }
 header {background: black; color: white; margin: 0; padding: 0; display: fixed}
 h1{ margin: 0; padding: 0; }
@@ -44,6 +45,7 @@ a, a:hover, a:active, a:visited, a:focus {
     font-size: 10em;
     color: white;
     text-align: center;
+    margin-top: 4rem;
     text-shadow: 0 0.01em 1rem black;
 }
 .footer{

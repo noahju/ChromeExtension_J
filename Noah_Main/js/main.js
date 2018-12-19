@@ -138,8 +138,8 @@ $(document).ready(function(){
               success: function (res) {
                 //console.log(res.results);
                 //console.log(res.results[selectedStr]);
-                $(".ExchangeInfo span").empty();
-                $(".ExchangeInfo span").html("The Exchange from " + res.results[selectedStr].fr + " To " + res.results[selectedStr].to + " is "+ res.results[selectedStr].val)
+                $(".ExchanageResults span").empty();
+                $(".ExchanageResults span").html("The Exchange from " + res.results[selectedStr].fr + " To " + res.results[selectedStr].to + " is "+ res.results[selectedStr].val)
               },
               error: function (jqXHR, textStatus, errorThrown) {
                   console.log(errorThrown  + " __ " + textStatus + " __ " + jqXHR.status);
@@ -479,13 +479,16 @@ var weatherRender  = function(weatherObj ){
     //console.log(  "render : " +  weatherObj);
 
     $(".weather .content").empty();
+    var Fahrenheit =  weatherObj.currently.apparentTemperature;
+    console.log(Fahrenheit);
+    var Celsius = (Fahrenheit - 32) * 5 / 9 ;
             $(".weather .content").append(
                     "<h3> 時刻 : " + ConvertToDate(weatherObj.currently.time, 3) + "</h3>"
-                    + "<div class='degrees'> 体感温度 : " + weatherObj.currently.apparentTemperature + "</div>"
+                    + "<div class='degrees'> 体感温度 : " + Celsius.toFixed(1) + " &#8451;" + "</div>"
                     + "<div class='data'>"
                     +"<h2> 概要 : " + weatherObj.currently.summary + "</h2>"
-                    +"<div> 風速 : " + weatherObj.currently.windSpeed + "</div>"
-                    +"<div> 湿度 : "+ Math.floor((weatherObj.currently.humidity*100)) + "%</div>"
+                    +"<div> 風速 : " + weatherObj.currently.windSpeed + " m/s"+ "</div>"
+                    +"<div> 湿度 : "+ Math.floor((weatherObj.currently.humidity*100)) + " %</div>"
                     + "</div>"
             );
 
