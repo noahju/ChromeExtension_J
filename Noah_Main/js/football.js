@@ -1,11 +1,21 @@
 $(document).ready(function(){
 
-    var footballApi = 'https://api.football-data.org/v2/competitions/2021/'
+    var footballApi = 'https://api.football-data.org/v2/competitions/2021/teams'
 
     var leagueTable = "http://api.football-data.org/v1/competitions/445/leagueTable";
     leagueTable = "https://api.football-data.org/v2/competitions/PL/matches";
     var footballApiTeam = "http://api.football-data.org/v2/competitions/2021/scorers";
+    var footballTeam  = " http://api.football-data.org/v2/teams/";
+
+    fnAjax(footballApi ,"", getTeamlist);
+
+    $(document).on("click" ,".teamlist .teamicon", function(){
+      console.log( $(this).data('id'));
+      var s_team = footballTeam + $(this).data('id');
+      fnAjax(s_team ,"" , getTeamInfo )
+    });
     /*
+
     $.get(leagueTable , (item)=>{
       console.log(item.standing);
     })
@@ -21,28 +31,76 @@ $(document).ready(function(){
     Bundesliga id : 2088 country : Germany
     Serie A id : 2114 country : Italy
     name : Primera Division id : 2224 country : Spain
-    /
 
-    https://www.football-data.org/documentation/quickstart#available-resources
+    /
+    more infomation : https://www.football-data.org/documentation/quickstart#available-resources
     */
-    $.ajax({
-      url: footballApi,
-      headers: {"X-Auth-Token" :"959783a20fc14539b46a51acf5eacf8b" },
-      //data:{"id" : 2021},
-      type: 'GET',
-      dataType : "json",
-      success: function(res) {
-        console.log(res);
-         res.competitions.forEach(item=>{
-           console.log(
-             " name : " + item.name
-               + " id : " +  item.id
-               + " country : " + item.area.name
-           );
-         })
-      },
-      error: function( xhr , status , error) {
-        console.log(status);
-      }
-    });
 });
+var fnAjax = function(_url , filter , fnCallbackObj) {
+  if (typeof fnCallbackObj == undefined ||
+    fnCallbackObj == "") {
+      fnCallbackObj = fnCallback;
+    }
+  var _headers =  {"X-Auth-Token" :"959783a20fc14539b46a51acf5eacf8b" };
+
+  $.ajax({
+    url : _url ,
+    headers: _headers,
+    type: 'GET',
+    dateType :'json',
+    success: fnCallbackObj,
+    error: function(xhr, status, error){
+        console.log(status);
+    }
+  })
+}
+var fnCallback = function(res) {
+    console.log(res);
+}
+var getTeamlist = function (res) {
+  $(".teamlist").empty();
+  res.teams.forEach(item=>{
+    $(".teamlist").append(
+      '<div class="teamicon" data-id="' + item.id + '"><img src="' + item.crestUrl + '" ></div>'
+    );
+  })
+}
+
+var getTeamInfo = function(res) {
+  console.log(res);
+  $(".desc").empty();
+  $(".desc").append("<h1>" + res.name +"</h1>" + "<p>founded: " + res.founded+ "</p>");
+
+  var image = res.crestUrl;
+  var clubcolor = res.clubColors.split('/');
+  console.log(clubcolor[0]);
+  console.log(clubcolor[1]);
+
+  $(".card-head").css("background-color", clubcolor[0].trim());
+  $(".card-body").css("background-color", clubcolor[1].trim());
+
+  res.squad.forEach(item=>{
+
+    var sHtml =
+    '<div class="playerInfo">'
+    +  '<div class="card-head">'
+    +    '<img src="' + image + '" >'
+    +    '<div class="product-detail">'
+    +      '<h2>'+item.name+'</h2>'
+    +      item.nationality + "/ " + item.dateOfBirth
+    +    '</div>'
+    +    '<span class="back-text">'+item.shirtNumber+'</span>'
+    +  '</div>'
+    +  '<div class="card-body">'
+    +    '<div class="badge">'+item.position+'</div>'
+    +    '<p>'
+    +    item.role + "/" + item.countryOfBirth
+    +    '</p>'
+    +  '</div>'
+    +'</div>'
+
+    $(".desc").append( sHtml ) ;
+    sHtml = "";
+  });
+
+}

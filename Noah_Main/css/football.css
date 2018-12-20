@@ -1,0 +1,15 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 6px;
+}
+.team{
+  overflow: hidden;
+  text-align: center;
+  background: #34495e;
+  padding: 10rem;
+}
+.team h1{
+  font-size: 1rem;
+}
