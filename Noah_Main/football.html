@@ -1,6 +1,7 @@
 <html>
 <head>
   <script type="text/javascript" src="lib/jquery-min.js"></script>
+  <script type="text/javascript" src="js/jquery.tmpl.min.js"></script>
   <script type="text/javascript" src="js/football.js"></script>
   <style>
   *{
@@ -18,6 +19,7 @@
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
+    background: rgba(52, 73, 94,0.5);
   }
 
   .team h1{
@@ -40,6 +42,7 @@
     filter: grayscale(100%);
     transition: 0.8s;
 
+
   }
   .team .teamlist img{
     margin-left: auto;
@@ -55,30 +58,30 @@
     background: rgba(209, 216, 224,1.0);
     border:1px solid rgba(48, 57, 82,0.3);
     text-align: center;
-    left: 50%;
-    width: 60rem;
-    top: 50%;
-    position: absolute;
-    margin-left: calc(-60rem/2);
-    margin-top: -3rem;
+    /* left: 50%; */
+    width: 80rem;
+    top: 10rem;
+    position: relative;
+    margin-left:10rem;
+    /* margin-left: calc(-80rem/2); */
+    /* margin-top: -3rem; */
     margin-bottom: 10rem;
     border-radius: 1rem;
     padding: 1rem;
     color: rgba(48, 57, 82,1);
     transition: 0.9s;
     overflow: scroll;
-    height: 48rem;
+    height: 78rem;
   }
   .teamInfo:hover{
     box-shadow: 0 0 2rem rgba(48, 57, 82,0.8);
   }
 .playerInfo{
-
   padding: 2rem;
   margin: 1rem;
   border-radius: 1rem;
   float: left;
-  width: 22rem;
+  width: 32rem;
   height: 30rem;
 }
 .desc{
@@ -91,9 +94,9 @@
 .card-head{
   position: relative;
   height: 20rem;
-   background: #fa782e; /*for old browser */
-   background: -moz-linear-gradient(-45deg ,rgba(248, 165, 194,1.0) 0%,rgba(120, 111, 166,1.0) 100% );
-   border-radius: 1rem 1rem 0 0 ;
+ background: #fa782e; /*for old browser */
+ background: -moz-linear-gradient(-45deg ,rgba(248, 165, 194,1.0) 0%,rgba(120, 111, 166,1.0) 100% );
+ border-radius: 1rem 1rem 0 0 ;
 
 }
 .card-head img{
@@ -135,6 +138,11 @@
   margin-left: 15rem;
   position: absolute;
 }
+.matches{
+  display: flex;
+  height: 23rem;
+  width: 40rem;
+}
 
   </style>
 </head>
@@ -142,46 +150,17 @@
   <div class="wrap">
     <div class="team">
       <h1>PL</h1>
-      <div class="teamlist">
-          <div class="teamicon"><img src="./img/football/Arsenal_FC.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Arsenal_FC.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Arsenal_FC.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Arsenal_FC.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Arsenal_FC.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Arsenal_FC.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
-          <div class="teamicon"><img src="./img/football/Chelsea_crest.svg" ></div>
+      <div class="teamlist" id="teamlist">
       </div>
-      <div class="teamInfo">
-        <div class="desc">
-          <div class="playerInfo">
-            <div class="card-head">
-              <img src='/img/football/Arsenal_FC.svg' >
-              <div class="product-detail">
-                <h2>Heartbessport</h2>
-                Support and Nike zoom Air
-              </div>
-              <span class="back-text">FAS</span>
-            </div>
-            <div class="card-body">
-              <div class="badge">right wing</div>
-              <p>
-              </p>
-            </div>
-          </div>
+
+    </div>
+    <div class="teamInfo">
+      <div class="desc">
+        <div class="playerInfo">
         </div>
+      </div>
+      <div class="matches">
+
       </div>
     </div>
   </div>

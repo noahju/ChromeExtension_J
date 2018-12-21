@@ -7,12 +7,15 @@ $(document).ready(function(){
     var footballApiTeam = "http://api.football-data.org/v2/competitions/2021/scorers";
     var footballTeam  = " http://api.football-data.org/v2/teams/";
 
+      var footballmatches = "http://api.football-data.org/v2/teams/" // /v2/teams/{id}/matches/
     fnAjax(footballApi ,"", getTeamlist);
 
     $(document).on("click" ,".teamlist .teamicon", function(){
       console.log( $(this).data('id'));
       var s_team = footballTeam + $(this).data('id');
-      fnAjax(s_team ,"" , getTeamInfo )
+      var s_team_matches = s_team + "/matches/";
+      fnAjax(s_team ,"" , getTeamInfo );
+      fnAjax(s_team_matches ,"" , getTeamMatches );
     });
     /*
 
@@ -59,11 +62,13 @@ var fnCallback = function(res) {
 }
 var getTeamlist = function (res) {
   $(".teamlist").empty();
-  res.teams.forEach(item=>{
+  SetTmpl("teamlist.html" , res.teams ,"teamlist");
+  /* res.teams.forEach(item=>{
     $(".teamlist").append(
       '<div class="teamicon" data-id="' + item.id + '"><img src="' + item.crestUrl + '" ></div>'
     );
   })
+  */
 }
 
 var getTeamInfo = function(res) {
@@ -103,4 +108,29 @@ var getTeamInfo = function(res) {
     sHtml = "";
   });
 
+}
+
+var getTeamMatches = function (res) {
+    console.log(res);
+}
+
+/* Render Html by jquery Template*/
+var SetTmpl = function( templateHtml , DtObj , InsertAreaID) {
+  //var getnewsurl__ = chrome.extension.getURL("news.html");
+  var getnewsurl__ = chrome.extension.getURL(templateHtml);
+  var templateMarkup = '';
+    $.ajax({
+        url: getnewsurl__,
+        dataType: "html",
+        success: function (res) {
+            templateMarkup = res
+        },
+        complete: function () {
+            $.template("Template", templateMarkup);
+            // Render the template with the movies data and insert
+            // the rendered HTML under the "movieList" element
+            $("#"+ InsertAreaID).empty();
+            $.tmpl("Template", DtObj).appendTo("#"+ InsertAreaID);
+        }
+    })
 }
