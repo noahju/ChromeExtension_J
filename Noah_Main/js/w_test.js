@@ -2,8 +2,9 @@ $(document).ready(function () {
   // var ctx = document.getElementById('myChart').getContext('2d');
   // var canvas = document.getelementbyid('mychart');
   // var ctx = canvas.getcontext('2d');
-  weather();
 
+
+  weather();
 
 
 
@@ -64,6 +65,7 @@ var weatherRender  = function(weatherObj ){
   var hourlyTime = [];
   var hourlyapparentTemperature = [];
   datalist.forEach((item , index )=>{
+    if(index % 2 > 0 || index % 3 > 0  ) return true;
     hourlyTime.push(ConvertToDate(  item.time , 4 ));
     hourlyapparentTemperature.push(ConvertToCelsius(item.apparentTemperature, 1));
   });
@@ -98,7 +100,11 @@ var ConvertToDate = function(dateStr , d_type ){
             retStr =  todayYear + "" + todayMonth + "" + todayDate;
             break;
         case 4:
-            retStr =  todayYear + "-" + todayMonth + "-" + todayDate + "  " + hours + ":" + minutes + ":" + seconds;
+            if(hours== 0 ){
+              retStr =  todayMonth + "-" + todayDate + "_" + hours;
+            }else{
+                retStr =  hours;
+            }
             break;
         default :
             retStr =  today;
@@ -123,20 +129,22 @@ var ConvertToCelsius = function (Fahrenheit , rttype ) {
 
 ;var DarkJS = function() {
   this.canvas = document.getElementById('myChart');
+  this.canvas.width="10";
 
 }
 DarkJS.prototype.Chart = function (objTime , objTemprature) {
-  var ctx = this.canvas.getContext('2d');
-  var chart = new Chart(ctx, {
+  var config = {
       // The type of chart we want to create
-      type: 'radar',
+      type: 'line',
+
       // The data for our dataset
       data: {
           labels: objTime ,
           datasets: [{
-              label: "",
-              backgroundColor: "rgba(54, 162, 235, 0.5)",
-              borderColor: "rgb(54, 162, 235)",
+              label: "title adfasdf",
+              //backgroundColor: '#FC2525',
+              backgroundColor: "rgba(236, 240, 241,1.0)",
+              borderColor: "rgba(236, 240, 241,1.0)",
               fill: false,
               data: objTemprature ,
           }]
@@ -145,38 +153,47 @@ DarkJS.prototype.Chart = function (objTime , objTemprature) {
       // Configuration options go here
       options: {
         barValueSpacing : 10,
-        scaleBeginAtZero: false
+        scaleBeginAtZero: false,
+        scales: {
+            yAxes: [{
+                scaleLabel: {
+                     display: true,
+                     labelString: 'Celsius',
+                     fontColor:'rgba(149, 165, 166, 0.9)'
+               },
+              gridLines: {
+                  color: 'rgba(149, 165, 166, 0.2)' // makes grid lines from y axis red
+                },
+                ticks: {
+                    beginAtZero:true,
+                    fontColor: 'rgba(149, 165, 166, 0.9)'
+                },
+            }],
+          xAxes: [{
+                scaleLabel: {
+                     display: true,
+                     labelString: 'Time',
+                     fontColor:'rgba(149, 165, 166, 0.9)'
+               },
+                gridLines: {
+                    color: 'rgba(149, 165, 166, 0.2)' // makes grid lines from y axis red
+                  },
+                ticks: {
+                    fontColor: 'rgba(149, 165, 166, 0.9)'
+                },
+            }]
+        }
       },
-      scales: {
-                xAxes: [
-                  {
-                    type: "time",
-                    time: {
-                      unit: "hour",
-                      displayFormats: {
-                        hour: "M/DD @ hA"
-                      },
-                      tooltipFormat: "MMM. DD @ hA"
-                    },
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Date/Time"
-                    }
-                  }
-                ],
-                yAxes: [
-                  {
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Temperature (°F)"
-                    },
-                    ticks: {
-                      callback: function(value, index, values) {
-                        return value + "°F";
-                      }
-                    }
-                  }
-                ]
-              }
-  });
+  };
+
+  Chart.plugins.register({
+    beforeDraw: function(chartInstance) {
+      var ctx = chartInstance.chart.ctx;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+      ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+    }
+  })
+  var myRadar = new Chart(document.getElementById("myChart"), config);
+  // var ctx = this.canvas.getContext('2d');
+  // var chart = new Chart(ctx, );
 }
