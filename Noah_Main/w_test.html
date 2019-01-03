@@ -19,16 +19,83 @@
     }
     .w_info{
       position: relative;
-      width: 30rem;
+      display: flex;
+      width: 60rem;
       height: 100%;
       background: rgba(189, 195, 199,1.0);
       border-radius: 1rem;
       margin-left: 0.5rem;
       text-overflow:
     }
+    .daily_w{
+      position: relative;
+      width: 10rem;
+      height: 12rem;
+      padding: 1rem;
+      margin: 0.5rem;
+      background: rgba(149, 165, 166, 0.5);
+      border-radius: 0.3rem;
+      color: white;
+      font-size: 0.5rem;
+    }
     #myChart{
       border-radius: 1rem;
     }
+
+
+    /*-----wheather icon setting -----*/
+    .clear-day{  background-image: url('/img/weather/clear-day.png')  }
+    .clear-night{  background-image: url('/img/weather/clear-night.png') }
+    .cloudy{  background-image: url('/img/weather/cloudy.png')  }
+    .fog{  background-image : url('/img/weather/fog.png') ; }
+    .partly-cloudy-day{  background-image: url('/img/weather/partly-cloudy-day.png') }
+    .partly-cloudy-night{  background-image: url('/img/weather/partly-cloudy-night.png')  }
+    .rain{  background-image: url('/img/weather/rain.png')  }
+    .sleet{  background-image: url('/img/weather/sleet.png')  }
+    .snow{  background-image: url('/img/weather/snow.png')  }
+    .wind{  background-image: url('/img/weather/wind.png')  }
+    .weather{
+      color: white;
+      max-width: 65rem;
+      min-width: 55rem;
+      padding: 3rem;
+      opacity: 1;
+      z-index: 9999;
+      height: 25rem;
+      overflow: hidden;
+      background: rgba(44, 62, 80,0.8);
+      border-radius: 1rem;
+      margin-left: 4rem;
+    }
+     .icon{
+        z-index: -1;
+        font-family: 'weathericons';
+        top: 1rem;
+        left: 1rem;
+        z-index: 9999;
+        float:left;
+        border-radius: 50%;
+    }
+    .weather .content{
+        margin-left: 1rem;
+        float: right;;
+    }
+    .icon i {
+        display: inline-block;
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-attachment: inherit;
+        /* background-image: url(/img/weather/rain.png); */
+        /* stay rotate icon image */
+        -webkit-animation:spin 4s linear infinite;
+         -moz-animation:spin 4s linear infinite;
+         animation:spin 10s linear infinite;
+    }
+    /*-------------------------------*/
+
   </style>
 
 </head>
@@ -36,8 +103,7 @@
   <div class="chart">
   <canvas id="myChart"></canvas>
   <div class="w_info">
-    asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf
-    asdfasdfasdfasdfasdfasdfasdfasdfasdf
+
   </div>
   </div>
 </body>

@@ -71,6 +71,18 @@ var weatherRender  = function(weatherObj ){
   });
   var drk = new DarkJS();
   drk.Chart(hourlyTime,  hourlyapparentTemperature );
+
+  var daily = weatherObj.daily.data;
+  daily.forEach((item,index)=>{
+    console.log(ConvertToDate(item.time , 3));
+    $(".w_info").append("<div class='daily_w'>"
+    + ConvertToDate(item.time , 3)
+    + "<div class='icon'>"
+    +    "<i class=" + item.icon + "></i>"
+    +    
+    + "</div>"
+    + "</div>");
+  });
 }
 var ConvertToDate = function(dateStr , d_type ){
        var retStr ;
